@@ -1,0 +1,72 @@
+\documentclass[12pt, a4paper, onecolumn, oneside, final]{report}
+
+\usepackage{csquotes}
+\special{papersize=210mm,297mm}
+\usepackage[top=3cm,bottom=2.5cm,left=4cm,right=2.5cm]{geometry}
+\usepackage{mathptmx}
+\usepackage[bahasa]{babel}
+\usepackage[backend=bibtex,citestyle=authoryear]{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{blindtext}
+\usepackage{sectsty}
+\usepackage{chngcntr}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{longtable}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\chapterfont{\centering \Large}
+\titleformat{\chapter}[display]
+  {\Large\centering\bfseries}
+  {\chaptertitlename\ \thechapter}{0pt}
+    {\Large\bfseries\uppercase}
+
+\setcounter{secnumdepth}{3}
+
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\bibliography{references}
+
+\begin{document}
+
+    \title{Pengembangan Sistem Auto Grading Menggunakan PC Pengguna Sebagai Worker}
+    \date{\today}
+    \author{
+        JAUHAR ARIFIN \\
+        NIM: 13515049
+    }
+
+    \pagenumbering{roman}
+    \setcounter{page}{0}
+
+    \input{chapters/cover}
+
+    \pagestyle{plain}
+    \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
+
+    \tableofcontents
+    \addcontentsline{toc}{chapter}{\contentsname}
+    \listoffigures
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \listoftables
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \clearpage
+
+    \titleformat*{\section}{\bfseries\Large}
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \renewcommand{\chaptername}{BAB}
+    \renewcommand{\thechapter}{\Roman{chapter}}
+    
+    \input{chapters/chapter-1}
+    \input{chapters/chapter-2}
+
+    \printbibliography
+
+\end{document}
