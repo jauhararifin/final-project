@@ -1,2 +1,17 @@
 temp
 Laporan-TA-1.pdf
+
+src/main-blx.bib
+src/main.aux
+src/main.bbl
+src/main.blg
+src/main.fdb_latexmk
+src/main.fls
+src/main.lof
+src/main.log
+src/main.lot
+src/main.out
+src/main.pdf
+src/main.run.xml
+src/main.synctex.gz
+src/main.toc
