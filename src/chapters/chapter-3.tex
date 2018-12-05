@@ -1,0 +1,76 @@
+\chapter{Rencana Penyelesaian Masalah}
+
+\par Dalam mengadakan kompetisi \textit{competitive programming} diperlukan sebuah sistem \textit{online judge}. Sistem \textit{online judge} memerlukan dua buah komponen utama yaitu \textit{autograder} dan sistem manajemen kompetisi. Sistem manajemen kompetisi memberikan layanan yang berhubungan dengan kompetisi seperti melihat soal, mengirim jawaban, membuat klarifikasi, dan melihat \textit{scoreboard}. Sistem \textit{autograder} berfungsi untuk melakukan penilaian terhadap jawaban yang telah dikirim secara \textit{realtime}.
+
+\section{Arsitektur Sistem Manajemen Kompetisi}
+
+\par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
+
+\begin{enumerate}
+    \item Peserta dan juri dapat melihat soal.
+    \item Peserta dapat mengirim jawaban.
+    \item Sistem dapat menilai jawaban peserta.
+    \item Peserta dapat mengirim klarifikasi soal.
+    \item Juri dapat membuat pengumuman terkait kontes.
+    \item Juri dapat menjawab klarifikasi peserta.
+    \item Juri dapat mengubah soal.
+    \item Peserta dan juri dapat melihat \textit{scoreboard}.
+    \item Juri dapat membekukan \textit{scoreboard}.
+    \item Peserta dapat melihat jawaban yang dikirim olehnya.
+    \item Juri dapat melihat jawaban yang dikirim seluruh peserta.
+    \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
+\end{enumerate}
+
+\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kontes. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kontes yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: soal, jawaban, klarifikasi, scoreboard, dan grader.
+
+\subsection{Komponen Soal}
+
+\par Befungsi untuk melakukan manajemen soal. Peserta dan juri dapat melihat soal. Juri dapat mengubah soal.
+
+\subsection{Komponen Jawaban}
+
+\par Berfungsi untuk melakukan manajemen jawaban. Peserta dapat mengirim jawaban. Peserta dapat melihat jawabannya. Juri dapat melihat jawaban peserta. Juri dapat menginvalidate jawaban peserta.
+
+\subsection{Komponen Klarifikasi}
+
+\par Peserta dapat meminta klarifikasi soal. Juri dapat menjawab klarifikasi soal. Juri dapat membuat pengumuman.
+
+\subsection{Komponen Scoreboard}
+
+\par Peserta dan juri dapat melihat scoreboard. Juri dapat membekukan scoreboard.
+
+\section{Arsitektur Sistem Autograder}
+
+\par Sistem manajemen kontes memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan \textit{autograder} yang dapat berjalan pada komputer peserta.
+
+\subsection{Load Balancing}
+
+\subsubsection{Push Based}
+
+\par \textit{Autograder} menerima jawaban peserta kemudian mendistribusikannya secara rata ke worker yang tersedia.
+
+\subsubsection{Pull Based}
+
+\par \textit{Autograder} menyimpan jawaban peserta pada queue, worker yang sedang tersedia akan meminta jawaban dari queue untuk dinilai.
+
+\subsubsection{Menggunakan Komputer Sendiri}
+
+\par Peserta menggunakan komputernya sendiri untuk menilai jawabannya sendiri
+
+\subsection{Evaluasi Jawaban Menggunakan Sandbox}
+
+\par Akan menggunakan cgroup, chroot dan namespace untuk mengisolasi jawaban peserta.
+
+\subsection{Pengukuran Waktu}
+
+\par Tiap komputer dapat menjalankan program dengan waktu yang berbeda-beda, diperlukan pengukuran waktu sehingga proses penilaian menjadi adil.
+
+\begin{itemize}
+    \item Menggunakan jawaban juri sebagai kerangka acuan. Jawaban juri dijalankan terlebih dahulu kemudian dilihat waktunya.
+    \item Menggunakan spesifikasi dari CPU.
+    \item Melakukan benchmarking dengan mencobakan program test.
+\end{itemize}
+
+\subsection{Pengiriman Jawaban Peserta Ke Worker}
+
+\par Jawaban yang dipertukarkan bisa diencrypt terlebih dahulu.

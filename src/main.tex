@@ -5,7 +5,7 @@
 \usepackage[top=3cm,bottom=2.5cm,left=4cm,right=2.5cm]{geometry}
 \usepackage{mathptmx}
 \usepackage[bahasa]{babel}
-\usepackage[backend=bibtex,citestyle=authoryear]{biblatex}
+\usepackage[backend=biber,style=verbose]{biblatex}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titling}
@@ -32,7 +32,7 @@
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
 
-\bibliography{references}
+\addbibresource{references.bib}
 
 \begin{document}
 
@@ -67,6 +67,7 @@
     
     \input{chapters/chapter-1}
     \input{chapters/chapter-2}
+    \input{chapters/chapter-3}
 
     \renewcommand\bibname{Daftar Pustaka}
     \printbibliography
