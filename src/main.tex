@@ -5,7 +5,7 @@
 \usepackage[top=3cm,bottom=2.5cm,left=4cm,right=2.5cm]{geometry}
 \usepackage{mathptmx}
 \usepackage[bahasa]{babel}
-\usepackage[backend=biber,style=verbose]{biblatex}
+\usepackage[backend=biber,style=authoryear]{biblatex}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titling}
@@ -33,6 +33,13 @@
 \counterwithin{table}{section}
 
 \addbibresource{references.bib}
+
+\DeclareQuoteStyle{bahasa}
+  {\textquotedblleft}
+  {\textquotedblright}
+  [0.05em]
+  {\textquotedblleft}
+  {\textquotedblright}
 
 \begin{document}
 

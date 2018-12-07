@@ -22,4 +22,4 @@ clean:
 	src/main.run.xml \
 	src/main.synctex.gz \
 	src/main.toc \
-	src/main.bcf
+	src/main.bcf || true
