@@ -2,7 +2,7 @@
 
 \par Dalam mengadakan kompetisi \textit{competitive programming} diperlukan sebuah sistem \textit{online judge}. Sistem \textit{online judge} memerlukan dua buah komponen utama yaitu \textit{autograder} dan sistem manajemen kompetisi. Sistem manajemen kompetisi memberikan layanan yang berhubungan dengan kompetisi seperti melihat soal, mengirim jawaban, membuat klarifikasi, dan melihat \textit{scoreboard}. Sistem \textit{autograder} berfungsi untuk melakukan penilaian terhadap jawaban yang telah dikirim secara \textit{realtime}.
 
-\section{Arsitektur Sistem Manajemen Kompetisi}
+\section{Sistem Manajemen Kompetisi}
 
 \par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
 
@@ -21,7 +21,13 @@
     \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
 \end{enumerate}
 
-\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kontes. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kontes yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: soal, jawaban, klarifikasi, scoreboard, dan grader.
+\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kontes, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kontes yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
+
+\subsection{Komponen Pengguna}
+
+\par Kompetisi \textit{competitive programming} ada yang bersifat tertutup dimana hanya peserta tertentu yang dapat mengikutinya dan terbuka dimana setiap orang dapat mengikutinya. Sistem \textit{online judge} yang populer saat ini umumnya dapat menangani kedua jenis kompetisi tersebut. Untuk memasuki kompetisi, peserta akan terlebih dahulu membuat akun di sistem \textit{online judge} tersebut. Peserta kemudian dapat memasuki kompetisi dengan cara melakukan \textit{login} pada sistem tersebut. Untuk melakukan pendaftaran peserta baru dan \textit{login}, sistem \textit{online judge} perlu memiliki komponen manajemen pengguna yang bertugas melakukan otentikasi dan otorisasi pengguna. Beberapa \textit{online judge} memiliki komponen manajemen pengguna yang memanfaatkan layanan otentikasi dan otorisasi dari pihak ketiga seperti Google, Facebook, Github, dan Auth0. Terdapat juga sistem \textit{online judge} yang melakukan otentikasi dan otorisasi tanpa menggunakan pihak ketiga, misalnya DomJudge dan Mooshak.
+
+\par Komponen pengguna akan dibuat pada sistem manajemen kompetisi untuk melakukan otentikasi dan otorisasi pengguna. Untuk menyederhanakan persoalan, pada Tugas Akhir ini komponen pengguna yang bertugas melakukan otentikasi dan otorisasi pengguna tidak akan menggunakan layanan pihak ketiga. Beberapa \textit{software development framework} seperti Django, Express, dan Laravel memiliki kemampuan untuk menangani masalah ini dengan mudah. Informasi pengguna akan disimpan pada sistem basis data yang sudah tersedia. Otentikasi pengguna akan dilakukan dengan sederhana, yaitu menggunakan \textit{username} dan \textit{password}. Otorisasi pengguna juga akan dilakukan secara sederhana dengan sistem \textit{Role-based access control}.
 
 \subsection{Komponen Soal}
 
