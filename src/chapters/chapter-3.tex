@@ -6,7 +6,7 @@
 
 \par Sistem manajemen kompetisi memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta. Komputer peserta akan bertindak sebagai \textit{worker} yang menjalankan sistem \textit{autograder}. \textit{Worker} adalah komputer yang digunakan oleh sistem \textit{autograder} untuk melakukan penilaian terhadap jawaban peserta. Dalam Tugas Akhir ini, komputer peserta adalah \textit{worker} dari sistem \textit{autograder}.
 
-\subsection{Pengukuran Waktu Dan Memori}
+\subsection{Pengukuran Waktu Dan Memori} \label{subsec:time-memory-measure}
 
 \par Komputer peserta memiliki spesifikasi yang berbeda-beda. Perbedaan spesifikasi tersebut menimbulkan beberapa perbedaan ketika sebuah program yang sama dieksekusi. Program yang sama dengan masukan yang sama dapat berjalan dengan waktu dan memori yang berbeda pada komputer yang berbeda. Komputer yang memiliki \textit{clock-speed} yang lebih tinggi akan menjalankan program lebih cepat. Komputer yang memiliki \textit{core} lebih banyak juga akan menjalankan program parallel dengan lebih cepat. Selain itu, ukuran \textit{cache} dari komputer juga memengaruhi kecepatan waktu eksekusi. Kebutuhan memori dari suatu program juga ditentukan oleh spesifikasi komputer. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar dibandingkan arsitektur 32-bit. Oleh karena itu, program peserta yang dieksekusi pada komputer yang berbeda akan memerlukan waktu dan memori yang berbeda pula.
 
@@ -24,7 +24,7 @@
 
 \par \textit{Benchmarking} pada komputer peserta memiliki celah keamanan. Peserta bisa saja menjalankan program yang berat ketika proses \textit{benchmarking} dilakukan. Hal ini akan menyebabkan waktu eksekusi menjadi lambat dan dapat meningkatkan batasan waktu dari jawaban peserta. Hal ini dapat dihindari dengan cara melarang peserta menilai jawabannya sendiri dan hanya boleh menilai jawaban peserta lain sehingga peserta tidak memiliki alasan untuk melakukan kecurangan pada saat \textit{benchmarking}. Akan tetapi hal ini masih menimbulkan celah keamanan. Peserta dapat mematikan jaringan komputernya sehingga tidak dapat bertindak sebagai \textit{worker}. Hal ini menyebabkan berkurangnya \textit{worker} yang dapat digunakan untuk melakukan penilaian.
 
-\subsubsection{Membandingkan Dengan Solusi Juri}
+\subsubsection{Membandingkan Dengan Solusi Juri} \label{subsec:time-memory-measure-compare-with-jury}
 
 \par Teknik \textit{benchmarking} sebenarnya efektif untuk digunakan. Pada teknik \textit{benchmarking}, permasalahan utamanya adalah bagaimana menghindari kecurangan peserta. Untuk mencegah peserta mematikan jaringan komputernya, setiap peserta perlu menilai jawabannya sendiri. Peserta yang mematikan jaringan komputernya tidak akan dapat menilai jawabannya sehingga merugikan dirinya sendiri.
 
@@ -32,21 +32,15 @@
 
 \par Dengan membandingkan program solusi peserta dengan program solusi juri pada saat yang bersamaan, perhitungan waktu dan memori yang akurat dapat dilakukan. Meskipun peserta menjalankan program yang berat pada saat penilaian dilakukan, perbandingan waktu eksekusi dari program solusi juri dengan program solusi peserta akan tetap sama. Oleh karena itu, teknik ini akan digunakan untuk melakukan pengukuran waktu dan memori dalam menyelesaikan Tugas Akhir ini.
 
-\subsection{Load Balancing}
+\subsection{\textit{Load Balancing}}
 
-\par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan yang dapat digunakan untuk melakukan pembagian kerja proses penilaian.
+\par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan pembagian kerja yang dapat digunakan, yaitu: \textit{push-based}, \textit{pull-based}, dan \textit{self-grading}.
 
-\subsubsection{\textit{Push-Based}}
+\par Pada pendekatan \textit{push-based}, sistem \textit{autograder} memerlukan sebuah \textit{master} yang akan membagikan pekerjaan ke seluruh \textit{worker}. \textit{Master} akan menentukan \textit{worker} mana yang akan diberikan suatu pekerjaan. Dengan menggunakan metode ini, \textit{master} perlu mengetahui informasi \textit{resource} dari seluruh \textit{worker} yang ada. Setiap \textit{worker} perlu mengirimkan informasi \textit{resource}-nya kepada \textit{master}. Metode ini cukup sulit untuk dilakukan karena perlunya mengimplementasikan algoritma \textit{load balancing} pada \textit{master}.
 
-\par Pada pendekatan \textit{push-based}, \textit{autograder} menerima jawaban peserta kemudian mendistribusikannya ke \textit{worker} yang tersedia. Pada pendekatan \textit{push-based}, sistem \textit{autograder} perlu mengetahui beban setiap \textit{worker} yang tersedia. Selain itu, \textit{autograder} perlu mengetahui adanya penambahan \textit{worker} baru, jika terdapat \textit{worker} yang baru aktif. Pada pendekatan \textit{push-based}, \textit{autograder} dapat mengetahui 
+\par Pada pendekatan \textit{pull-based}, diperlukan juga sebuah \textit{master} yang akan menyimpan seluruh pekerjaan yang perlu diselesaikan. Berbeda dengan pendekatan \textit{push-based} dimana \textit{master} lah yang memberikan \textit{worker} pekerjaan. Pada pendekatan \textit{pull-based}, \textit{worker} yang sedang tersedia akan meminta pekerjaan kepada \textit{master}. Dengan pendekatan ini, pembagian pekerjaan akan menjadi rata dengan sendirinya. Metode ini lebih mudah untuk diimplementasikan dibanding dengan metode \textit{push-bashed} karena tidak perlu membuat algoritma \textit{load balancing}.
 
-\subsubsection{Pull Based}
-
-\par \textit{Autograder} menyimpan jawaban peserta pada queue, worker yang sedang tersedia akan meminta jawaban dari queue untuk dinilai.
-
-\subsubsection{Menggunakan Komputer Sendiri}
-
-\par Peserta menggunakan komputernya sendiri untuk menilai jawabannya sendiri
+\par Selain pendekatan \textit{push-based} dan \textit{pull-based}, terdapat pendekatan lain yang lebih sederhana yaitu \textit{self-grading}. Pada \textit{self-grading}, peserta akan menilai jawabannya sendiri. Dengan menggunakan pendekatan ini, tidak diperlukan adanya \textit{master}. Selain itu, metode \textit{self-grading} lebih adil dibandingkan dengan metode \textit{push-based} dan \textit{pull-based}. Pada dua metode lainnya, peserta dapat mengirimkan jawaban secara terus menerus kepada sistem \textit{autograder} sehingga membanjiri sistem dan menimbulkan berkurangnya kinerja sistem. Dengan metode \textit{self-grading}, peserta yang mengirimkan jawaban secara terus menerus tidak akan membanjiri sistem dan hanya memperlambat proses penilaian jawabannya sendiri. Pada bagian \ref{subsec:time-memory-measure} dan \ref{subsec:time-memory-measure-compare-with-jury} juga sudah dijelaskan bahwa pada Tugas Akhir ini setiap peserta akan menilai jawabannya sendiri. Oleh karena itu, pada Tugas Akhir ini akan digunakan teknik \textit{self-grading}. 
 
 \subsection{Evaluasi Jawaban Menggunakan Sandbox}
 
