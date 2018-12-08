@@ -2,6 +2,72 @@
 
 \par Dalam mengadakan kompetisi \textit{competitive programming} diperlukan sebuah sistem \textit{online judge}. Sistem \textit{online judge} memerlukan dua buah komponen utama yaitu \textit{autograder} dan sistem manajemen kompetisi. Sistem manajemen kompetisi memberikan layanan yang berhubungan dengan kompetisi seperti melihat soal, mengirim jawaban, membuat klarifikasi, dan melihat \textit{scoreboard}. Sistem \textit{autograder} berfungsi untuk melakukan penilaian terhadap jawaban yang telah dikirim secara \textit{realtime}.
 
+\section{Sistem \textit{Autograder}}
+
+\par Sistem manajemen kompetisi memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta. Komputer peserta akan bertindak sebagai \textit{worker} yang menjalankan sistem \textit{autograder}. \textit{Worker} adalah komputer yang digunakan oleh sistem \textit{autograder} untuk melakukan penilaian terhadap jawaban peserta. Dalam Tugas Akhir ini, komputer peserta adalah \textit{worker} dari sistem \textit{autograder}.
+
+\subsection{Pengukuran Waktu Dan Memori}
+
+\par Komputer peserta memiliki spesifikasi yang berbeda-beda. Perbedaan spesifikasi tersebut menimbulkan beberapa perbedaan ketika sebuah program yang sama dieksekusi. Program yang sama dengan masukan yang sama dapat berjalan dengan waktu dan memori yang berbeda pada komputer yang berbeda. Komputer yang memiliki \textit{clock-speed} yang lebih tinggi akan menjalankan program lebih cepat. Komputer yang memiliki \textit{core} lebih banyak juga akan menjalankan program parallel dengan lebih cepat. Selain itu, ukuran \textit{cache} dari komputer juga memengaruhi kecepatan waktu eksekusi. Kebutuhan memori dari suatu program juga ditentukan oleh spesifikasi komputer. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar dibandingkan arsitektur 32-bit. Oleh karena itu, program peserta yang dieksekusi pada komputer yang berbeda akan memerlukan waktu dan memori yang berbeda pula.
+
+\par Diperlukan sistem pengukuran waktu yang adil sehingga program peserta yang benar akan dianggap benar di setiap komputer. Begitu juga program peserta yang salah akan dianggap salah di setiap komputer. Terdapat beberapa teknik yang dapat digunakan untuk mengukur waktu eksekusi jawaban peserta.
+
+\subsubsection{Spesifikasi CPU dan Sistem Operasi}
+
+\par Kecepatan eksekusi sebuah program ditentukan dari \textit{clock-speed}, dan \textit{cache} dari CPU. Jika program peserta hanya diberikan satu buah \textit{core} dari CPU, maka jumlah \textit{core} dari CPU tidak perlu diperhatikan lagi. Kecepatan eksekusi program peserta dapat diukur dari spesifikasi CPU peserta. Komputer dengan \textit{clock-speed} dan ukuran \textit{cache} yang rendah akan diberikan batasan waktu yang lebih lama. Arsitektur setiap komputer juga berbeda-beda. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar. Dengan mengetahui arsitektur komputer, kebutuhan memori dapat diperkirakan.
+
+\par Pada penilaian jawaban peserta, diperlukan pengukuran waktu dan memori yang sangat akurat. Pengukuran waktu atau memori yang tidak akurat akan menimbulkan ketidakadilan kepada peserta. Dengan hanya memerhatikan spesifikasi dari CPU dan sistem operasi pada komputer, pengukuran waktu dan memori yang akurat sulit dilakukan. Program yang berjalan pada sistem operasi 64-bit tidak selalu memerlukan memori dua kali dari program yang berjalan pada sistem operasi 32-bit. Kebutuhan memori bergantung pada isi dari program yang dijalankan. Selain itu, menentukan batasan waktu program dari \textit{clock-speed} dan \textit{cache} tidak mudah dilakukan. 
+
+\subsubsection{CPU \textit{Benchmarking}}
+
+\par \textit{Benchmarking} dapat dilakukan untuk mengukur kinerja CPU. Sebuah program \textit{test} dapat dijalankan pada CPU untuk mengukur waktu eksekusinya. Program \textit{test} akan dijalankan pada komputer pengguna kemudian dicatat waktunya. Jumlah instruksi yang ada pada program \textit{test} dan lamanya waktu eksekusi dapat digunakan untuk mengukur kinerja CPU. Batas waktu dari jawaban peserta kemudian akan ditentukan berdasarkan hasil pengetesan ini.
+
+\par \textit{Benchmarking} pada komputer peserta memiliki celah keamanan. Peserta bisa saja menjalankan program yang berat ketika proses \textit{benchmarking} dilakukan. Hal ini akan menyebabkan waktu eksekusi menjadi lambat dan dapat meningkatkan batasan waktu dari jawaban peserta. Hal ini dapat dihindari dengan cara melarang peserta menilai jawabannya sendiri dan hanya boleh menilai jawaban peserta lain sehingga peserta tidak memiliki alasan untuk melakukan kecurangan pada saat \textit{benchmarking}. Akan tetapi hal ini masih menimbulkan celah keamanan. Peserta dapat mematikan jaringan komputernya sehingga tidak dapat bertindak sebagai \textit{worker}. Hal ini menyebabkan berkurangnya \textit{worker} yang dapat digunakan untuk melakukan penilaian.
+
+\subsubsection{Membandingkan Dengan Solusi Juri}
+
+\par Teknik \textit{benchmarking} sebenarnya efektif untuk digunakan. Pada teknik \textit{benchmarking}, permasalahan utamanya adalah bagaimana menghindari kecurangan peserta. Untuk mencegah peserta mematikan jaringan komputernya, setiap peserta perlu menilai jawabannya sendiri. Peserta yang mematikan jaringan komputernya tidak akan dapat menilai jawabannya sehingga merugikan dirinya sendiri.
+
+\par Permasalahan lain yang timbul adalah peserta dapat menjalankan program yang berat ketika \textit{benchmarking} dilakukan. Hal ini menyebabkan hasil \textit{benchmarking} menunjukkan waktu eksekusi yang lama sehingga batas waktu dari jawaban peserta akan dinaikkan. Untuk menghindari hal ini, benchmarking dapat dilakukan bersamaan dengan proses eksekusi jawaban peserta. \textit{Worker} akan menjalankan program solusi juri dan program solusi peserta dalam waktu bersamaan. Jika program peserta memiliki waktu eksekusi dan memori yang tidak jauh berbeda dengan juri maka solusi peserta dianggap sesuai batasan. Keluaran program peserta kemudian akan dibandingkan dengan keluaran program juri untuk menentukan kebenarannya.
+
+\par Dengan membandingkan program solusi peserta dengan program solusi juri pada saat yang bersamaan, perhitungan waktu dan memori yang akurat dapat dilakukan. Meskipun peserta menjalankan program yang berat pada saat penilaian dilakukan, perbandingan waktu eksekusi dari program solusi juri dengan program solusi peserta akan tetap sama. Oleh karena itu, teknik ini akan digunakan untuk melakukan pengukuran waktu dan memori dalam menyelesaikan Tugas Akhir ini.
+
+\subsection{Load Balancing}
+
+\par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan yang dapat digunakan untuk melakukan pembagian kerja proses penilaian.
+
+\subsubsection{\textit{Push-Based}}
+
+\par Pada pendekatan \textit{push-based}, \textit{autograder} menerima jawaban peserta kemudian mendistribusikannya ke \textit{worker} yang tersedia. Pada pendekatan \textit{push-based}, sistem \textit{autograder} perlu mengetahui beban setiap \textit{worker} yang tersedia. Selain itu, \textit{autograder} perlu mengetahui adanya penambahan \textit{worker} baru, jika terdapat \textit{worker} yang baru aktif. Pada pendekatan \textit{push-based}, \textit{autograder} dapat mengetahui 
+
+\subsubsection{Pull Based}
+
+\par \textit{Autograder} menyimpan jawaban peserta pada queue, worker yang sedang tersedia akan meminta jawaban dari queue untuk dinilai.
+
+\subsubsection{Menggunakan Komputer Sendiri}
+
+\par Peserta menggunakan komputernya sendiri untuk menilai jawabannya sendiri
+
+\subsection{Evaluasi Jawaban Menggunakan Sandbox}
+
+\par Dalam melakukan penilaian terhadap jawaban peserta, diperlukan adanya proses kompilasi dan eksekusi terhadap program yang dikirimkan peserta. Proses kompilasi dan eksekusi ini akan dijalankan pada \textit{worker}. Proses ini dapat membahayakan lingkungan \textit{worker} jika peserta mengirimkan kode program yang berbahaya. Untuk menghindari kerusakan pada \textit{worker}, proses ini perlu diisolasi sehingga tidak berpengaruh pada lingkungan \textit{worker}. Teknik untuk mengisolasi proses eksekusi program ini dinamakan \textit{sandboxing}. Terdapat beberapa teknik \textit{sandboxing} yang dapat digunakan.
+
+\subsubsection{Menggunakan \textit{Virtual Machine}}
+
+\par \textit{Virtual machine} memberikan isolasi kepada program pada tingkat \textit{hardware}. Komputer yang ada pada saat ini memiliki \textit{hypervisor} yang dapat digunakan untuk mensimulasikan \textit{hardware} dari komputer. Dengan menggunakan \textit{virtual machine}, komputer dapat menjalankan sistem operasi virtual di atas sistem operasi yang sedang berjalan. \textit{Virtual machine} memberikan layanan isolasi yang sangat aman.
+
+\par Meskipun keamanan \textit{virtual machine} sangat tinggi, akan tetapi banyak \textit{overhead} yang ditimbulkan. Untuk menyalakan \textit{virtual machine}, membutuhkan waktu yang lama dan memori yang cukup besar. Selain itu, diperlukan adanya sistem operasi baru yang berjalan di atas \textit{virtual machine} yang dibuat. Hal ini menyebabkan proses penilaian jawaban peserta menjadi lambat dan membutuhkan sangat banyak memori.
+
+\subsubsection{Menggunakan \textit{Cgroup}, \textit{Chroot} dan \textit{Namespace}}
+
+\par \textit{Cgroup}, \textit{chroot} dan \textit{namespace} merupakan suatu fitur pada linux yang memungkinkan penggunanya untuk mengeksekusi program secara terisolasi. \textit{Cgroup} dapat memberikan batasan \textit{resource} seperti IO, memory dan CPU kepada suatu program sehingga tidak membebani program lain. \textit{Chroot} memberikan isolasi \textit{filesystem} pada suatu program sehingga program yang berjalan di dalam \textit{chroot} tidak dapat mengakses \textit{filesystem} yang berada di luar \textit{chroot}. \textit{Namespace} memisahkan program pada linux menjadi beberapa partisi dan program pada sebuah partisi hanya dapat mengetahui program lain yang berada dalam partisi tersebut. Dengan menggabungkan ketiga fitur linux ini, dapat dibuat \textit{sandbox} yang cukup untuk mengeksekusi jawaban peserta.
+
+\par Dengan menggunakan teknik ini, penilaian jawaban peserta dapat dilakukan secara aman dengan sedikit \textit{overhead}. Teknik ini sudah digunakan oleh teknologi \textit{container} untuk mengisolasi program. Oleh karena itu, isolasi program dengan \textit{cgroup}, \textit{chroot} dan \textit{namespace} dipilih dalam Tugas Akhir ini.
+
+\subsection{Pengiriman Jawaban Peserta Ke Worker}
+
+\par Jawaban yang dipertukarkan bisa diencrypt terlebih dahulu.
+
 \section{Sistem Manajemen Kompetisi}
 
 \par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
@@ -37,6 +103,8 @@
 
 \par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam database dalam bentuk HTML.
 
+\par Setiap soal perlu memiliki \textit{checker} untuk menilai jawaban peserta. Seringkali jawaban peserta tidak harus sama persis dengan jawaban juri atau terdapat lebih dari satu jawaban yang benar. Untuk itu, juri perlu membuat program \textit{checker} yang digunakan untuk menentukan kebenaran jawaban peserta. Program \textit{checker} yang dibuat oleh juri dapat disimpan dalam bentuk \textit{source code} atau \textit{executable}.
+
 \subsection{Komponen Jawaban}
 
 \par Berfungsi untuk melakukan manajemen jawaban. Peserta dapat mengirim jawaban. Peserta dapat melihat jawabannya. Juri dapat melihat jawaban peserta. Juri dapat menginvalidate jawaban peserta.
@@ -48,39 +116,3 @@
 \subsection{Komponen Scoreboard}
 
 \par Peserta dan juri dapat melihat scoreboard. Juri dapat membekukan scoreboard.
-
-\section{Arsitektur Sistem Autograder}
-
-\par Sistem manajemen kontes memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan \textit{autograder} yang dapat berjalan pada komputer peserta.
-
-\subsection{Load Balancing}
-
-\subsubsection{Push Based}
-
-\par \textit{Autograder} menerima jawaban peserta kemudian mendistribusikannya secara rata ke worker yang tersedia.
-
-\subsubsection{Pull Based}
-
-\par \textit{Autograder} menyimpan jawaban peserta pada queue, worker yang sedang tersedia akan meminta jawaban dari queue untuk dinilai.
-
-\subsubsection{Menggunakan Komputer Sendiri}
-
-\par Peserta menggunakan komputernya sendiri untuk menilai jawabannya sendiri
-
-\subsection{Evaluasi Jawaban Menggunakan Sandbox}
-
-\par Akan menggunakan cgroup, chroot dan namespace untuk mengisolasi jawaban peserta.
-
-\subsection{Pengukuran Waktu}
-
-\par Tiap komputer dapat menjalankan program dengan waktu yang berbeda-beda, diperlukan pengukuran waktu sehingga proses penilaian menjadi adil.
-
-\begin{itemize}
-    \item Menggunakan jawaban juri sebagai kerangka acuan. Jawaban juri dijalankan terlebih dahulu kemudian dilihat waktunya.
-    \item Menggunakan spesifikasi dari CPU.
-    \item Melakukan benchmarking dengan mencobakan program test.
-\end{itemize}
-
-\subsection{Pengiriman Jawaban Peserta Ke Worker}
-
-\par Jawaban yang dipertukarkan bisa diencrypt terlebih dahulu.
