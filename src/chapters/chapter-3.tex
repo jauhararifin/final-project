@@ -58,9 +58,15 @@
 
 \par Dengan menggunakan teknik ini, penilaian jawaban peserta dapat dilakukan secara aman dengan sedikit \textit{overhead}. Teknik ini sudah digunakan oleh teknologi \textit{container} untuk mengisolasi program. Oleh karena itu, isolasi program dengan \textit{cgroup}, \textit{chroot} dan \textit{namespace} dipilih dalam Tugas Akhir ini.
 
-\subsection{Pengiriman Jawaban Peserta Ke Worker}
+\subsection{Pengiriman \textit{Test-Case} Ke \textit{Worker}}
 
-\par Jawaban yang dipertukarkan bisa diencrypt terlebih dahulu.
+\par Dalam melakukan penilaian jawaban peserta perlu adanya pengiriman \textit{test-case} dari \textit{server} ke \textit{worker}. \textit{Test-case} merupakan informasi yang digunakan untuk menentukan kebenaran jawaban peserta sehingga informasi ini bersifat rahasia dan tidak boleh diketahui oleh peserta maupun orang lain di luar kompetisi. Pengiriman informasi rahasia ini dapat dilakukan dengan menggunakan teknik kriptografi dimana informasi akan dienkripsi terlebih dahulu sebelum dikirimkan. Proses enkripsi dan dekripsi dapat dilakukan pada lapisan \textit{transport} menggunakan TCP dengan TLS.
+
+\par Dengan menggunakan TCP dan TLS, kebocoran informasi yang dikirimkan melalui jaringan dapat dihindari sehingga tidak ada pihak ketiga yang dapat mengetahui isi dari informasi tersebut. Akan tetapi, karena informasi ini diterima oleh komputer peserta, peserta dapat dengan mudah mengetahui isi dari informasi tersebut. Oleh karena itu, diperlukan satu lapisan enkripsi lagi pada aplikasi yang berjalan pada komputer peserta. Untuk mencegah peserta mengetahui kunci yang digunakan oleh aplikasi pada komputernya, algoritma pertukaran kunci seperti \textit{Diffie-Hellman} dapat digunakan.
+
+\par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim.
+
+\par Pada Tugas Akhir ini, \textit{test-case} dipertukarkan dengan mengirimkan program pembangkit \textit{test-case} secara aman. Keamanan diperoleh dengan menggunakan dua kali enkripsi yaitu pada lapisan \textit{transport} dan aplikasi. Terdapat beberapa protokol yang dapat digunakan dalam melakukan pengiriman informasi ini. Protokol yang dipilih pada Tugas Akhir ini adalah protokol yang berbasis RPC yaitu \textit{GRPC}. Protokol ini dipilih karena aman dan mudah untuk digunakan.
 
 \section{Sistem Manajemen Kompetisi}
 
