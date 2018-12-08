@@ -58,7 +58,7 @@
 
 \par Dengan menggunakan teknik ini, penilaian jawaban peserta dapat dilakukan secara aman dengan sedikit \textit{overhead}. Teknik ini sudah digunakan oleh teknologi \textit{container} untuk mengisolasi program. Oleh karena itu, isolasi program dengan \textit{cgroup}, \textit{chroot} dan \textit{namespace} dipilih dalam Tugas Akhir ini.
 
-\subsection{Pengiriman \textit{Test-Case} Ke \textit{Worker}}
+\subsection{Pengiriman \textit{Test-Case} Ke \textit{Worker}} \label{subsec:sending-test-case-to-worker}
 
 \par Dalam melakukan penilaian jawaban peserta perlu adanya pengiriman \textit{test-case} dari \textit{server} ke \textit{worker}. \textit{Test-case} merupakan informasi yang digunakan untuk menentukan kebenaran jawaban peserta sehingga informasi ini bersifat rahasia dan tidak boleh diketahui oleh peserta maupun orang lain di luar kompetisi. Pengiriman informasi rahasia ini dapat dilakukan dengan menggunakan teknik kriptografi dimana informasi akan dienkripsi terlebih dahulu sebelum dikirimkan. Proses enkripsi dan dekripsi dapat dilakukan pada lapisan \textit{transport} menggunakan TCP dengan TLS.
 
@@ -70,7 +70,7 @@
 
 \section{Sistem Manajemen Kompetisi}
 
-\par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
+\par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. \textit{Online judge} yang populer pada saat ini memberikan sistem manajemen kompetisi berbasis web. Sistem manajemen kompetisi ini dibutuhkan oleh peserta dan juri untuk melakukan aksi-aksi terkait kompetisi yang sedang berlangsung. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
 
 \begin{enumerate}
     \item Peserta dan juri dapat melihat soal.
@@ -87,7 +87,7 @@
     \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
 \end{enumerate}
 
-\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kontes, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kontes yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
+\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
 
 \subsection{Komponen Pengguna}
 
@@ -101,18 +101,24 @@
 
 \par Pada kompetisi \textit{competitive programming}, deskripsi soal dapat diakses melalui sistem \textit{online judge} yang biasanya berupa halaman web. Dalam beberapa kompetisi, peserta kompetisi akan mendapatkan \textit{hard-copy} dari soal. Komponen soal dibutuhkan oleh sistem manajemen kompetisi untuk mengelola soal yang ada pada kompetisi. Komponen ini memberikan layanan kepada pengguna untuk melihat soal. Terkadang terdapat kesalahan pada soal ketika kompetisi berlangsung sehingga komponen ini perlu memberikan layanan kepada juri untuk mengganti soal.
 
-\par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam database dalam bentuk HTML.
+\par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam database dalam bentuk HTML. Untuk memudahkan implementasi pada Tugas Akhir ini, deskripsi soal akan disimpan dalam basis data.
 
-\par Setiap soal perlu memiliki \textit{checker} untuk menilai jawaban peserta. Seringkali jawaban peserta tidak harus sama persis dengan jawaban juri atau terdapat lebih dari satu jawaban yang benar. Untuk itu, juri perlu membuat program \textit{checker} yang digunakan untuk menentukan kebenaran jawaban peserta. Program \textit{checker} yang dibuat oleh juri dapat disimpan dalam bentuk \textit{source code} atau \textit{executable}.
+\par Setiap soal perlu memiliki program \textit{test-case generator}, \textit{solution}, dan \textit{checker}. Ketiga buah program ini dibuat oleh juri untuk melakukan penilaian jawaban peserta. \textit{Test-case generator} adalah program yang dibuat oleh juri untuk membangkitkan \textit{test-case} seperti yang sudah dijelaskan pada bagian \ref{subsec:sending-test-case-to-worker}. \textit{Solution} adalah program yang merupakan solusi valid dari soal. Program solusi ini dibuat oleh juri untuk dibandingkan dengan jawaban peserta seperti yang sudah dijelaskan pada bagian \ref{subsec:time-memory-measure-compare-with-jury}. Program \textit{checker} akan digunakan oleh \textit{worker} untuk menentukan kebenaran jawaban peserta. Terkadang terdapat lebih dari satu jawab yang benar pada sebuah soal. Oleh karena itu, program \textit{checker} ini dibutuhkan untuk menilai jawaban peserta. 
+
+\par Program \textit{test-case generator}, \textit{solution}, dan \textit{checker} dapat disimpan dalam \textit{filesystem} atau sistem basis data. Untuk memudahkan implementasi pada Tugas Akhir ini, ketiga program ini akan disimpan dalam bentuk \textit{source code} pada sistem basis data.
 
 \subsection{Komponen Jawaban}
 
-\par Berfungsi untuk melakukan manajemen jawaban. Peserta dapat mengirim jawaban. Peserta dapat melihat jawabannya. Juri dapat melihat jawaban peserta. Juri dapat menginvalidate jawaban peserta.
+\par Sistem manajemen kompetisi perlu menyediakan layanan kepada peserta untuk mengirimkan jawaban. Jawaban yang dikirimkan peserta berupa program dalam bentuk \textit{source code} dalam bahasa pemrograman yang diizinkan oleh juri. Selain itu, sistem manajemen kompetisi juga harus memberikan layanan kepada peserta untuk dapat melihat kembali jawabannya. Juri juga perlu mengawasi jawaban dari peserta untuk menghindari adanya kecurangan.  Oleh karena itu, sistem manajemen kompetisi juga harus dapat memberikan layanan kepada juri untuk melihat seluruh jawaban yang pernah dikirimkan oleh peserta. Untuk memudahkan implementasi, pada Tugas Akhir ini jawaban peserta akan disimpan dalam bentuk \textit{source code} pada sistem basis data.
 
 \subsection{Komponen Klarifikasi}
 
-\par Peserta dapat meminta klarifikasi soal. Juri dapat menjawab klarifikasi soal. Juri dapat membuat pengumuman.
+\par Dalam kompetisi \textit{competitive programming}, terkadang terdapat deskripsi soal yang salah atau kurang jelas. Oleh karena itu, perlu adanya sistem yang dapat memberikan layanan kepada juri dan peserta untuk saling berinteraksi. Sistem interaksi ini dapat memberikan layanan kepada juri untuk memberikan pengumuman terkait keberjalanan kompetisi. Selain itu, sistem interaksi ini dapat memberikan layanan kepada peserta untuk mengajukan pertanyaan terkait soal ataupun keberjalanan kompetisi kepada juri. Juri dapat menjawab pertanyaan peserta melalui sistem interaksi ini.
 
-\subsection{Komponen Scoreboard}
+\par Interaksi yang terjadi antara peserta dengan juri dilakukan dengan pengiriman pesan teks singkat. Pada Tugas Akhir ini, interaksi antara peserta dan juri akan disimpan dalam sistem basis data.
 
-\par Peserta dan juri dapat melihat scoreboard. Juri dapat membekukan scoreboard.
+\subsection{Komponen \textit{Scoreboard}}
+
+\par \textit{Scoreboard} merupakan halaman yang berisi peringkat peserta pada kompetisi yang sedang berlangsung. Halaman ini memberikan informasi kepada peserta, juri, maupun orang di luar kompetisi mengenai jumlah soal yang berhasil dikerjakan setiap peserta, jumlah jawaban yang dikirimkan tiap peserta, maupun peringkat peserta. Peringkat peserta dihitung dengan cara tertentu, misalnya dengan jumlah soal yang berhasil dijawab dengan benar.
+
+\par Perhitungan peringkat pada sistem manajemen kompetisi dapat dikategorikan sebagai pekerjaan yang berat. Hal ini dikarenakan, peringkat harus selalu diperbarui ketika terdapat peserta yang mengirimkan jawaban. \textit{Online judge} yang populer saat ini biasanya melakukan perhitungan peringkat secara periodik. Hal ini menyebabkan informasi peringkat tidak diperbarui secara \textit{realtime}. Pada Tugas Akhir ini, perhitungan peringkat akan diserahkan kepada komputer peserta sendiri sehingga tidak membebani \textit{server} dengan perhitungan yang berat.
