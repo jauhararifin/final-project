@@ -6,6 +6,7 @@
 \usepackage{mathptmx}
 \usepackage[bahasa]{babel}
 \usepackage[backend=biber,style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titling}
@@ -19,13 +20,15 @@
 \usepackage{tabulary}
 \usepackage{longtable}
 
+\hypersetup{colorlinks=false, pdfborder={0 0 0},}
+
 \renewcommand{\baselinestretch}{1.5}
 
 \chapterfont{\centering \Large}
 \titleformat{\chapter}[display]
-  {\Large\centering\bfseries}
-  {\chaptertitlename\ \thechapter}{0pt}
-    {\Large\bfseries\uppercase}
+    {\Large\centering\bfseries}
+    {\chaptertitlename\ \thechapter}{0pt}
+        {\Large\bfseries\uppercase}
 
 \setcounter{secnumdepth}{3}
 
@@ -35,11 +38,16 @@
 \addbibresource{references.bib}
 
 \DeclareQuoteStyle{bahasa}
-  {\textquotedblleft}
-  {\textquotedblright}
-  [0.05em]
-  {\textquotedblleft}
-  {\textquotedblright}
+    {\textquotedblleft}
+    {\textquotedblright}
+    [0.05em]
+    {\textquotedblleft}
+    {\textquotedblright}
+
+\DefineBibliographyStrings{english}{
+    % andothers = {dkk\adddot}
+    and = {\&}
+}
 
 \begin{document}
 
