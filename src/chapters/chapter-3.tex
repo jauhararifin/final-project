@@ -32,7 +32,7 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{images/cpu-time-counting}
+    \includegraphics[width=0.5\textwidth]{images/cpu-time-counting}
     \caption{Diagram Aktivitas Penilaian Solusi Peserta}
     \label{fig:cpu-time-counting}
 \end{figure}
@@ -43,9 +43,23 @@
 
 \par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan pembagian kerja yang dapat digunakan, yaitu: \textit{push-based}, \textit{pull-based}, dan \textit{self-grading}.
 
-\par Pada pendekatan \textit{push-based}, sistem \textit{autograder} memerlukan sebuah \textit{master} yang akan membagikan pekerjaan ke seluruh \textit{worker}. \textit{Master} akan menentukan \textit{worker} mana yang akan diberikan suatu pekerjaan. Dengan menggunakan metode ini, \textit{master} perlu mengetahui informasi \textit{resource} dari seluruh \textit{worker} yang ada. Setiap \textit{worker} perlu mengirimkan informasi \textit{resource}-nya kepada \textit{master}. Metode ini cukup sulit untuk dilakukan karena perlunya mengimplementasikan algoritma \textit{load balancing} pada \textit{master}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/load-balancing-push}
+    \caption{\textit{Push-Based Load Balancer}}
+    \label{fig:load-balancing-push}
+\end{figure}
 
-\par Pada pendekatan \textit{pull-based}, diperlukan juga sebuah \textit{master} yang akan menyimpan seluruh pekerjaan yang perlu diselesaikan. Berbeda dengan pendekatan \textit{push-based} dimana \textit{master} lah yang memberikan \textit{worker} pekerjaan. Pada pendekatan \textit{pull-based}, \textit{worker} yang sedang tersedia akan meminta pekerjaan kepada \textit{master}. Dengan pendekatan ini, pembagian pekerjaan akan menjadi rata dengan sendirinya. Metode ini lebih mudah untuk diimplementasikan dibanding dengan metode \textit{push-bashed} karena tidak perlu membuat algoritma \textit{load balancing}.
+\par Pada pendekatan \textit{push-based}, sistem \textit{autograder} memerlukan sebuah \textit{master} yang akan membagikan pekerjaan ke seluruh \textit{worker}. \textit{Master} akan menentukan \textit{worker} mana yang akan diberikan suatu pekerjaan. Dengan menggunakan metode ini, \textit{master} perlu mengetahui informasi \textit{resource} dari seluruh \textit{worker} yang ada. Setiap \textit{worker} perlu mengirimkan informasi \textit{resource}-nya kepada \textit{master}. Metode ini cukup sulit untuk dilakukan karena perlunya mengimplementasikan algoritma \textit{load balancing} pada \textit{master}. Gambar \ref{fig:load-balancing-push} menggambarkan alur pembagian kerja dengan metode \textit{push-based}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/load-balancing-pull}
+    \caption{\textit{Pull-Based Load Balancer}}
+    \label{fig:load-balancing-pull}
+\end{figure}
+
+\par Pada pendekatan \textit{pull-based}, diperlukan juga sebuah \textit{master} yang akan menyimpan seluruh pekerjaan yang perlu diselesaikan. Berbeda dengan pendekatan \textit{push-based} dimana \textit{master} lah yang memberikan \textit{worker} pekerjaan. Pada pendekatan \textit{pull-based}, \textit{worker} yang sedang tersedia akan meminta pekerjaan kepada \textit{master}. Dengan pendekatan ini, pembagian pekerjaan akan menjadi rata dengan sendirinya. Metode ini lebih mudah untuk diimplementasikan dibanding dengan metode \textit{push-bashed} karena tidak perlu membuat algoritma \textit{load balancing}. Gambar \ref{fig:load-balancing-pull} menggambarkan alur pembagian kerja dengan metode \textit{pull-based}.
 
 \par Selain pendekatan \textit{push-based} dan \textit{pull-based}, terdapat pendekatan lain yang lebih sederhana yaitu \textit{self-grading}. Pada \textit{self-grading}, peserta akan menilai jawabannya sendiri. Dengan menggunakan pendekatan ini, tidak diperlukan adanya \textit{master}. Selain itu, metode \textit{self-grading} lebih adil dibandingkan dengan metode \textit{push-based} dan \textit{pull-based}. Pada dua metode lainnya, peserta dapat mengirimkan jawaban secara terus menerus kepada sistem \textit{autograder} sehingga membanjiri sistem dan menimbulkan berkurangnya kinerja sistem. Dengan metode \textit{self-grading}, peserta yang mengirimkan jawaban secara terus menerus tidak akan membanjiri sistem dan hanya memperlambat proses penilaian jawabannya sendiri. Pada bagian \ref{subsec:time-memory-measure} dan \ref{subsec:time-memory-measure-compare-with-jury} juga sudah dijelaskan bahwa pada Tugas Akhir ini setiap peserta akan menilai jawabannya sendiri. Oleh karena itu, pada Tugas Akhir ini akan digunakan teknik \textit{self-grading}. 
 
@@ -67,24 +81,47 @@
 
 \subsection{Pengiriman \textit{Test-Case} Ke \textit{Worker}} \label{subsec:sending-test-case-to-worker}
 
-\par Dalam melakukan penilaian jawaban peserta perlu adanya pengiriman \textit{test-case} dari \textit{server} ke \textit{worker}. \textit{Test-case} merupakan informasi yang digunakan untuk menentukan kebenaran jawaban peserta sehingga informasi ini bersifat rahasia dan tidak boleh diketahui oleh peserta maupun orang lain di luar kompetisi. Pengiriman informasi rahasia ini dapat dilakukan dengan menggunakan teknik kriptografi dimana informasi akan dienkripsi terlebih dahulu sebelum dikirimkan. Proses enkripsi dan dekripsi dapat dilakukan pada lapisan \textit{transport} menggunakan TCP dengan TLS.
+\par Dalam melakukan penilaian jawaban peserta perlu adanya pengiriman \textit{test-case} dari \textit{server} ke \textit{worker}. \textit{Test-case} merupakan informasi yang digunakan untuk menentukan kebenaran jawaban peserta sehingga informasi ini bersifat rahasia dan tidak boleh diketahui oleh peserta maupun orang lain di luar kompetisi. \textit{Test-case} digunakan sebagai masukan pada saat menjalankan program solusi peserta dan juri. Kebenaran dari solusi peserta dinilai dari keluaran yang dihasilkan. Salah satu cara untuk menilai apakah program peserta tersebut benar atau tidak adalah dengan membandingkan dengan keluaran dari program solusi juri. Jika keluaran solusi peserta sama seperti keluaran solusi juri, maka solusi peserta akan dianggap benar. Akan tetapi, seringkali keluaran dari program solusi peserta tidak harus sama persis dengan solusi juri. Soal pada \textit{competitive programming} seringkali memiliki lebih dari satu solusi yang sah dan tidak mungkin untuk menuliskan semua solusi satu per satu. Oleh karena itu, diperlukan juga adanya program \textit{checker} yang digunakan untuk menentukan kebenaran solusi peserta. Program \textit{checker} akan menilai kebenaran solusi peserta berdasarkan keluaran dari program solusi peserta dan program solusi juri.
+
+\par \textit{Test-case} dan \textit{checker} merupakan informasi rahasia yang perlu dipertukarkan antara \textit{worker} dan \textit{server}. Pertukaran informasi rahasia ini dapat dilakukan dengan menggunakan teknik kriptografi dimana informasi akan dienkripsi terlebih dahulu sebelum dikirimkan. Proses enkripsi dan dekripsi dapat dilakukan pada lapisan \textit{transport} menggunakan TCP dengan TLS.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/grading-dfd}
+    \caption{Diagram Aliran Data Pada Proses Penilaian Solusi Peserta}
+    \label{fig:grading-dfd}
+\end{figure}
 
 \par Dengan menggunakan TCP dan TLS, kebocoran informasi yang dikirimkan melalui jaringan dapat dihindari sehingga tidak ada pihak ketiga yang dapat mengetahui isi dari informasi tersebut. Akan tetapi, karena informasi ini diterima oleh komputer peserta, peserta dapat dengan mudah mengetahui isi dari informasi tersebut. Oleh karena itu, diperlukan satu lapisan enkripsi lagi pada aplikasi yang berjalan pada komputer peserta. Untuk mencegah peserta mengetahui kunci yang digunakan oleh aplikasi pada komputernya, algoritma pertukaran kunci seperti \textit{Diffie-Hellman} dapat digunakan.
 
-\par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim.
+\par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim. \textit{Test-case} yang akan digunakan untuk melakukan penilaian solusi peserta dibangkitkan dengan program pembangkit \textit{test-case} ini seperti pada gambar \ref{fig:grading-dfd}. Diagram pada gambar \ref{fig:total-grader-activity} menggambarkan alur proses penilaian jawaban peserta secara lengkap.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/total-grader-activity}
+    \caption{Alur Proses Penilaian Jawaban Peserta}
+    \label{fig:total-grader-activity}
+\end{figure}
 
 \par Pada Tugas Akhir ini, \textit{test-case} dipertukarkan dengan mengirimkan program pembangkit \textit{test-case} secara aman. Keamanan diperoleh dengan menggunakan dua kali enkripsi yaitu pada lapisan \textit{transport} dan aplikasi. Terdapat beberapa protokol yang dapat digunakan dalam melakukan pengiriman informasi ini. Protokol yang dipilih pada Tugas Akhir ini adalah protokol yang berbasis RPC yaitu \textit{GRPC}. Protokol ini dipilih karena aman dan mudah untuk digunakan.
 
 \section{Sistem Manajemen Kompetisi}
 
-\par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. \textit{Online judge} yang populer pada saat ini memberikan sistem manajemen kompetisi berbasis web. Sistem manajemen kompetisi ini dibutuhkan oleh peserta dan juri untuk melakukan aksi-aksi terkait kompetisi yang sedang berlangsung. Kebutuhan dari sistem manajemen kompetisi adalah sebagai berikut:
+\par Sistem manajemen kompetisi memberikan layanan kepada peserta kompetisi dan juri untuk berinteraksi. \textit{Online judge} yang populer pada saat ini memberikan sistem manajemen kompetisi berbasis web. Sistem manajemen kompetisi ini dibutuhkan oleh peserta dan juri untuk melakukan aksi-aksi terkait kompetisi yang sedang berlangsung. Kebutuhan dari sistem manajemen kompetisi digambarkan oleh diagram \textit{use case} pada gambar \ref{fig:oj-use-case}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/oj-use-case}
+    \caption{Diagram \textit{Use Case} Dari Sistem Manajemen Kompetisi}
+    \label{fig:oj-use-case}
+\end{figure}
 
 \begin{enumerate}
     \item Peserta dan juri dapat melihat soal.
     \item Peserta dapat mengirim jawaban.
     \item Sistem dapat menilai jawaban peserta.
     \item Peserta dapat mengirim klarifikasi soal.
-    \item Juri dapat membuat pengumuman terkait kontes.
+    \item Juri dapat membuat pengumuman terkait kompetisi.
     \item Juri dapat menjawab klarifikasi peserta.
     \item Juri dapat mengubah soal.
     \item Peserta dan juri dapat melihat \textit{scoreboard}.
@@ -94,7 +131,7 @@
     \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
 \end{enumerate}
 
-\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kontes yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kontes ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
+\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kompetisi yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
 
 \subsection{Komponen Pengguna}
 

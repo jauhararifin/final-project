@@ -6,7 +6,6 @@
 \usepackage{mathptmx}
 \usepackage[bahasa]{babel}
 \usepackage[backend=biber,style=authoryear]{biblatex}
-\renewcommand*{\nameyeardelim}{\addcomma\space}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titling}
@@ -19,6 +18,7 @@
 \usepackage{parskip}
 \usepackage{tabulary}
 \usepackage{longtable}
+\usepackage[titles]{tocloft}
 
 \hypersetup{colorlinks=false, pdfborder={0 0 0},}
 
@@ -35,6 +35,7 @@
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
 
+\renewcommand*{\nameyeardelim}{\addcomma\space}
 \addbibresource{references.bib}
 
 \DeclareQuoteStyle{bahasa}
@@ -45,9 +46,10 @@
     {\textquotedblright}
 
 \DefineBibliographyStrings{english}{
-    % andothers = {dkk\adddot}
     and = {\&}
 }
+
+\setlength{\cftfignumwidth}{4em}
 
 \begin{document}
 
@@ -68,9 +70,9 @@
     \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
 
     \tableofcontents
-    \addcontentsline{toc}{chapter}{\contentsname}
+    \addcontentsline{toc}{chapter}{\contentsname}\
     \listoffigures
-    \addcontentsline{toc}{chapter}{\listfigurename}
+    \addcontentsline{toc}{chapter}{\listfigurename}\
     \listoftables
     \addcontentsline{toc}{chapter}{\listtablename}
     \clearpage
