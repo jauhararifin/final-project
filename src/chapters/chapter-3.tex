@@ -131,7 +131,14 @@
     \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
 \end{enumerate}
 
-\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kompetisi yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/oj-components}
+    \caption{Diagram Komponen Sistem Manajemen Kompetisi}
+    \label{fig:oj-components}
+\end{figure}
+
+\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kompetisi yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader. Diagram komponen pada gambar \ref{fig:oj-components} menggambarkan komponen yang akan digunakan dalam sistem manajemen kompetisi beserta keterhubungannya.
 
 \subsection{Komponen Pengguna}
 
@@ -159,7 +166,14 @@
 
 \par Dalam kompetisi \textit{competitive programming}, terkadang terdapat deskripsi soal yang salah atau kurang jelas. Oleh karena itu, perlu adanya sistem yang dapat memberikan layanan kepada juri dan peserta untuk saling berinteraksi. Sistem interaksi ini dapat memberikan layanan kepada juri untuk memberikan pengumuman terkait keberjalanan kompetisi. Selain itu, sistem interaksi ini dapat memberikan layanan kepada peserta untuk mengajukan pertanyaan terkait soal ataupun keberjalanan kompetisi kepada juri. Juri dapat menjawab pertanyaan peserta melalui sistem interaksi ini.
 
-\par Interaksi yang terjadi antara peserta dengan juri dilakukan dengan pengiriman pesan teks singkat. Pada Tugas Akhir ini, interaksi antara peserta dan juri akan disimpan dalam sistem basis data.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/oj-erd}
+    \caption{Skema Basis Data Sistem Manajemen Kompetisi}
+    \label{fig:oj-erd}
+\end{figure}
+
+\par Interaksi yang terjadi antara peserta dengan juri dilakukan dengan pengiriman pesan teks singkat. Pada Tugas Akhir ini, interaksi antara peserta dan juri akan disimpan dalam sistem basis data. Gambar \ref{oj-erd} menggambarkan skema basis data yang akan digunakan pada sistem manajemen kompetisi yang akan dikembangkan.
 
 \subsection{Komponen \textit{Scoreboard}}
 
