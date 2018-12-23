@@ -87,14 +87,12 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.65\textwidth]{images/grading-dfd}
+    \includegraphics[width=0.85\textwidth]{images/grading-dfd}
     \caption{Diagram Aliran Data Pada Proses Penilaian Solusi Peserta}
     \label{fig:grading-dfd}
 \end{figure}
 
 \par Dengan menggunakan TCP dan TLS, kebocoran informasi yang dikirimkan melalui jaringan dapat dihindari sehingga tidak ada pihak ketiga yang dapat mengetahui isi dari informasi tersebut. Akan tetapi, karena informasi ini diterima oleh komputer peserta, peserta dapat dengan mudah mengetahui isi dari informasi tersebut. Oleh karena itu, diperlukan satu lapisan enkripsi lagi pada aplikasi yang berjalan pada komputer peserta. Untuk mencegah peserta mengetahui kunci yang digunakan oleh aplikasi pada komputernya, algoritma pertukaran kunci seperti \textit{Diffie-Hellman} dapat digunakan.
-
-\par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim. \textit{Test-case} yang akan digunakan untuk melakukan penilaian solusi peserta dibangkitkan dengan program pembangkit \textit{test-case} ini seperti pada gambar \ref{fig:grading-dfd}. Diagram pada gambar \ref{fig:total-grader-activity} menggambarkan alur proses penilaian jawaban peserta secara lengkap.
 
 \begin{figure}
     \centering
@@ -102,6 +100,8 @@
     \caption{Alur Proses Penilaian Jawaban Peserta}
     \label{fig:total-grader-activity}
 \end{figure}
+
+\par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim. \textit{Test-case} yang akan digunakan untuk melakukan penilaian solusi peserta dibangkitkan dengan program pembangkit \textit{test-case} ini seperti pada gambar \ref{fig:grading-dfd}. Diagram pada gambar \ref{fig:total-grader-activity} menggambarkan alur proses penilaian jawaban peserta secara lengkap.
 
 \par Pada Tugas Akhir ini, \textit{test-case} dipertukarkan dengan mengirimkan program pembangkit \textit{test-case} secara aman. Keamanan diperoleh dengan menggunakan dua kali enkripsi yaitu pada lapisan \textit{transport} dan aplikasi. Terdapat beberapa protokol yang dapat digunakan dalam melakukan pengiriman informasi ini. Protokol yang dipilih pada Tugas Akhir ini adalah protokol yang berbasis RPC yaitu \textit{GRPC}. Protokol ini dipilih karena aman dan mudah untuk digunakan.
 
