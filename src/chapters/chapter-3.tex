@@ -4,7 +4,7 @@
 
 \section{Sistem \textit{Autograder}}
 
-\par Sistem manajemen kompetisi memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta. Komputer peserta akan bertindak sebagai \textit{worker} yang menjalankan sistem \textit{autograder}. \textit{Worker} adalah komputer yang digunakan oleh sistem \textit{autograder} untuk melakukan penilaian terhadap jawaban peserta. Dalam Tugas Akhir ini, komputer peserta adalah \textit{worker} dari sistem \textit{autograder}. Terdapat beberapa aspek yang perlu diperhatikan dalam mengembangkan sistem \textit{autograder} seperti pengukuran waktu dan memori, \textit{load balancing}, evaluasi jawaban peserta, dan pengiriman \textit{test-case} ke \textit{worker}
+\par Sistem manajemen kompetisi memerlukan \textit{autograder} untuk menilai jawaban peserta kompetisi secara otomatis. Sistem \textit{online judge} yang sering digunakan saat ini menggunakan \textit{autograder} yang dipasang oleh juri pada beberapa komputer yang sudah disediakan oleh juri. Pada Tugas Akhir ini akan diciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta. Komputer peserta akan bertindak sebagai \textit{worker} yang menjalankan sistem \textit{autograder}. \textit{Worker} adalah komputer yang digunakan oleh sistem \textit{autograder} untuk melakukan kompilasi dan eksekusi terhadap jawaban peserta. Dalam Tugas Akhir ini, komputer peserta adalah \textit{worker} dari sistem \textit{autograder}. Terdapat beberapa aspek yang perlu diperhatikan dalam mengembangkan sistem \textit{autograder} seperti pengukuran waktu dan memori, \textit{load balancing}, evaluasi jawaban peserta, dan pengiriman \textit{test-case} ke \textit{worker}
 
 \subsection{Pengukuran Waktu Dan Memori} \label{subsec:time-memory-measure}
 
@@ -14,7 +14,7 @@
 
 \subsubsection{Spesifikasi CPU dan Sistem Operasi}
 
-\par Kecepatan eksekusi sebuah program ditentukan dari \textit{clock-speed}, dan \textit{cache} dari CPU. Jika program peserta hanya diberikan satu buah \textit{core} dari CPU, maka jumlah \textit{core} dari CPU tidak perlu diperhatikan lagi. Kecepatan eksekusi program peserta dapat diukur dari spesifikasi CPU peserta. Komputer dengan \textit{clock-speed} dan ukuran \textit{cache} yang rendah akan diberikan batasan waktu yang lebih lama. Arsitektur setiap komputer juga berbeda-beda. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar. Dengan mengetahui arsitektur komputer, kebutuhan memori dapat diperkirakan.
+\par Kecepatan eksekusi sebuah program ditentukan dari \textit{clock-speed}, dan \textit{cache} dari CPU. Jika program peserta hanya diberikan satu buah \textit{core} dari CPU, maka jumlah \textit{core} dari CPU tidak perlu diperhatikan lagi. Kecepatan eksekusi program peserta dapat diukur berdasarkan spesifikasi CPU peserta. Komputer dengan \textit{clock-speed} dan ukuran \textit{cache} yang rendah akan diberikan batasan waktu yang lebih lama. Arsitektur setiap komputer juga berbeda-beda. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar. Dengan mengetahui arsitektur komputer, kebutuhan memori dapat diperkirakan.
 
 \par Pada penilaian jawaban peserta, diperlukan pengukuran waktu dan memori yang sangat akurat. Pengukuran waktu atau memori yang tidak akurat akan menimbulkan ketidakadilan kepada peserta. Dengan hanya memerhatikan spesifikasi dari CPU dan sistem operasi pada komputer, pengukuran waktu dan memori yang akurat sulit dilakukan. Program yang berjalan pada sistem operasi 64-bit tidak selalu memerlukan memori dua kali dari program yang berjalan pada sistem operasi 32-bit. Kebutuhan memori bergantung pada isi dari program yang dijalankan. Selain itu, menentukan batasan waktu program dari \textit{clock-speed} dan \textit{cache} tidak mudah dilakukan. 
 
@@ -30,42 +30,44 @@
 
 \par Permasalahan lain yang timbul adalah peserta dapat menjalankan program yang berat ketika \textit{benchmarking} dilakukan. Hal ini menyebabkan hasil \textit{benchmarking} menunjukkan waktu eksekusi yang lama sehingga batas waktu dari jawaban peserta akan dinaikkan. Untuk menghindari hal ini, benchmarking dapat dilakukan bersamaan dengan proses eksekusi jawaban peserta. \textit{Worker} akan menjalankan program solusi juri dan program solusi peserta dalam waktu bersamaan. Jika program peserta memiliki waktu eksekusi dan memori yang tidak jauh berbeda dengan juri maka solusi peserta dianggap sesuai batasan. Keluaran program peserta kemudian akan dibandingkan dengan keluaran program juri untuk menentukan kebenarannya.
 
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{images/cpu-time-counting}
     \caption{Diagram Aktivitas Penilaian Solusi Peserta}
     \label{fig:cpu-time-counting}
 \end{figure}
 
+\par Meskipun program solusi juri dan solusi peserta dieksekusi pada komputer yang sama. Waktu eksekusi kedua program tersebut dapat sedikit berbeda karena adanya perbedaan implementasi antara solusi peserta dan juri. Solusi peserta bisa saja lebih lambat atau lebih cepat dibandingkan dengan solusi juri. Oleh karena itu, perlu adanya faktor toleransi terhadap waktu eksekusi peserta. Solusi peserta dapat diterima jika waktu eksekusinya masih berada pada batas toleransi dari solusi juri. Secara matematis, solusi peserta akan diterima jika memenuhi persamaan berikut $ T_{peserta} < (1 + \gamma) \times T_{juri}$, dengan $\gamma$ adalah nilai dari faktor toleransi.
+
 \par Dengan membandingkan program solusi peserta dengan program solusi juri pada saat yang bersamaan, perhitungan waktu dan memori yang akurat dapat dilakukan. Meskipun peserta menjalankan program yang berat pada saat penilaian dilakukan, perbandingan waktu eksekusi dari program solusi juri dengan program solusi peserta akan tetap sama. Oleh karena itu, teknik ini akan digunakan untuk melakukan pengukuran waktu dan memori dalam menyelesaikan Tugas Akhir ini. Gambar \ref{fig:cpu-time-counting} menjelaskan proses penilaian jawaban peserta dengan membandingkan dengan program solusi juri. 
 
 \subsection{\textit{Load Balancing}}
 
-\par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan pembagian kerja yang dapat digunakan, yaitu: \textit{push-based}, \textit{pull-based}, dan \textit{self-grading}.
-
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.75\textwidth]{images/load-balancing-push}
     \caption{\textit{Push-Based Load Balancer}}
     \label{fig:load-balancing-push}
 \end{figure}
 
+\par Dalam membangun sistem \textit{autograder}, diperlukan pembagian kerja kepada \textit{worker-worker} yang ada. \textit{Worker} yang dimaksud adalah komputer yang bekerja melakukan penilaian jawaban peserta. Dalam Tugas Akhir ini, \textit{worker} merupakan komputer peserta. Karena spesifikasi komputer tiap \textit{worker} berbeda-beda, diperlukan teknik pembagian kerja yang adil kepada seluruh peserta dan seluruh \textit{worker}. Selain itu aspek keamanan juga perlu diperhatikan karena jawaban peserta akan dikirimkan ke \textit{worker} lain. Terdapat beberapa pendekatan pembagian kerja yang dapat digunakan, yaitu: \textit{push-based}, \textit{pull-based}, dan \textit{self-grading}.
+
 \par Pada pendekatan \textit{push-based}, sistem \textit{autograder} memerlukan sebuah \textit{master} yang akan membagikan pekerjaan ke seluruh \textit{worker}. \textit{Master} akan menentukan \textit{worker} mana yang akan diberikan suatu pekerjaan. Dengan menggunakan metode ini, \textit{master} perlu mengetahui informasi \textit{resource} dari seluruh \textit{worker} yang ada. Setiap \textit{worker} perlu mengirimkan informasi \textit{resource}-nya kepada \textit{master}. Metode ini cukup sulit untuk dilakukan karena perlunya mengimplementasikan algoritma \textit{load balancing} pada \textit{master}. Gambar \ref{fig:load-balancing-push} menggambarkan alur pembagian kerja dengan metode \textit{push-based}.
 
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.75\textwidth]{images/load-balancing-pull}
     \caption{\textit{Pull-Based Load Balancer}}
     \label{fig:load-balancing-pull}
 \end{figure}
 
-\par Pada pendekatan \textit{pull-based}, diperlukan juga sebuah \textit{master} yang akan menyimpan seluruh pekerjaan yang perlu diselesaikan. Berbeda dengan pendekatan \textit{push-based} dimana \textit{master} lah yang memberikan \textit{worker} pekerjaan. Pada pendekatan \textit{pull-based}, \textit{worker} yang sedang tersedia akan meminta pekerjaan kepada \textit{master}. Dengan pendekatan ini, pembagian pekerjaan akan menjadi rata dengan sendirinya. Metode ini lebih mudah untuk diimplementasikan dibanding dengan metode \textit{push-bashed} karena tidak perlu membuat algoritma \textit{load balancing}. Gambar \ref{fig:load-balancing-pull} menggambarkan alur pembagian kerja dengan metode \textit{pull-based}.
+\par Pada pendekatan \textit{pull-based}, diperlukan juga sebuah \textit{master} yang akan menyimpan seluruh pekerjaan yang perlu diselesaikan. Berbeda dengan pendekatan \textit{push-based} dimana \textit{master} lah yang memberikan \textit{worker} pekerjaan. Pada pendekatan \textit{pull-based}, \textit{worker} yang sedang tersedia akan meminta pekerjaan kepada \textit{master}. Dengan pendekatan ini, pembagian pekerjaan akan menjadi rata dengan sendirinya. Metode ini lebih mudah untuk diimplementasikan dibanding dengan metode \textit{push-bashed} karena tidak perlu membuat algoritma \textit{load balancing} yang spesifik pada \textit{master}. Gambar \ref{fig:load-balancing-pull} menggambarkan alur pembagian kerja dengan metode \textit{pull-based}.
 
 \par Selain pendekatan \textit{push-based} dan \textit{pull-based}, terdapat pendekatan lain yang lebih sederhana yaitu \textit{self-grading}. Pada \textit{self-grading}, peserta akan menilai jawabannya sendiri. Dengan menggunakan pendekatan ini, tidak diperlukan adanya \textit{master}. Selain itu, metode \textit{self-grading} lebih adil dibandingkan dengan metode \textit{push-based} dan \textit{pull-based}. Pada dua metode lainnya, peserta dapat mengirimkan jawaban secara terus menerus kepada sistem \textit{autograder} sehingga membanjiri sistem dan menimbulkan berkurangnya kinerja sistem. Dengan metode \textit{self-grading}, peserta yang mengirimkan jawaban secara terus menerus tidak akan membanjiri sistem dan hanya memperlambat proses penilaian jawabannya sendiri. Pada bagian \ref{subsec:time-memory-measure} dan \ref{subsec:time-memory-measure-compare-with-jury} juga sudah dijelaskan bahwa pada Tugas Akhir ini setiap peserta akan menilai jawabannya sendiri. Oleh karena itu, pada Tugas Akhir ini akan digunakan teknik \textit{self-grading}. 
 
 \subsection{Evaluasi Jawaban Menggunakan Sandbox}
 
-\par Dalam melakukan penilaian terhadap jawaban peserta, diperlukan adanya proses kompilasi dan eksekusi terhadap program yang dikirimkan peserta. Proses kompilasi dan eksekusi ini akan dijalankan pada \textit{worker}. Proses ini dapat membahayakan lingkungan \textit{worker} jika peserta mengirimkan kode program yang berbahaya. Untuk menghindari kerusakan pada \textit{worker}, proses ini perlu diisolasi sehingga tidak berpengaruh pada lingkungan \textit{worker}. Teknik untuk mengisolasi proses eksekusi program ini dinamakan \textit{sandboxing}. Terdapat beberapa teknik \textit{sandboxing} yang dapat digunakan.
+\par Dalam melakukan penilaian terhadap jawaban peserta, diperlukan adanya proses kompilasi dan eksekusi terhadap program yang dikirimkan peserta. Proses kompilasi dan eksekusi ini akan dijalankan pada \textit{worker}. Proses ini dapat membahayakan lingkungan \textit{worker} jika peserta mengirimkan kode program yang berbahaya. Untuk menghindari kerusakan pada \textit{worker}, proses ini perlu diisolasi sehingga tidak berpengaruh pada lingkungan \textit{worker}. Teknik untuk mengisolasi proses eksekusi program ini dinamakan \textit{sandboxing}. Terdapat beberapa teknik \textit{sandboxing} yang dapat digunakan seperti \textit{virtual machine} dan \textit{containerization}.
 
 \subsubsection{Menggunakan \textit{Virtual Machine}}
 
@@ -75,9 +77,9 @@
 
 \subsubsection{Menggunakan \textit{Cgroup}, \textit{Chroot} dan \textit{Namespace}}
 
-\par \textit{Cgroup}, \textit{chroot} dan \textit{namespace} merupakan suatu fitur pada linux yang memungkinkan penggunanya untuk mengeksekusi program secara terisolasi. \textit{Cgroup} dapat memberikan batasan \textit{resource} seperti IO, memory dan CPU kepada suatu program sehingga tidak membebani program lain. \textit{Chroot} memberikan isolasi \textit{filesystem} pada suatu program sehingga program yang berjalan di dalam \textit{chroot} tidak dapat mengakses \textit{filesystem} yang berada di luar \textit{chroot}. \textit{Namespace} memisahkan program pada linux menjadi beberapa partisi dan program pada sebuah partisi hanya dapat mengetahui program lain yang berada dalam partisi tersebut. Dengan menggabungkan ketiga fitur linux ini, dapat dibuat \textit{sandbox} yang cukup untuk mengeksekusi jawaban peserta.
+\par \textit{Cgroup}, \textit{chroot} dan \textit{namespace} merupakan suatu fitur pada Linux yang memungkinkan penggunanya untuk mengeksekusi program secara terisolasi. \textit{Cgroup} dapat memberikan batasan \textit{resource} seperti IO, memori dan CPU kepada suatu proses sehingga tidak membebani proses lain. \textit{Chroot} memberikan isolasi \textit{filesystem} pada suatu proses sehingga proses yang berjalan di dalam \textit{chroot} tidak dapat mengakses \textit{filesystem} yang berada di luar \textit{chroot}. \textit{Namespace} memisahkan proses pada Linux menjadi beberapa partisi. Proses pada sebuah partisi hanya dapat mengetahui proses lain yang berada dalam partisi tersebut. Dengan menggabungkan ketiga fitur Linux ini, dapat dibuat \textit{sandbox} yang cukup aman untuk mengeksekusi jawaban peserta.
 
-\par Dengan menggunakan teknik ini, penilaian jawaban peserta dapat dilakukan secara aman dengan sedikit \textit{overhead}. Teknik ini sudah digunakan oleh teknologi \textit{container} untuk mengisolasi program. Oleh karena itu, isolasi program dengan \textit{cgroup}, \textit{chroot} dan \textit{namespace} dipilih dalam Tugas Akhir ini.
+\par Teknik ini sudah digunakan oleh teknologi \textit{container} untuk mengisolasi program. Dengan menggunakan teknik ini, penilaian jawaban peserta dapat dilakukan secara aman dengan sedikit \textit{overhead}. Oleh karena itu, isolasi program dengan \textit{cgroup}, \textit{chroot} dan \textit{namespace} dipilih dalam Tugas Akhir ini.
 
 \subsection{Pengiriman \textit{Test-Case} Ke \textit{Worker}} \label{subsec:sending-test-case-to-worker}
 
@@ -85,7 +87,7 @@
 
 \par \textit{Test-case} dan \textit{checker} merupakan informasi rahasia yang perlu dipertukarkan antara \textit{worker} dan \textit{server}. Pertukaran informasi rahasia ini dapat dilakukan dengan menggunakan teknik kriptografi dimana informasi akan dienkripsi terlebih dahulu sebelum dikirimkan. Proses enkripsi dan dekripsi dapat dilakukan pada lapisan \textit{transport} menggunakan TCP dengan TLS.
 
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.85\textwidth]{images/grading-dfd}
     \caption{Diagram Aliran Data Pada Proses Penilaian Solusi Peserta}
@@ -94,7 +96,7 @@
 
 \par Dengan menggunakan TCP dan TLS, kebocoran informasi yang dikirimkan melalui jaringan dapat dihindari sehingga tidak ada pihak ketiga yang dapat mengetahui isi dari informasi tersebut. Akan tetapi, karena informasi ini diterima oleh komputer peserta, peserta dapat dengan mudah mengetahui isi dari informasi tersebut. Oleh karena itu, diperlukan satu lapisan enkripsi lagi pada aplikasi yang berjalan pada komputer peserta. Untuk mencegah peserta mengetahui kunci yang digunakan oleh aplikasi pada komputernya, algoritma pertukaran kunci seperti \textit{Diffie-Hellman} dapat digunakan.
 
-\begin{figure}
+\begin{figure}[ht!]
     \centering
     \includegraphics[width=0.65\textwidth]{images/total-grader-activity}
     \caption{Alur Proses Penilaian Jawaban Peserta}
@@ -119,7 +121,7 @@
 \begin{enumerate}
     \item Peserta dan juri dapat melihat soal.
     \item Peserta dapat mengirim jawaban.
-    \item Sistem dapat menilai jawaban peserta.
+    \item Sistem \textit{autograder} dapat menilai jawaban peserta.
     \item Peserta dapat mengirim klarifikasi soal.
     \item Juri dapat membuat pengumuman terkait kompetisi.
     \item Juri dapat menjawab klarifikasi peserta.
@@ -152,7 +154,7 @@
 
 \par Pada kompetisi \textit{competitive programming}, deskripsi soal dapat diakses melalui sistem \textit{online judge} yang biasanya berupa halaman web. Dalam beberapa kompetisi, peserta kompetisi akan mendapatkan \textit{hard-copy} dari soal. Komponen soal dibutuhkan oleh sistem manajemen kompetisi untuk mengelola soal yang ada pada kompetisi. Komponen ini memberikan layanan kepada pengguna untuk melihat soal. Terkadang terdapat kesalahan pada soal ketika kompetisi berlangsung sehingga komponen ini perlu memberikan layanan kepada juri untuk mengganti soal.
 
-\par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam database dalam bentuk HTML. Untuk memudahkan implementasi pada Tugas Akhir ini, deskripsi soal akan disimpan dalam basis data.
+\par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam sistem manajemen basis data dalam bentuk HTML. Untuk memudahkan implementasi pada Tugas Akhir ini, deskripsi soal akan disimpan dalam basis data.
 
 \par Setiap soal perlu memiliki program \textit{test-case generator}, \textit{solution}, dan \textit{checker}. Ketiga buah program ini dibuat oleh juri untuk melakukan penilaian jawaban peserta. \textit{Test-case generator} adalah program yang dibuat oleh juri untuk membangkitkan \textit{test-case} seperti yang sudah dijelaskan pada bagian \ref{subsec:sending-test-case-to-worker}. \textit{Solution} adalah program yang merupakan solusi valid dari soal. Program solusi ini dibuat oleh juri untuk dibandingkan dengan jawaban peserta seperti yang sudah dijelaskan pada bagian \ref{subsec:time-memory-measure-compare-with-jury}. Program \textit{checker} akan digunakan oleh \textit{worker} untuk menentukan kebenaran jawaban peserta. Terkadang terdapat lebih dari satu jawab yang benar pada sebuah soal. Oleh karena itu, program \textit{checker} ini dibutuhkan untuk menilai jawaban peserta. 
 
