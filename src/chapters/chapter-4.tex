@@ -1,0 +1,32 @@
+\chapter{Pengembangan Dan Pengujian}
+
+\par Pada Tugas Akhir ini, perangkat lunak yang dikembangan berupa sistem manajemen kompetisi, \textit{autograder} dan program antar muka pengguna.  Sistem manajemen kompetisi di\textit{deploy} pada komputer yang disediakan oleh juri dan bertindak sebagai \textit{server}. \textit{Autograder} dan program antar muka akan didistribusikan kepada peserta dan juri untuk dijalankan pada komputernya. Secara keseluruhan, perangkat lunak yang dikembangkan dinamakan \textit{UGrade}. Nama tersebut berasal dari kata \textit{you} dan \textit{grade}. Nama tersebut dipilih karena proses penilaian atau \textit{grading} dilakukan oleh masing-masing peserta.
+
+\par Terdapat tiga program utama yang dikembangkan pada \textit{UGrade} yaitu: \textit{UGServer}, \textit{UGJob} dan \textit{UGDesktop}. \textit{UGServer} berfungsi sebagai sistem manajemen kompetisi yang bertindak sebagai server. \textit{UGJob} berfungsi sebagai \textit{worker} dari \textit{autograder}. \textit{UGDesktop} berfungsi sebagai antar muka antara pengguna dengan sistem \textit{online judge}. Selain tiga program utama tersebut, terdapat program lain yang digunakan untuk membantu proses pengembangan. Untuk melakukan \textit{sandboxing}, dikembangan program yang bernama \textit{UGSbox}. Selain itu, untuk memudahkan proses testing, dikembangankan program \textit{UGCtl} yang dapat digunakan sebagai antar muka pengguna dalam bentuk \textit{command-line}.
+
+\section{\textit{UGServer} (Sistem Manajemen Kompetisi)}
+
+\par \textit{UGServer} merupakan sistem manejem kompetisi yang berfungsi untuk mengatur keberjalanan kompetisi. \textit{UGServer} memberikan layanan kepada peserta dan juri untuk berinteraksi dengan kompetisi. Layanan yang diberikan oleh \textit{UGServer} antara lain:
+\begin{enumerate}
+  \item Otentikasi dan otorisasi pengguna.
+  \item Pembuatan dan akses kompetisi.
+  \item Pembuatan dan akses soal pada kompetisi.
+  \item Pengiriman dan akses jawaban pada kompetisi.
+\end{enumerate}
+
+\par Sebenarnya masih banyak layanan lain yang harus diberikan oleh sistem manajemen kompetisi. Akan tetapi, Tugas Akhir ini lebih difokuskan untuk mengembangkan \textit{autograder} dibandingkan dengan sistem manajemen kompetisi. Hal ini dikarenakan tujuan dari Tugas Akhir ini lebih berfokus pada proses penilaian jawaban peserta. Oleh karena itu, fungsionalitas yang dipaparkan pada paragram di atas sudah cukup untuk memenuhi tujuan dari Tugas Akhir ini.
+
+\par \textit{UGServer} dikembangkan dengan menggunakan \textit{framework django}. Pengembangan perangkat lunak berbasis \textit{web} dapat dengan cepat dan mudah dilakukan menggunakan \textit{framework django}. Selain itu, \textit{django} telah memberikan banyak fitur yang sangat membantu proses pengembangan perangkat lunak seperti otorisasi, otentikasi, dan \textit{ORM}. Terdapat beberapa alternatif lain yang dapat meningkatkan kinerja sistem manajemen kompetisi seperti menggunakan \textit{express} atau \textit{GO}. Kedua alternatif tersebut tidak digunakan karena membutuhkan waktu pengembangan yang lama dan tidak terlalu memberikan perunbahan yang signifikan. Oleh karena itu, \textit{Framework} \textit{django} dipilih untuk mengembangkan \textit{UGServer} karena mudah dan cepat untuk dikembangkan.
+
+\par \textit{UGServer} memberikan \textit{API} yang dapat digunakan oleh pengguna. \textit{API} yang diberikan oleh \textit{UGServer} berupa \textit{GraphQL} yang berjalan di atas protokol \textit{HTTP}. \textit{GraphQL} digunakan karena mudah untuk diimplementasikan dan digunakan. \textit{UGDesktop} dan \textit{UGCtl} merupakan program antar muka pengguna yang menggunakan \textit{API} ini. Terdapat beberapa alternatif lain yang dapat digunakan untuk mengembangkan \textit{API} dari \textit{UGServer} seperti menggunakan arsitektur \textit{REST} atau menggunakan teknik seperti \textit{RPC}. Alternatif tersebut tidak digunakan karena lebih tidak fleksibel dan lebih sulit untuk diimplementasikan.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/dbschemas}
+    \caption{Skema Basis Data Sistem Manajemen Kompetisi}
+    \label{fig:dbschemas}
+\end{figure}
+
+\par Dalam menjalankan fungsinya, \textit{UGServer} menggunakan sistem manajemen basis data untuk menyimpan informasi terkait kompetisi. Pada saat ini, \textit{UGServer} dapat berjalan menggunakan sistem basis data \textit{Postgresql} atau \textit{SQLite}. \textit{Framework django} memiliki fitur \textit{ORM} yang siap digunakan untuk basis data yang bersifat relasional. Karena adanya fitur tersebut, data lebih mudah untuk diatur menggunakan basis data relasional. Oleh karena itu, pada Tugas Akhir ini penyimpanan data dilakukan menggunakan sistem basis data relasional. Gambar \ref{fig:dbschemas} merupakan skema basis data yang digunakan untuk menyimpan informasi terkait kompetisi.
+
+% TODO: further works
