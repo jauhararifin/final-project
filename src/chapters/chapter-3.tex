@@ -149,7 +149,7 @@
 
 \par \textit{Test-case} umumnya merupakan file \textit{text} yang cukup besar. Pengiriman file ini dapat menghabiskan banyak \textit{bandwidth}. Meskipun begitu, \textit{test-case} biasanya dibuat dengan cara dibangkitkan oleh sebuah program yang dibuat oleh juri. \textit{Test-case} yang sama dapat dibangkitkan berulang-kali dengan menjalankan program tersebut. Untuk mengurangi kebutuhan \textit{bandwidth}, \textit{test-case} tidak perlu dikirim, melainkan program pembangkit \textit{test-case} saja yang dikirim. \textit{Test-case} yang akan digunakan untuk melakukan penilaian solusi peserta dibangkitkan dengan program pembangkit \textit{test-case} ini seperti pada Gambar \ref{fig:grading-dfd}. Diagram pada Gambar \ref{fig:total-grader-activity} menggambarkan alur proses penilaian jawaban peserta secara lengkap.
 
-\par Pada Tugas Akhir ini, \textit{test-case} dipertukarkan dengan mengirimkan program pembangkit \textit{test-case} secara aman. Keamanan diperoleh dengan menggunakan dua kali enkripsi yaitu pada lapisan \textit{transport} dan aplikasi. Terdapat beberapa protokol yang dapat digunakan dalam melakukan pengiriman informasi ini. Protokol yang dipilih pada Tugas Akhir ini adalah protokol yang berbasis RPC yaitu \textit{GRPC}. Protokol ini dipilih karena aman dan mudah untuk digunakan.
+\par Pada Tugas Akhir ini, \textit{test-case} dipertukarkan dengan mengirimkan program pembangkit \textit{test-case} secara aman. Keamanan diperoleh dengan menggunakan dua kali enkripsi yaitu pada lapisan \textit{transport} dan aplikasi. Terdapat beberapa protokol yang dapat digunakan dalam melakukan pengiriman informasi ini. Protokol yang dipilih pada Tugas Akhir ini adalah protokol HTTP. Protokol ini dipilih karena aman dan mudah untuk digunakan.
 
 \section{Sistem Manajemen Kompetisi}
 
@@ -177,14 +177,25 @@
     \item Juri dapat mengatur jawaban peserta untuk tidak dinilai.
 \end{enumerate}
 
+\par Pada Tugas Akhir ini, tidak semua kebutuhan dari sistem manajemen kompetisi diimplementasikan. Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu hanya kebutuhan yang berkaitan dengan proses penilaian saja yang diimplementasikan pada Tugas Akhir ini. Kebutuhan sistem manajemen kompetisi yang diimplementasikan pada Tugas Akhri ini antara lain:
+
+\begin{enumerate}
+    \item Peserta dan juri dapat melihat soal.
+    \item Peserta dapat mengirim jawaban.
+    \item Sistem \textit{autograder} dapat menilai jawaban peserta.
+    \item Juri dapat mengubah soal.
+    \item Peserta dapat melihat jawaban yang dikirim olehnya.
+    \item Juri dapat melihat jawaban yang dikirim seluruh peserta.
+\end{enumerate}
+
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/oj-components}
+    \includegraphics[width=0.5\textwidth]{images/oj-components}
     \caption{Diagram Komponen Sistem Manajemen Kompetisi}
     \label{fig:oj-components}
 \end{figure}
 
-\par Masalah yang ingin diselesaikan dalam Tugas Akhir ini tidak terletak pada sistem manajemen kompetisi, melainkan pada sistem \textit{autograder}. Oleh karena itu, sistem manajemen kompetisi yang akan digunakan akan mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, klarifikasi, scoreboard, dan grader. Diagram komponen pada Gambar \ref{fig:oj-components} menggambarkan komponen yang akan digunakan dalam sistem manajemen kompetisi beserta keterhubungannya.
+\par Sistem manajemen kompetisi yang digunakan pada Tugas Akhir ini mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, dan grader. Diagram komponen pada Gambar \ref{fig:oj-components} menggambarkan komponen yang digunakan dalam sistem manajemen kompetisi beserta keterhubungannya.
 
 \subsection{Komponen Pengguna}
 
@@ -192,7 +203,7 @@
 
 \par Komponen pengguna akan dibuat pada sistem manajemen kompetisi untuk melakukan otentikasi dan otorisasi pengguna. Untuk menyederhanakan persoalan, pada Tugas Akhir ini komponen pengguna yang bertugas melakukan otentikasi dan otorisasi pengguna tidak akan menggunakan layanan pihak ketiga. Beberapa \textit{software development framework} seperti Django, Express, dan Laravel memiliki kemampuan untuk menangani masalah ini dengan mudah. Informasi pengguna akan disimpan pada sistem basis data yang sudah tersedia. Otentikasi pengguna akan dilakukan dengan sederhana, yaitu menggunakan \textit{username} dan \textit{password}.
 
-\par Otorisasi pengguna juga akan dilakukan secara sederhana dengan sistem \textit{Role-based access control}. Setiap pengguna akan diberikan \textit{role} tertentu. Aksi-aksi yang dapat dilakukan oleh pengguna ditentukan oleh \textit{role} yang dimilikinya. Role yang akan digunakan dalam sistem manajemen kompetisi ini adalah "peserta" dan "juri". Setiap pengguna yang berhasil \textit{login} kedalam sistem akan diberikan \textit{token} unik. Token unik ini digunakan untuk menentukan \textit{role} dari pengguna yang melakukan aksi pada sistem. \textit{Token} yang akan digunakan dalam Tugas Akhir ini adalah \textit{JWT (JSON Web Token)} karena mudah untuk digunakan dan aman.
+\par Otorisasi pengguna juga akan dilakukan secara sederhana dengan sistem \textit{Role-based access control}. Setiap pengguna akan diberikan \textit{role} tertentu. Aksi-aksi yang dapat dilakukan oleh pengguna ditentukan oleh \textit{role} yang dimilikinya. Setiap pengguna yang berhasil \textit{login} kedalam sistem akan diberikan \textit{token} unik. Token unik ini digunakan untuk menentukan \textit{role} dari pengguna yang melakukan aksi pada sistem. \textit{Token} yang akan digunakan dalam Tugas Akhir ini adalah \textit{JWT (JSON Web Token)} karena mudah untuk digunakan dan aman.
 
 \subsection{Komponen Soal}
 
@@ -208,21 +219,4 @@
 
 \par Sistem manajemen kompetisi perlu menyediakan layanan kepada peserta untuk mengirimkan jawaban. Jawaban yang dikirimkan peserta berupa program dalam bentuk \textit{source code} dalam bahasa pemrograman yang diizinkan oleh juri. Selain itu, sistem manajemen kompetisi juga harus memberikan layanan kepada peserta untuk dapat melihat kembali jawabannya. Juri juga perlu mengawasi jawaban dari peserta untuk menghindari adanya kecurangan.  Oleh karena itu, sistem manajemen kompetisi juga harus dapat memberikan layanan kepada juri untuk melihat seluruh jawaban yang pernah dikirimkan oleh peserta. Untuk memudahkan implementasi, pada Tugas Akhir ini jawaban peserta akan disimpan dalam bentuk \textit{source code} pada sistem basis data.
 
-\subsection{Komponen Klarifikasi}
-
-\par Dalam kompetisi \textit{competitive programming}, terkadang terdapat deskripsi soal yang salah atau kurang jelas. Oleh karena itu, perlu adanya sistem yang dapat memberikan layanan kepada juri dan peserta untuk saling berinteraksi. Sistem interaksi ini dapat memberikan layanan kepada juri untuk memberikan pengumuman terkait keberjalanan kompetisi. Selain itu, sistem interaksi ini dapat memberikan layanan kepada peserta untuk mengajukan pertanyaan terkait soal ataupun keberjalanan kompetisi kepada juri. Juri dapat menjawab pertanyaan peserta melalui sistem interaksi ini.
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/oj-erd}
-    \caption{Skema Basis Data Sistem Manajemen Kompetisi}
-    \label{fig:oj-erd}
-\end{figure}
-
-\par Interaksi yang terjadi antara peserta dengan juri dilakukan dengan pengiriman pesan teks singkat. Pada Tugas Akhir ini, interaksi antara peserta dan juri akan disimpan dalam sistem basis data. Gambar \ref{fig:oj-erd} menggambarkan skema basis data yang akan digunakan pada sistem manajemen kompetisi yang akan dikembangkan.
-
-\subsection{Komponen \textit{Scoreboard}}
-
-\par \textit{Scoreboard} merupakan halaman yang berisi peringkat peserta pada kompetisi yang sedang berlangsung. Halaman ini memberikan informasi kepada peserta, juri, maupun orang di luar kompetisi mengenai jumlah soal yang berhasil dikerjakan setiap peserta, jumlah jawaban yang dikirimkan tiap peserta, maupun peringkat peserta. Peringkat peserta dihitung dengan cara tertentu, misalnya dengan jumlah soal yang berhasil dijawab dengan benar.
-
-\par Perhitungan peringkat pada sistem manajemen kompetisi dapat dikategorikan sebagai pekerjaan yang berat. Hal ini dikarenakan, peringkat harus selalu diperbarui ketika terdapat peserta yang mengirimkan jawaban. \textit{Online judge} yang populer saat ini biasanya melakukan perhitungan peringkat secara periodik. Hal ini menyebabkan informasi peringkat tidak diperbarui secara \textit{realtime}. Pada Tugas Akhir ini, perhitungan peringkat akan diserahkan kepada komputer peserta sendiri sehingga tidak membebani \textit{server} dengan perhitungan yang berat.
+% TODO: tambah penjelasan tentang submission, grading_group, grading, erd diagram dari db
