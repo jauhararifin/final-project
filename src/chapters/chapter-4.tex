@@ -29,7 +29,7 @@
 
 \par Dalam menjalankan fungsinya, \textit{UGServer} menggunakan sistem manajemen basis data untuk menyimpan informasi terkait kompetisi. Pada saat ini, \textit{UGServer} dapat berjalan menggunakan sistem basis data \textit{Postgresql} atau \textit{SQLite}. \textit{Framework django} memiliki fitur \textit{ORM} yang siap digunakan untuk basis data yang bersifat relasional. Karena adanya fitur tersebut, data lebih mudah untuk diatur menggunakan basis data relasional. Oleh karena itu, pada Tugas Akhir ini penyimpanan data dilakukan menggunakan sistem basis data relasional. Gambar \ref{fig:dbschemas} merupakan skema basis data yang digunakan untuk menyimpan informasi terkait kompetisi.
 
-\subsection{Manajemen Pengguna}
+\subsection{Manajemen Pengguna} \label{subsec:user-management}
 
 % akun
 \par \textit{UGServer} memberikan layanan untuk melakukan manajemen pengguna. Pengguna pada \textit{UGrade} terikat pada suatu kompetisi. Pengguna pada suatu kompetisi tidak dapat mengikuti kompetisi lain. Pengguna yang ingin mengikuti dua buah kompetisi harus membuat dua akun. Pengguna dapat membuat akun dengan cara membuat kompetisi. Ketika seseorang membuat kompetisi, maka sebuah akun akan tercipta sesuai dengan alamat \textit{email} orang tersebut. Selain itu, akun dapat dibuat dengan mengundang orang lain ke dalam kompetisi.
@@ -63,5 +63,32 @@ Pengguna dalam perangkat lunak ini umumnya meliputi juri, peserta dan admin. Per
     \item \textit{create:submissions}: \textit{permission} ini memungkinkan pengguna untuk mengirimkan jawabannya. Pengguna tanpa \textit{permission} ini dapat dipandang sebagai seorang penonton.
 \end{enumerate}
 Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan \textit{granularitas} pada hak akses untuk setiap pengguna. Gambar \ref{fig:user-schema} merupakan skema basis data yang digunakan untuk melakukan manajemen pengguna.
+
+% TODO: jelasin API
+
+\subsection{Manajemen Soal}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/problem-schema}
+    \caption{Skema Basis Data Sistem Manajemen Soal}
+    \label{fig:problem-schema}
+\end{figure}
+
+\par Setiap soal pada \textit{UGServer} akan terikat pada suatu kompetisi. Suatu soal tidak dapat berada pada dua kompetisi sekaligus. Jika terdapat soal yang sama pada kompetisi yang berbeda, maka soal tersebut harus ditambahkan dua kali dan tetap dianggap soal yang berbeda. Setiap soal pada kompetisi memiliki nama dan \textit{short id}. Nama soal merupakan judul soal yang akan ditampilkan pada sistem antar muka yang digunakan pengguna. \textit{Short id} merupakan kode soal yang unik untuk setiap kompetisi dan mudah untuk dibaca oleh manusia. \textit{Short id} berguna untuk mengidentifikasi soal dengan mudah.
+
+\par Informasi mengenai soal disimpan di sistem basis data pada tabel \textit{problems}. Skema basis data yang digunakan untuk menyimpan informasi soal digambarkan pada Gambar \ref{fig:problem-schema}. Aksi-aksi yang dapat dilakukan oleh pengguna terhadap soal ditentukan berdasarkan \textit{permission} yang dimiliki oleh pengguna tersebut.
+
+% TODO: screenshot ui
+
+\par Setiap soal memiliki deskripsi soal. Deskripsi soal merupakan penjelasan mengenai soal, format masukan, format keluaran, contoh masukan dan contoh keluaran. Deskripsi soal ditulis dalam format \textit{markdown} dan disimpan pada \textit{field} \textit{statement} pada tabel \textit{problems}. Pemilihan format \textit{markdown} bertujuan untuk kemudahan melakukan penyimpanan deskripsi soal. Beberapa sistem \textit{online judge} lain memungkinkan melakukan penyimpanan soal dalam bentuk \textit{file} seperti \textit{pdf}. \textit{UGServer} tidak mendukung penyisipan \textit{file} pada deskripsi soal. Hal ini bertujuan untuk memudahkan implementasi.
+
+\par Untuk melakukan penilaian terhadap jawaban peserta, setiap soal dilengkapi dengan beberapa informasi terkait penilaian. Beberapa informasi yang terkait dengan penilaian adalah: batas waktu eksekusi, batas penggunaan \textit{memory}, batas \textit{output file} yang dihasilkan, faktor toleransi, \textit{testcase generator}, solusi juri dan \textit{checker}. Batas waktu eksekusi disimpan pada \textit{field timelimit} dalam bentuk bilangan bulat yang menyatakan lamanya batas waktu eksekusi dalam satuan milidetik. Batas waktu ini digunakan oleh \textit{autograder} untuk menghentikan program secara paksa ketika berjalan terlalu lama. Batas penggunaan memory dan \textit{output file} yang dihasilkan disimpan pada \textit{field memorylimit} dan \textit{outputlimit} di tabel \textit{problems}. Batas tersebut disimpan dalam bentuk bilangan bulat yang menyatakan batas dalam satuan \textit{bytes}. Faktor toleransi disimpan pada \textit{field tolerance} di tabel \textit{problems} sebagai \textit{float}.
+
+\par Dalam melakukan penilaian, \textit{autograder} memerlukan informasi mengenai \textit{testcase generator}, solusi juri, dan \textit{checker}. Informasi tersebut berupa \textit{source code} pada bahasa pemrograman tertentu. \textit{UGServer} menyimpan informasi bahasa pemrograman yang digunakan oleh \textit{testcase generator}, solusi juri dan \textit{checker} pada sistem basis data sebagai \textit{foreign key} ke tabel \textit{languages}. Informasi bahasa pemrograman tersebut disimpan pada \textit{field tcgen\_language, solution\_language}, dan \textit{checker\_language} di tabel \textit{problems}. Informasi mengenai kode sumber tidak disimpan dalam sistem basis data karena dianggap kurang efisien jika ukuran \textit{source code} terlalu besar. Oleh karena itu, kode sumber disimpan sebagai \textit{file} yang berada pada \textit{disk}. Dengan begitu, sistem basis data hanya perlu menyimpan informasi mengenai alamat file dari \textit{source code} yang disimpan.
+
+% TODO: graphql API
+
+\par Pengguna dapat melakukan beberapa aksi pada soal yang ada pada sistem seperti: melihat daftar soal, membaca soal, menambah soal, mengubah soal, dan menghapus soal. Pengguna hanya dapat melakukan aksi-aksi tersebut sesuai izin yang dimilikinya seperti yang sudah dijelaskan pada bagian \ref{subsec:user-management}. Aksi-aksi tersebut dapat dilakukan menggunakan \textit{GraphQL API}.
 
 % TODO: further works
