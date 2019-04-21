@@ -91,4 +91,100 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 \par Pengguna dapat melakukan beberapa aksi pada soal yang ada pada sistem seperti: melihat daftar soal, membaca soal, menambah soal, mengubah soal, dan menghapus soal. Pengguna hanya dapat melakukan aksi-aksi tersebut sesuai izin yang dimilikinya seperti yang sudah dijelaskan pada bagian \ref{subsec:user-management}. Aksi-aksi tersebut dapat dilakukan menggunakan \textit{GraphQL API}.
 
+\subsection{Manajemen Jawaban}
+
+\par Peserta maupun juri dapat mengirimkan jawabannya terhadap suatu soal jika memiliki \textit{permission create:submissions}. Jawaban terhadap suatu soal berupa \textit{source code} yang ditulis pengguna dalam bahasa pemrograman tertentu yang diizinkan. Pada saat ini, bahasa pemrograman yang dapat digunakan adalah C dan C++. Pengguna dapat mengirimkan jawaban melalui \textit{GraphQL API}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/submission-schema}
+    \caption{Skema Basis Data Sistem Manajemen Jawaban}
+    \label{fig:submission-schema}
+\end{figure}
+
+\par \textit{Source code} dari jawaban dari pengguna akan disimpan dalam bentuk \textit{file} yang berada pada \textit{disk}. Selain \textit{source code}, terdapat informasi lain pada jawaban pengguna yang disimpan seperti bahasa pemrograman yang digunakan, waktu pengiriman jawaban, pengirim jawaban dan soal yang bersangkutan. Informasi tersebut disimpan dalam basis data pada tabel \textit{submission}. Gambar \ref{fig:submission-schema} merupakan skema basis data yang digunakan untuk menyimpan jawaban.
+
+\par Setiap jawaban yang berhasil dikirim oleh pengguna akan dinilai oleh \textit{grader}. \textit{Grader} akan berjalan secara otomatis ketika jawaban peserta disimpan. \textit{Grader} kemudian akan menentukan \textit{verdict} dari jawaban peserta. \textit{Verdict} merupakan hasil penilaian terhadap jawaban peserta. Jenis \textit{verdict} yang digunakan adalah:
+\begin{enumerate}
+    \item \textit{Accpeted}: menandakan bahwa jawaban memberikan keluaran yang benar dan memenuhi batasan.
+    \item \textit{Wrong Answer}: menandakan bahwa jawaban memberikan keluaran yang salah tetapi memenuhi batasan.
+    \item \textit{Memory Limit Exceeded}: menandakan bahwa jawaban menggunakan terlalu banyak \textit{memory} melebihi batasan yang ditetapkan.
+    \item \textit{Time Limit Exceeded}: menandakan bahwa jawaban melebihi batasan waktu yang sudah ditetapkan.
+    \item \textit{Runtime Error}: menandakan bahwa jawaban tidak berhasil dieksekusi karena adanya kesalahan pada jawaban.
+    \item \textit{Compile Error}: menandakan jawaban tidak dapat dikompilasi.
+    \item \textit{Internal Error}: menandakan adanya kesalahan pada sistem \textit{UGrade} sehingga jawaban tidak dapat dinilai.
+\end{enumerate}
+
+\subsection{Penilain Jawaban}
+
+\par Setiap jawaban yang dikirimkan oleh pengguna akan dinilai secara otomatis oleh \textit{UGServer}. Penilaian dilakukan secara \textit{asynchronous}. Oleh karena itu, peserta tidak perlu menunggu penilaian selesai untuk melakukan aksi-aksi lain. Seringkali terdapat beberapa masalah teknis yang mengakibatkan jawaban peserta perlu dinilai ulang. Oleh sebab itu, setiap jawaban peserta dapat dinilai lebih dari satu kali. Hasil penilaian yang digunakan adalah hasil penilaian yang terakhir.
+
+\subsubsection{\textit{Grading Group}}
+
+\par Penilaian pada sebuah jawaban disebut sebagai \textit{grading group}. Setiap jawaban dapat dinilai lebih dari satu kali dan memiliki lebih dari satu \textit{grading group}. Adanya \textit{grading group} berguna untuk melakukan penilaian terhadap jawaban peserta lebih dari satu kali. Jika terdapat perubahan \textit{testcase} atau perubahan batasan waktu pada suatu soal, maka perlu adanya penilaian ulang. Penilaian ulang dapat dilakukan dengan membuat \textit{grading group} baru untuk setiap penilaian.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{images/grader-schema}
+    \caption{Skema Penilaian Jawaban Pengguna}
+    \label{fig:grader-schema}
+\end{figure}
+
+\par Informasi dari \textit{grading group} disimpan dalam tabel \textit{GradingGroups} pada sistem basis data. Setiap \textit{grading group} memiliki informasi mengenai jawaban peserta, catatan waktu terciptanya \textit{grading group}, \textit{verdict}, spesifikasi penilaian, catatan waktu selesainya penilaian, dan \textit{grading size}. Informasi-informasi tersebut disimpan sebagai \textit{field} dalam tabel \textit{GradingGroups}. Spesifikasi penilaian berupa \textit{archive file} dan disimpan sebagai \textit{file} dalam \textit{disk}. Field \textit{spec} pada tabel \textit{GradingGroups} menyimpan informasi alamat \textit{file} dari spesifikasi penilaian. Skema basis data yang digunakan untuk melakukan penilaian ditunjukkan pada Gambar \ref{fig:grader-schema}.
+
+\par Penilaian diawali dengan pembuatan spesifikasi penilaian. Spesifikasi penilaian berisi informasi mengenai \textit{testcase generator}, solusi juri, \textit{checker}, solusi peserta dan batasan soal. Informasi tersebut disimpan sebagai \textit{file} dengan format \textit{tar}. Spesifikasi penilain tersebut terdiri dari beberapa file sebagai berikut:
+\begin{enumerate}
+    \item tcgen.cpp\\ merupakan kode sumber \textit{testcase generator} dari soal. Ekstensi dari \textit{file} dapat berbeda sesuai bahasa pemrograman yang digunakan.
+    \item solution.cpp\\ merupakan kode sumber  solusi juri pada soal yang bersangkutan. Ekstensi dari \textit{file} dapat berbeda sesuai bahasa pemrograman yang digunakan.
+    \item checker.cpp\\ merupakan kode sumber \textit{checker} dari soal. Ekstensi dari \textit{file} dapat berbeda sesuai dengan bahasa pemrograman yang digunakan.
+    \item submission.cpp\\ merupakan kode sumber solusi peserta. Ekstensi dari \textit{file} dapat berbeda sesuai dengan bahasa pemrograman yang digunakan.
+    \item lang.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan bahasa pemrograman yang digunakan sebagai \textit{testcase generator}, solusi juri, \textit{checker} dan solusi peserta. \textit{JSON document} pada \textit{file} ini hanya berisi empat \textit{key} yaitu \textit{tcgen}, \textit{solution}, \textit{checker}, dan \textit{submission}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value} yaitu bahasa \textit{ID} dari bahasa pemrograman yang digunakan.
+    \item problem.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan batasan dari soal. \textit{JSON document} pada file ini berisi empat buah \textit{key} yaitu \textit{timeLimit}, \textit{outputLimit}, \textit{memoryLimit}, dan \textit{tolerance}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value}  berupa bilangan yang menjelaskan batasan dari soal.
+\end{enumerate}
+\par \textit{File} spesifikasi penilaian ini nantinya akan diunduh oleh \textit{autograder} yang berjalan pada komputer pengguna.
+
+\subsubsection{\textit{Grading Size}}
+
+\par Setiap penilaian yang ditandai dengan \textit{grading group} memiliki suatu nilai \textit{grading size}. Nilai dari \textit{grading size} digunakan untuk mengurangi risiko serangan yang mungkin dilakukan pengguna. Sebuah penilaian dapat dilakukan oleh lebih dari satu \textit{worker}. Setiap worker akan memberikan hasil penilaiannya kepada \textit{UGServer}. Jawaban peserta akan dinilai benar ketika mayoritas dari \textit{worker} yang melakukan penilaian memberikan \textit{verdict} \textit{accepted}. Nilai dari \textit{grading size} mengindikasikan banyaknya \textit{worker} yang melakukan penilaian.
+
+\par Nilai \textit{grading size} yang besar akan lebih aman karena dapat lebih mengurangi risiko kecurangan peserta. Hal ini dikarenakan kemungkinan terjadinya kecurangan lebih kecil sebab \textit{worker} yang bekerja lebih banyak. Meskipun begitu, tingginya nilai \textit{grading size} menyebabkan proses penilaian menjadi lebih lambat karena penilaian harus menunggu banyak \textit{worker} untuk selesai terlebih dahulu. Sebaliknya, nilai \textit{grading size} yang kecil dapat mempercepat penilaian akan tetapi mengurangi keamanan. Nilai \textit{grading size} dapat diatur dalam pengaturan kompetisi oleh pengguna yang memiliki \textit{permission} \textit{update:contests}.
+
+\par Karena setiap jawaban dapat dinilai lebih dari satu kali, perlu ada entitas yang merepresentasikan penilaian sebuah jawaban oleh sebuah \textit{worker}. Entitas tersebut dinamakan \textit{grading}. Sebuah \textit{grading} memiliki informasi mengenai \textit{grading group} terkait, \textit{verdict}, \textit{grader group}, catatan waktu penilaian, dan pengguna yang melakukan penilaian. Informasi ini disimpan di dalam basis data pada tabel \textit{Gradings}.
+
+\par Secara singkat, setiap jawaban dapat memiliki beberapa \textit{grading group} yang merepresentasikan sebuah penilaian terhadap jawaban. Hasil penilaian jawaban pada sebuah \textit{grading group} merupakan hasil penilaian yang dilakukan oleh banyak \textit{worker}. Banyaknya \textit{worker} yang melakukan penilaian adalah sebanyak \textit{grading size}. Setiap penilaian yang dilakukan oleh \textit{worker} direpresentasikan menjadi sebuah \textit{grading}. Secara singkat dapat dikatakan bahwa setiap \textit{grading group} memiliki \textit{grading} sebanyak \textit{grading size}.
+
+\subsubsection{\textit{Grader Group}}
+
+\par Adanya nilai dari \textit{grading size} bertujuan agar setiap jawaban dapat dinilai lebih dari satu \textit{worker}. \textit{Worker} yang melakukan penilaian terhadap suatu jawaban tentunya harus merupakan \textit{worker} yang berbeda. Untuk mengatasi hal ini, setiap \textit{grading} dan \textit{worker} memiliki sebuah nilai \textit{grader group}. \textit{Worker} dengan nilai \textit{grader group} tertentu hanya dapat melakukan penialain terhadap \textit{grading} yang memiliki nilai \textit{grader group} yang sama. Setiap penilaian jawaban peserta, akan dibuat \textit{grading size} buah \textit{grading} yang memiliki nilai \textit{grader group} yang unik yaitu dari nol hingga $\textit{grading size} - 1$. Setiap \textit{worker} dengan \textit{grader group} $K$ hanya akan melakukan penilaian terhadap \textit{grading} yang memiliki nilai \textit{grader group} $K$.
+
+\par Nilai \textit{grader group} dari setiap \textit{worker} dihitung dengan cara melakukan \textit{hash} pada ID \textit{worker}. Setiap \textit{worker} memiliki ID berupa integer yang unik. Nilai \textit{grader group} sebuah worker dihitung dengan formula $\textit{grader\_group} = hash(W_{id}) \bmod \textit{grading\_size}$. Dengan mengasumsikan jumlah \textit{worker} cukup banyak dibandingkan dengan nilai \textit{grading size}, maka cara ini akan mengelompokkan menjadi \textit{grading size} buah kelompok dengan anggota yang kira-kira sama banyak. Cara ini dipilih karena perhitungannya yang cepat, mudah dan dapat mengelompokkan \textit{worker} secara rata.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/grading-example-1}
+    \caption{Contoh Proses Pembuatan \textit{Grading}}
+    \label{fig:grading-example-1}
+\end{figure}
+
+\par Sebagai contoh, seorang pengguna telah melakukan pengiriman jawaban terhadap suatu soal. Setelah pengiriman jawaban tersebut berhasil dilakukan, akan tercipta sebuah \textit{submission} yang dapat kita beri nama \textit{Submission \#1}. \textit{UGServer} kemudian akan secara otomatis membuat \textit{grading group} untuk menilai jawaban tersebut. Kita dapat memisalkan \textit{grading group} tersebut bernama \textit{Grading Group \#1}. Pada \textit{Grading Group \#1} terdapat informasi mengenai \textit{grading size}. Informasi \textit{grading size} didapatkan dari konfigurasi kompetisi. Pengguna dengan \textit{permission update:contest} dapat mengubah nilai ini. Dalam contoh ini, kita misalnya nilai \textit{grading size} dari kompetisi tersebut adalah tiga. Setelah \textit{grading group} terbentuk, \textit{UGServer} akan membuat \textit{grading size} buah \textit{grading}. Dalam contoh ini berarti akan tercipta tiga buah \textit{grading}. Untuk kemudahan penjelasan, tiga buah \textit{grading} ini dapat kita sebut dengan \textit{Grading \#1} , \textit{Grading \#2}, dan \textit{Grading \#3}. Setiap \textit{grading} yang diciptakan akan memiliki nilai \textit{grader group} yang unik dan terurut dari nol hingga $\textit{grading size} - 1$. Dalam contoh ini \textit{Grading \#1} memiliki nilai \textit{grader group} nol, \textit{Grading \#2} memiliki nilai \textit{grader group} satu, dan \textit{Grading \#3} memiliki nilai \textit{grader group} dua. Gambar \ref{fig:grading-example-1} menggambarkan \textit{submission}, \textit{grading group} dan \textit{grading} pada contoh di paragraf ini.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{images/grading-example-2}
+    \caption{Contoh Proses Penilaian Oleh \textit{Worker}}
+    \label{fig:grading-example-2}
+\end{figure}
+
+\par Setelah terbentuk tiga buah \textit{grading} seperti pada paragraf sebelumnya, penilaian dapat mulai dilakukan oleh \textit{worker}. \textit{Worker} secara periodik akan selalu bertanya pada \textit{UGServer} apakah terdapat \textit{grading} yang perlu dikerjakan. \textit{UGServer} akan memberikan \textit{grading} yang sesuai dengan nilai dari \textit{grader group} \textit{worker} yang bersangkutan. Setiap \textit{grading} memiliki informasi \textit{claimed\_by} yang akan berisi ID dari peserta yang sedang melakukan penilaian terhadap \textit{grading} tersebut. Nilai tersebut bertujuan agar \textit{grading} yang sedang dinilai tidak akan dinilai oleh \textit{worker} lain. Gambar \ref{fig:grading-example-2} menjelaskan pemberian \textit{grading} pada \textit{worker} yang dilakukan oleh \textit{UGServer}.
+
+\par \textit{Worker} yang telah melakukan penilaian akan mengirimkan hasil penilaiannya kepada \textit{UGServer}. \textit{UGServer} kemudian akan mengubah nilai \textit{verdict} dari \textit{grading} dan mencatat waktu selesainya penilaian. Jika jumlah \textit{grading} yang selesai dinilai sudah lebih dari setengah dari \textit{grading size}, maka \textit{verdict} dari \textit{grading group} akan diubah. Setelah tahap tersebut, pengguna dapat melihat hasil akhir penilaiannya. 
+
+% TODO: jelasin API waktu grading
+
+% TODO: use more clear term for worker, grading group, grading size, grading, grader group.
+
+% TODO: tambah kode assign grader group
+
 % TODO: further works
+
+\section{\textit{UGSbox}}
