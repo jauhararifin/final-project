@@ -188,3 +188,58 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 % TODO: further works
 
 \section{\textit{UGSbox}}
+
+\par Dalam menjalankan penilaian, \textit{UGSbox} berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah: \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri, dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada Tugas Akhir ini, \textit{UGSbox} berperan dalam memberikan isolasi tersebut.
+
+\par \textit{UGSbox} memberikan isolasi pada proses yang berjalan dengan menggunakan beberapa fitur dari linux. Isolasi yang diberikan \textit{ugsbox} antara lain adalah sebagai berikut:
+\begin{itemize}
+    \item isolasi \textit{filesystem}. \\ Isolasi terhadap \textit{filesystem} dilakukan dengan menggunakan \textit{system call chroot}. Dengan menggunakan \textit{chroot}, direktori \textit{root} dari suatu  proses dapat diganti menjadi direktori lain. Mengganti \textit{root} dari proses mengakibatkan proses tersebut tidak dapat mengakses \textit{file} yang ada di luar \textit{root}. \textit{Filesystem} yang akan digunakan oleh proses dapat dimuat dari \textit{file} yang memiliki format \textit{.tar.xz}. File tersebut dinamakan \textit{image file}. Proses isolasi \textit{filesystem} dimulai dengan melakukan ekstraksi \textit{image file} kemudian mengganti \textit{root} dari proses ke dalam direktori \textit{image file} yang sudah berhasil diekstrak. 
+
+    \item \textit{filesystem binding}. \\ \textit{UGSbox} memberikan fitur \textit{filesystem binding} yang dapat digunakan oleh pengguna untuk memasukkan \textit{filesystem} lain ke dalam \textit{filesystem} yang sudah diisolasi. Fitur ini berguna untuk menyimpan \textit{testcase} ke dalam suatu \textit{filesystem} khusus yang kemudian dapat dimuat ke dalam \textit{filesystem} yang sudah diisolasi.
+
+    \item isolasi \textit{network}. \\ Untuk menjaga keamanan, setiap proses yang berjalan di dalam lingkungan yang diisolasi tidak boleh menggunakan \textit{network} untuk berkomunikasi dengan dunia luar. Untuk mengatasi masalah ini, \textit{UGSbox} menggunakan fitur \textit{namespace} dari linux. Proses yang diisolasi akan mendapat \textit{namespace} dengan \textit{network interface} yang terisolasi dari \textit{network interface} milik \textit{host}.
+
+    \item isolasi \textit{user}. \\ Selain isolasi \textit{network}, \textit{namespace} pada Linux juga digunakan untuk melakukan isolasi \textit{user}. Dengan mengisolasi \textit{user}, proses yang terisolasi tidak dapat mengetahui adanya \textit{user} lain di luar lingkungannya.
+
+    \item batas penggunaan CPU dan \textit{memory}. \\ Penggunaan CPU dan \textit{memory} dari proses yang diisolasi tentunya perlu dibatasi. Hal ini bertujuan agar proses yang berjalan tidak memberatkan komputer pengguna ketika penilaian sedang berlangsung. Untuk mengatasi masalah ini, \textit{UGSbox} menggunakan fitur \textit{cgroup} dari linux. Dengan menggunakan \textit{cgroup}, penggunaan \textit{memory} dan CPU dapat dibatasi dan dimonitor. Proses yang menggunakan CPU atau \textit{memory} melebihi batasan akan dihentikan secara paksa. 
+
+    \item batas ukuran \textit{file} yang dapat dihasilkan. \\ Program yang dikirimkan oleh pengguna mungkin saja memuat kode yang dapat memberatkan \textit{disk} karena melakukan penulisan secara terus menerus. Hal ini dapat mengakibatkan komputer pengguna menjadi lambat karena \textit{disk}-nya tidak dapat digunakan. Untuk mengatasi masalah ini, \textit{UGSbox} membatasi ukuran \textit{file} yang dapat diciptakan oleh proses di dalam lingkungan yang diisolasi. Pembatasan ini dicapai dengan menggunakan \textit{system call setrlimit}.
+
+    \item batas jumlah \textit{file} yang dapat dibuka. \\ Untuk meningkatkan keamanan, jumlah \textit{file} yang dapat dibuka oleh proses yang diisolasi juga dibatasi menggunakan \textit{system call setrlimit}.
+
+    \item batas proses yang dapat diciptakan. \\ Selain membatasi ukuran \textit{file} yang dihasilkan, dan jumlah \textit{file} yang dapat dibuka, \textit{UGSbox} juga menggunakan \textit{setrlimit} untuk membatasi proses yang dapat diciptakan.
+
+\end{itemize}
+
+\begin{lstlisting}[caption={Contoh Hasil Eksekusi Perintah \textit{ugsbox}},label={lst:ugsbox-guard},language=Bash,style=BashStyle]
+$ ugsbox guard --help
+Usage:
+  ugsbox guard [flags]
+
+Flags:
+  -b, --bind strings               bind host directory to sandbox directory with format <hostdir>:<sandboxdir>. Warning: file owner of binded directory will be changed
+  -f, --file-size uint             generated file size limit
+  -h, --help                       help for guard
+  -i, --image string               compressed sandbox image (in .tar.xz) path
+  -m, --memory-limit uint          memory limit in bytes (default 67108864)
+  -M, --memory-throttle uint       memory throttle in bytes (default 268435456)
+  -n, --nproc uint                 limit process creation e.g.: fork/exec
+  -o, --open-file uint             open file limit
+  -s, --stack-size uint            limit stack size in bytes
+  -E, --stderr string              path (relative to sandbox) to file to be used as stderr
+  -I, --stdin string               path (relative to sandbox) to file to be used as stdin
+  -O, --stdout string              path (relative to sandbox) to file to be used as stdout
+  -t, --time-limit uint            time limit in milisecond (default 10000)
+  -T, --walltime-limit uint        wall clock time limit in milisecond (default 10000)
+  -w, --working-directory string   working directory of process (default "/home")
+
+Global Flags:
+      --debug   show debug log
+      --trace   show trace log
+\end{lstlisting}
+
+\par \textit{UGSBox} dapat digunakan dengan dua cara yaitu: sebagai \textit{executable program} atau sebagai \textit{library}. Pengguna dapat menggunakan perintah \textit{ugsbox guard} untuk menjalankan \textit{UGSbox} melalui CLI. Kode \ref{lst:ugsbox-guard} merupakan contoh hasil pemanggilan \textit{ugsbox guard}.
+
+\par Selain melalui CLI, \textit{UGSbox} juga dapat digunakan melalui pemanggilan fungsi pada bahasa pemrograman GO. Untuk dapat menggunakan \textit{UGSbox} sebagai \textit{library}, pengguna dapat meng-\textit{import} \textit{package https://github.com/jauhararifin/ugrade} dan \textit{https://github.com/jauhararifin/ugrade/sandbox}. Penggunaan \textit{library} tersebut dapat dapat dilihat pada dokumentasi \textit{UGrade} di \textit{https://godoc.org/github.com/jauhararifin/ugrade}.
+
+\section{\textit{UGJob}}
