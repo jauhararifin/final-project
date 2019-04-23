@@ -189,6 +189,8 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 \section{\textit{UGSbox}}
 
+% TODO: jelasin kodenya
+
 \par Dalam menjalankan penilaian, \textit{UGSbox} berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah: \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri, dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada Tugas Akhir ini, \textit{UGSbox} berperan dalam memberikan isolasi tersebut.
 
 \par \textit{UGSbox} memberikan isolasi pada proses yang berjalan dengan menggunakan beberapa fitur dari linux. Isolasi yang diberikan \textit{ugsbox} antara lain adalah sebagai berikut:
@@ -243,3 +245,80 @@ Global Flags:
 \par Selain melalui CLI, \textit{UGSbox} juga dapat digunakan melalui pemanggilan fungsi pada bahasa pemrograman GO. Untuk dapat menggunakan \textit{UGSbox} sebagai \textit{library}, pengguna dapat meng-\textit{import} \textit{package https://github.com/jauhararifin/ugrade} dan \textit{https://github.com/jauhararifin/ugrade/sandbox}. Penggunaan \textit{library} tersebut dapat dapat dilihat pada dokumentasi \textit{UGrade} di \textit{https://godoc.org/github.com/jauhararifin/ugrade}.
 
 \section{\textit{UGJob}}
+
+% TODO: jelasin kodenya
+
+\par \textit{UGJob} merupakan implementasi dari \textit{worker} pada keluarga perangkat lunak \textit{UGrade}. \textit{UGJob} dikembangkan menggunakan bahasa GO dan berperan dalam menilai jawaban pengguna. \textit{UGJob} dikembangkan sebagai sebuah \textit{executable} yang dapat dijalankan melalui CLI. \textit{UGDesktop} akan secara periodik menjalankan \textit{UGJob} untuk melakukan penilaian.
+
+\par Setiap \textit{grading} yang dihasilkan oleh \textit{UGServer} akan dinilai oleh \textit{worker} yang ada pada komputer pengguna. \textit{Worker} pada komputer pengguna tidak perlu mengetahui adanya konsep \textit{grading group}, \textit{grading size}, dan \textit{grader group}. \textit{Worker} hanya perlu meminta \textit{grading} pada \textit{UGServer} untuk dinilai. Dalam meminta \textit{grading}, \textit{worker} hanya perlu mengirimkan ID dari pengguna yang bertindak sebagai \textit{worker}. \textit{UGServer} akan memberikan \textit{grading} yang sesuai dengan ID pengguna dari \textit{worker} tersebut.
+
+\par Di sisi \textit{worker}, semua \textit{grading} yang perlu dinilai akan dipandang sebagai sebuah \textit{job}. Pada Tugas Akhir ini, \textit{job} dapat disamakan dengan \textit{grading} karena sebuah \textit{grading} akan dianggap sebagai sebuah \textit{job} oleh \textit{worker}. Istilah \textit{job} digunakan untuk meningkatkan abstraksi dari \textit{worker}. \textit{Worker} tidak perlu mengetahui konsep penilaian yang dilakukan di sisi \textit{UGServer}. \textit{Worker} tidak perlu mengetahui adanya konsep \textit{grading} pada \textit{UGServer}. Semua penilaian yang perlu dilakukan oleh \textit{worker} akan dianggap sebagai sebuah \textit{job}. Dengan menggunakan istilah \textit{job}, sistem penilaian yang ada pada sisi \textit{UGServer} dapat dengan mudah dimodifikasi tanpa memengaruhi \textit{worker}.
+
+\begin{lstlisting}[caption={Contoh Hasil Eksekusi Perintah \textit{ugjob consume}},label={lst:ugjob-consume},language=Bash,style=BashStyle]
+$ ugjob consume --help
+This program fetch job from server, execute it and send the result back to server.
+
+Usage:
+  ugjob consume [flags]
+
+Flags:
+  -h, --help                help for consume
+  -u, --server-url string   Server url (default "http://localhost:8000")
+  -t, --token string        Your session token
+
+Global Flags:
+      --debug   show debug message
+      --trace   show trace message
+\end{lstlisting}
+
+\par \textit{UGJob} dapat dijalankan melalui CLI dengan mengetikkan perintah \textit{ugjob consume}. \textit{UGJob} memerlukan \textit{token} yang bisa didapatkan oleh pengguna pada saat melakukan \textit{sign in}. \textit{Token} ini berguna untuk mengidentifikasi ID dari pengguna. \textit{UGServer} akan menggunakan \textit{token} untuk menentukan \textit{job} mana yang akan dikerjakan oleh \textit{worker}. Kode \ref{lst:ugjob-consume} merupakan contoh hasil pemanggilan \textit{ugjob consume}.
+
+\par Pemanggilan \textit{ugjob consume} akan menjalankan \textit{worker} pada komputer pengguna dan proses penilaian akan mulai dilakukan. Penilaian diawali dengan pengambilan \textit{job} oleh \textit{UGJob}. \textit{UGJob} akan meminta \textit{job} kepada \textit{UGServer} dengan mengirimkan \textit{GET HTTP request} ke \textit{UGServer} dengan menyertakan \textit{token} yang dimilikinya. \textit{HTTP Request} tersebut akan dikirimkan ke URL \textit{/gradings} pada \textit{UGServer} dengan menyertakan \textit{token} pada bagian \textit{header}.
+
+\par Setiap permintaan \textit{job} yang dilakukan oleh \textit{UGJob} akan diproses oleh \textit{UGServer}. \textit{UGServer} akan memberikan job yang sesuai kepada \textit{UGJob}. Pemberian \textit{job} dilakukan dengan memandang \textit{token} yang disertakan oleh \textit{UGJob} ketika melakukan permintaan \textit{job}. Jika tidak terdapat \textit{job} yang perlu dikerjakan, maka \textit{UGServer} akan memberikan \textit{HTTP response} dengan status 404. \textit{UGServer} akan memberikan \textit{job} kepada \textit{UGJob} dengan bentuk \textit{tar file} yang dikirimkan melalui \textit{body} pada \textit{HTTP response}. Selain itu, \textit{UGServer} juga menyertakan \textit{job token} pada setiap \textit{job} yang dikirimkan. \textit{Job token} ini berguna untuk membedakan antara satu buah \textit{job} dengan yang lainnya.
+
+\par Setelah mendapatkan \textit{job} dari \textit{UGServer}, \textit{UGJob} akan melakukan penilaian dengan mengekstrak \textit{job} yang didapatkannya. \textit{Job} akan diekstrak pada suatu direktori sementara di \textit{/tmp}. Direktori \textit{/tmp} dipilih karena sistem secara otomatis akan menghapus isi dari direktori ini ketika \textit{booting}. Selain itu, direktori ini juga sudah standar digunakan sebagai tempat penyimpanan \textit{file} yang bersifat sementara. Direktori \textit{Job} yang sudah berhasil dinilai secara otomatis akan dihapus oleh \textit{UGJob}. 
+
+\subsection{Pembangkitan \textit{Testcase}}
+
+\par Untuk melakukan penilaian, diperlukan adanya \textit{testcase}. \textit{Testcase} akan dibangkitkan dengan menggunakan program \textit{testcase generator} yang disertakan pada \textit{file} \textit{job}. \textit{Testcase generator} ini pertama-tama dikompilasi menjadi \textit{executable file} kemudian dijalankan. \textit{Testcase} yang dihasilkan oleh \textit{testcase generator} disimpan pada direktori sementara di dalam \textit{/tmp}.
+
+% TODO: jelasin spesifikasi testcase generator & testcase suite
+
+\par Program \textit{testcase generator} hanya membangkitkan masukan dari \textit{testcase}. Keluaran dari \textit{testcase} dibangkitkan dengan menggunakan solusi juri. Untuk membangkitkan keluaran dari \textit{testcase}, solusi juri dikompilasi kemudian dijalankan dengan memberikan input yang berasal dari \textit{testcase generator}. Keluaran dari solusi juri ini akan digunakan sebagai keluaran dari \textit{testcase}.
+
+\par \textit{Testcase} yang sudah terbentuk disimpan pada suatu direktori tertentu. Direktori yang menjadi tempat penyimpanan \textit{testcase} tidak akan dihapus ketika penilaian sudah selesai dilakukan. Hal ini bertujuan agar proses penilaian \textit{job} selanjutnya tidak perlu melakukan pembangkitan \textit{testcase} lagi.
+
+\subsection{Penghitungan Waktu Dan \textit{Memory} Solusi Juri} 
+
+\par Waktu dan \textit{memory} dari eksekusi solusi juri perlu dihitung untuk menentukan batasan waktu dan \textit{memory} solusi peserta. Waktu dan \textit{memory} eksekusi solusi juri dihitung pada saat pembangkitan \textit{testcase}. Solusi juri diperlukan dalam membangkitkan keluaran dari \textit{testcase}. Pada saat keluaran \textit{testcase} dibangkitkan, lamanya waktu eksekusi dan penggunaan \textit{memory}-nya dihitung dan dicatat.
+
+\par Perhitungan waktu eksekusi dilakukan dengan menggunakan \textit{UGSbox}. Proses yang dijalankan menggunakan \textit{UGSbox} dapat dihitung penggunaan waktu dan \textit{memory}-nya. Jika solusi juri melebihi batas waktu yang ditentukan oleh juri, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{internal error} yang menandakan bahwa penilaian gagal dilakukan. Hal ini dapat terjadi ketika komputer peserta sangat lambat.
+
+\subsection{Eksekusi Solusi Peserta}
+
+\par Setelah \textit{testcase} berhasil dibangkitkan dan batasan untuk peserta sudah berhasil dihitung, solusi peserta akan mulai dijalankan. Seperti program lainnya, solusi peserta dijalankan menggunakan \textit{UGSbox} untuk menghindari penggunaan \textit{resource} yang berlebihan dan menghindari risiko dari adanya serangan yang ada pada program solusi peserta.
+
+\par Sebelum solusi peserta dijalankan, tentunya perlu ada proses kompilasi. Proses kompilasi ini dilakukan dengan cara yang sama untuk mengkompilasi program lain. Pada saat kompilasi, beberapa kegagalan mungkin terjadi seperti: kesalahan \textit{syntax}, penggunaan \textit{memory} terlalu besar, dan proses kompilasi berjalan terlalu lama. Jika terjadi kegagalan pada tahap kompilasi, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{compile error}.
+
+\par Penggunaan CPU dan \textit{memory} dari program solusi peserta dibatasi berdasarkan batasan yang diperoleh ketika menjalankan program solusi juri. Jika solusi peserta menggunakan \textit{memory} melebihi batasan yang sudah dihitung, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{memory limit exceeded}. Selain itu, jika solusi peserta berjalan terlalu lama dan melebihi batasan waktu yang sudah dihitung maka \textit{UGJob} akan memberikan \textit{verdict} \textit{time limit exceeded}. Program solusi peserta mungkin saja melakukan kesalahan yang menyebabkan munculnya \textit{error} seperti pembagian dengan nol, atau mengakses alamat \textit{memory} yang belum dialokasikan. Jika hal ini terjadi, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{runtime error}.
+
+\par Keluaran dari program solusi peserta disimpan pada direktori sementara yang diletakkan pada \textit{/tmp}. Selanjutnya keluaran dari program solusi peserta akan dinilai dengan cara dibandingkan dengan keluaran solusi juri. Setelah penilaian selesai dilakukan, keluaran program solusi peserta sudah tidak digunakan lagi. Oleh sebab itu, keluaran program solusi peserta dihapus setelah penilaian selesai dilakukan.
+
+\subsection{Penilaian Keluaran Solusi Peserta}
+
+\par Keluaran dari program solusi peserta perlu dinilai kebenarannya. Penilaian kebenaran dari program solusi peserta dilakukan dengan cara membandingkannya dengan keluaran solusi juri. \textit{UGJob} membandingkan keluaran program solusi peserta dengan program solusi juri dengan menggunakan \textit{checker}.
+
+\par \textit{Checker} merupakan sebuah program yang dibuat oleh juri dan digunakan untuk menilai kebenaran program solusi peserta. Seperti pada program lainnya, perlu adanya proses kompilasi yang dilakukan pada \textit{checker}. Proses kompilasi \textit{checker} dilakukan dengan cara yang sama seperti kompilasi program lainnya.
+
+\lstinputlisting[caption={Contoh Program \textit{Checker}},label={lst:exact-match-checker},language=C,style=CStyle]{listings/exact-match-checker.c}
+
+\par Setelah \textit{checker} selesai dikompilasi, \textit{checker} akan dijalankan dengan memberikan masukan berupa masukan \textit{testcase}, keluaran program solusi juri dan keluaran program solusi peserta. \textit{Checker} kemudian akan memberikan keluaran berupa kebenaran dari program solusi peserta. Kode \ref{lst:exact-match-checker} merupakan contoh \textit{checker} yang membandingkan kesamaan tiap \textit{byte} dari keluaran solusi peserta dan solusi juri.
+
+\par Program \textit{checker} akan memberikan keluaran berupa \textit{string} yang dapat bernilai \textit{AC} atau \textit{WA}. Keluaran \textit{checker} akan bernilai \textit{AC} jika solusi peserta dianggap benar, dan akan bernilai \textit{WA} jika sebaliknya. \textit{UGJob} kemudian akan mengirimkan \textit{verdict} kepada \textit{UGServer} sesuai dengan hasil penilaian \textit{checker}.
+
+\par Program \textit{checker} yang dibuat oleh juri mungkin saja memiliki kesalahan. Kesalahan tersebut mengakibatkan program \textit{checker} menghasilkan \textit{error}. Selain itu, jika program \textit{checker} juga mungkin menggunakan terlalu banyak \textit{memory} dan menghabiskan terlalu banyak \textit{waktu}. Jika hal ini terjadi, maka program \textit{checker} akan dihentikan dan \textit{UGJob} akan menghasilkan \textit{verdict} \textit{internal error}.
+
+\par Setelah penilaian selesai dilakukan dan \textit{verdict} sudah ditentukan, hasil penilaian akan dikirmkan ke \textit{UGServer}. Hasil penilaian yang dikirimkan berupa \textit{verdict} hasil penilaian. Pengiriman dilakukan melalui \textit{POST HTTP request}. \textit{Job token} disertakan pada \textit{header} dari \textit{HTTP request} sebagai identitas dari \textit{job} yang telah diselesaikan.
+
+\section{\textit{UGDesktop}}
