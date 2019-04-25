@@ -1,1 +1,25 @@
-\chapter{Kesimpulan dan Saran}
+\chapter{Simpulan dan Saran}
+
+\par Pada bab ini diberikan kesimpulan dari Tugas Akhir dan saran pengembangan kebih lanjut terhadap solusi yang sudah dipaparkan.
+
+\section{Simpulan}
+
+% \par Pada tugas akhir ini telah diciptakan sistem \textit{online judge} yang bernama \textit{UGrade}. \textit{UGrade} memanfaatkan komputer pengguna untuk menjadi \textit{worker} dalam melakukan penilaian jawaban peserta kompetisi. Berdasarkan hasil pengujian, penggunaan komputer pengguna sebagai \textit{worker} meningkatkan kinerja penilaian. Hal ini dikarenakan jumlah \textit{worker} yang melakukan penilaian sebanding dengan jumlah peserta yang mengirimkan \textit{jawaban}.
+
+\par Pada tugas akhir ini telah diciptakan sistem \textit{online judge} yang bernama \textit{UGrade}. \textit{UGrade} memanfaatkan komputer pengguna untuk menjadi \textit{worker} dalam melakukan penilaian jawaban peserta kompetisi. Peningkatan kinerja dari sistem yang dibangun belum dapat ditentukan karena pengujian belum dilakukan.
+
+\par Pengujian terhadap serangan yang mungkin dilakukan oleh peserta dilakukan dengan mengirimkan jawaban yang bebahaya kepada sistem yang dibangun. Keamanan dari sistem belum dapat ditentukan karena pengujian belum ditentukan.
+
+\par Kebenaran dari sistem penilaian diuji dengan mengirimkan jawaban secara berulang-ulang dengan harapan \textit{autograder} memerikan \textit{verdict} yang sama. Kebenaran dari sistem yang dibangun belum dapat ditentukan karena pengujian belum dilakukan.
+
+\section{Saran}
+
+\par Saran yang dapat diberikan untuk pengembangan terkait pengerjaan tugas akhir ini adalah sebagai berikut:
+\begin{enumerate}
+    \item Pemilihan teknik penilaian membutuhkan adanya studi lebih lanjut. Jika banyak peserta melakukan serangan terhadap sistem, \textit{self grading} dapat mengurangi risiko terjadinya kerusakan sistem. Sistem \textit{online judge} dapat dibuat mudah untuk dikonfigurasi sehingga dapat menggunakan beberapa jenis sistem penilaian.
+    \item \textit{UGDesktop} berukuran sangat besar karena mengguna \textit{framework} React dan Electron. Aplikasi \textit{desktop} dapat dibuat lebih \textit{native} dengan menggunakan \textit{library} seperti GTK.
+    \item Pemilihan \textit{framework} Django untuk bertindak sebagai \textit{server} tidak dapat menangani banyaknya pengguna dengan efisien. Bahasa Go dapat digunakan untuk meningkatkan kinerja dari \textit{server}.
+    \item Penggunaan bahasa Go untuk mengembangkan lingkungan \textit{sandbox} kurang efektif. Bahasa Go sulit untuk melakukan \textit{system call fork} dan \textit{exec} secara terpisah karena adanya \textit{go runtime} yang perlu dijalankan. \textit{Sandbox} dapat dikembangkan dengan bahasa yang lebih \textit{low-level} seperti C, C++ atau Rust. 
+    \item Penggunaan istilah \textit{grading group}, \textit{grading size}, \textit{grading} dan \textit{grader group} sulit dipahami. Penggunaan nama yang mirip sebaiknya dihindari dengan memilih nama yang lebih deskriptif dan tidak terlalu mirip. 
+    \item Bahasa yang didukung oleh \textit{UGrade} masih terbatas C dan C++. \textit{UGrade} perlu memberikan dukungan terhadap bahasa Pascal, Python dan Java karena bahasa tersebut sering digunakan pada kompetisi \textit{competitive programming}.
+\end{enumerate}
