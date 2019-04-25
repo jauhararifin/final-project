@@ -340,4 +340,17 @@ Global Flags:
 
 \par Pengujian dilakukan dengan menyimulasikan proses pengiriman jawaban oleh pengguna. Sebuah kompetisi diciptakan dengan beberapa pengguna yang akan mengirimkan jawaban secara periodik. Kinerja sistem yang dibangun dibandingkan dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu \textit{DOMJudge}. \textit{DOMJudge} dipilih karena bersifat \textit{open source} dan sudah populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. \textit{DOMJudge} telah digunakan untuk menyelenggarakan ACM-ICPC, Arkavidia, Vocompfest dan banyak kompetisi lainnya.
 
+\par Selain pengujian kinerja, diperlukan pengujian kebenaran dari sistem yang dibangun. Pengujian kebenaran dilakukan dengan menyimulasikan proses pengiriman jawaban oleh peserta. Kebenaran sistem yang dibangun ditentukan berdasarkan \textit{verdict} penilaian yang diberikan oleh sistem. Sistem yang benar akan memberikan \textit{verdict} yang sama ketika jawaban yang sama dinilai berkali-kali di komputer yang berbeda. Pada pengujian kebenaran, digunakan sebuah soal dengan enam buah jawaban yang diharapkan akan memiliki \textit{verdict} \textit{accepted}, \textit{wrong answer}, \textit{memory limit exceeded}, \textit{time limit exceeded}, \textit{runtime error}, dan \textit{compile error}.
+
+\par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Jawaban yang dikirimkan adalah sebagai berikut:
+\begin{enumerate}
+    \item jawaban yang berisi \textit{fork bomb}
+    \item jawaban yang berisi \textit{compile bomb}
+    \item jawaban yang berisi \textit{reverse shell}
+    \item jawaban yang mencoba keluar dari lingkungan \textit{sandbox}
+\end{enumerate} 
+Komputer yang bertindak sebagai worker diharapkan dapat tetap berjalan setelah jawaban tersebut dieksekusi.
+
+\par Kerahasiaan dan integritas dari \textit{testcase}, solusi juri dan solusi peserta perlu dijaga. Untuk menjaga kerahasiaan dan integritas, diperlukan adanya pengujian. Pengujian integritas dilakukan dengan melakukan percobaan merusak \textit{testcase}, solusi juri dan solusi peserta yang ada pada komputer \textit{worker}. Perusakan pada \textit{testcase}, solusi juri ataupun solusi peserta diharapkan dapat dikenali dan diatasi sehingga hasil penilaian dari \textit{worker} akan tetap benar. Kerahasiaan \textit{testcase}, solusi juri dan solusi peserta hanya akan diuji dengan melihat isi dari \textit{file} \textit{testcase}, solusi juri dan solusi peserta. Kerahasiaan akan dianggap lolos uji jika isi dari \textit{file} \textit{testcase}, solusi juri maupun solusi peserta tidak dapat dibaca oleh pengguna.
+
 % TODO: data pengujian
