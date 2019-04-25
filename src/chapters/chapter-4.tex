@@ -325,4 +325,13 @@ Global Flags:
 
 \par Dalam kelompok perangkat lunak \textit{UGrade}, pengguna dapat berinteraksi dengan sistem kompetisi dengan \textit{UGDesktop}. \textit{UGDesktop} memudahkan interaksi pengguna dengan memberikan antar-muka berbasis grafis. Pengguna dapat meng-\textit{install} \textit{UGDesktop} pada komputernya. Pengguna kemudian dapat menjalankan \textit{UGDesktop} sebagai aplikasi \textit{desktop} pada komputernya.
 
-\par \textit{UGDesktop} dikembangkan menggunakan \textit{typescript}, \textit{react} dan \textit{electron}. \textit{React} dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis \textit{react}. \textit{Electron} digunakan untuk 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{images/ugdesktop-example}
+    \caption{Halaman Kompetisi Dari \textit{UGDesktop}}
+    \label{fig:ugdesktop-example}
+\end{figure}
+
+\par \textit{UGDesktop} dikembangkan menggunakan \textit{typescript}, \textit{react} dan \textit{electron}. \textit{React} dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis \textit{react}. \textit{React} umumnya digunakan untuk mengembangkan aplikasi berbasis \textit{web} dan membutuhkan \textit{web browser} untuk menjalankan aplikasi tersebut. Pengguna membutuhkan aplikasi yang dapat berjalan sebagai \textit{desktop app} untuk dapat menjalankan sistem antar muka pengguna sekaligus \textit{worker}. Untuk mengatasi hal tersebut, \textit{electron} digunakan untuk menjalankan aplikasi \textit{web} yang berbasis \textit{react} sebagai aplikasi \textit{desktop}. Gambar \ref{fig:ugdesktop-example} merupakan contoh salah satu halaman pada \textit{UGDesktop}.
+
+\par Untuk melakukan penilaian, \textit{UGDesktop} secara periodik akan meminta menjalankan \textit{UGJob}. Dalam menjalankan \textit{UGJob}, \textit{UGDesktop} menggunakan \textit{token} yang didapatkannya ketika pengguna melakukan \textit{sign in}. \textit{UGJob} yang dijalankan \textit{UGDesktop} akan meminta \textit{job} dari \textit{UGServer} untuk dinilai.
