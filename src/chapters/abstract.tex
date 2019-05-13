@@ -1,16 +1,21 @@
 \clearpage
 
+\chapter*{Abstrak}
+\addcontentsline{toc}{chapter}{Abstrak}
+
 \begin{center}
-    \Large {\bfseries{\MakeUppercase{Abstrak}}} \\
-    \large {\MakeUppercase{\thetitle}} \\
+    \textbf{\large {\MakeUppercase{\thetitle}}} \\
     \normalsize Oleh \theauthor
 \end{center}
 
-\par \textit{Competitive programming} merupakan kompetisi di bidang \textit{computer science} dimana peserta akan berlomba untuk menyelesaikan persoalan dengan membuat program sesuai batasan yang ditentukan. Dalam menyelenggarakan kompetisi \textit{competitive programming}, juri biasanya menggunakan \textit{online judge} yang dapat menilai jawaban peserta secara otomatis. \textit{Online judge} menggunakan \textit{autograder} untuk melakukan penilaian. \textit{Autograder}, perlu dijalankan pada komputer dengan spesifikasi yang cukup. Setiap \textit{autograder} yang dijalankan pada sebuah komputer disebut sebagai \textit{worker}. Banyaknya jumlah peserta dapat mengurangi kinerja penilaian karena jumlah jawaban yang harus dinilai akan meningkat. Untuk menjaga kinerja penilaian, diperlukan \textit{worker} dalam jumlah yang besar sehingga diperlukan biaya yang besar pula. 
+\parindent 0pt
+\parskip 1.5ex
+\renewcommand{\baselinestretch}{1.0} % line spacing
+\par \textit{Competitive programming} merupakan kompetisi di bidang \textit{computer science} dimana peserta berlomba menyelesaikan persoalan dengan membuat program sesuai batasan yang ditentukan. Dalam menyelenggarakan kompetisi \textit{competitive programming}, juri menggunakan \textit{autograder} untuk melakukan penilaian. \textit{Autograder} dijalankan pada komputer tertentu yang disebut \textit{worker}. Untuk menjaga kinerja penilaian, diperlukan \textit{worker} dalam jumlah yang besar sehingga diperlukan biaya yang besar pula. 
 
-\par Komputer peserta umumnya memiliki kemampuan yang cukup untuk melakukan penilaian jawaban. Pada tugas akhir ini, komputer peserta digunakan sebagai \textit{worker}. Dengan menggunakan komputer peserta sebagai \textit{worker}, kinerja penilaian dapat dipertahankan meskipun jumlah peserta sangat banyak. Setiap peserta memiliki komputer dengan spesifikasi yang berbeda. Untuk menjaga keadilan, solusi peserta dan solusi juri akan dieksekusi pada komputer peserta dan dibandingkan hasilnya. Untuk menjaga kerahasiaan penilaian, informasi rahasia dienkripsi pada tingkat aplikasi.
+\par Komputer peserta umumnya memiliki kemampuan yang cukup untuk melakukan penilaian jawaban. Pada tugas akhir ini, komputer peserta digunakan sebagai \textit{worker}. Dengan menggunakan komputer peserta sebagai \textit{worker}, kinerja penilaian dapat meningkat. Setiap peserta memiliki komputer dengan spesifikasi yang berbeda. Untuk menjaga keadilan, solusi peserta dan solusi juri akan dieksekusi pada \textit{worker} dan dibandingkan hasilnya. Kerahasiaan penilaian dijaga dengan melakukan enkripsi pada tingkat aplikasi.
 
-\par Pengujian tugas akhir ini menyimulasikan pengumpulan dan penilaian jawaban peserta ke sistem \textit{online judge}. Pengujian dilakukan dengan membandingkan kinerja penilaian sistem yang dibangun dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu \textit{DOMJudge}. Hasil pengujian menyatakan penilaian jawaban dengan memanfaatkan komputer peserta sebagai \textit{worker} akan meningkatkan kinerja penilaian.
+\par Pengujian tugas akhir ini dilakukan dengan menyimulasikan penilaian jawaban peserta oleh \textit{autograder}. Pengujian dilakukan dengan membandingkan kinerja penilaian sistem yang dibangun dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu \textit{DOMJudge}. Hasil pengujian menyatakan penilaian jawaban dengan memanfaatkan komputer peserta sebagai \textit{worker} meningkatkan kinerja penilaian.
 
 \par Kata kunci: \textit{competitive programming}, \textit{autograder}, \textit{online judge}.
 

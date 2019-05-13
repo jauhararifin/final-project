@@ -4,15 +4,15 @@
 
 \par \textit{Competitive programming} merupakan salah satu cabang lomba yang cukup populer di bidang \textit{computer science}. Pada kompetisi \textit{competitive programming}, peserta diminta menyelesaikan persoalan terkait \textit{computer science} yang diberikan oleh juri secara benar dan dalam waktu yang singkat. Beberapa instansi dan organisasi seringkali mengadakan kompetisi ini secara rutin. Perusahaan teknologi besar seperti Google dan Facebook pun seringkali mengadakan kompetisi \textit{competitive programming} secara tahunan. Kompetisi \textit{competitive programming} ditunjang dengan menggunakan sistem \textit{online judge}. Sistem \textit{online judge} tersebut biasanya berupa halaman \textit{web} dimana peserta dapat melihat soal, membuat klarifikasi, mengirimkan jawaban dan melihat \textit{scoreboard}. Sistem \textit{online judge} yang populer pada saat ini adalah Codeforces, URI \textit{Online Judge} (\cite{uriojpaper}), Uva, dan SPOJ.
 
-\par Di dalam sistem \textit{online judge}, terdapat sistem \textit{autograder} yang digunakan untuk menilai jawaban peserta. Jawaban peserta yang berupa \textit{source code} bahasa pemrograman akan dinilai kebenarannya oleh sistem \textit{autograder} dengan cara melakukan kompilasi pada kode tersebut kemudian mengeksekusi program hasil kompilasi dengan \textit{test-case} yang sudah disiapkan oleh pembuat soal. Dengan menggunakan \textit{autograder}, penilaian jawaban peserta dapat dilakukan secara otomatis dan keterlibatan manusia menjadi lebih sedikit. Untuk meningkatkan jumlah jawaban peserta yang dapat dinilai dalam satuan waktu, biasanya juri menyiapkan lebih dari satu komputer yang menjalankan sistem \textit{autograder}. Dalam menjalankan sistem \textit{autograder} pada lebih dari satu komputer diperlukan komputer dengan spesifikasi yang sama untuk menjaga keadilan dalam penilaian.
+\par Di dalam sistem \textit{online judge}, terdapat sistem \textit{autograder} yang digunakan untuk menilai jawaban peserta. Jawaban peserta yang berupa \textit{source code} dalam bahasa pemrograman tertentu akan dinilai kebenarannya oleh sistem \textit{autograder} dengan cara melakukan kompilasi pada kode tersebut kemudian mengeksekusi program hasil kompilasi dengan \textit{test-case} yang sudah disiapkan oleh juri atau pembuat soal. Menurut \cite{jordanioi}, cara tersebut disebut sebagai \textit{black-box grading}. Dengan menggunakan \textit{autograder}, penilaian jawaban peserta dapat dilakukan secara otomatis dan keterlibatan manusia menjadi lebih sedikit. Untuk meningkatkan jumlah jawaban peserta yang dapat dinilai dalam satuan waktu, biasanya juri menyiapkan lebih dari satu komputer yang menjalankan sistem \textit{autograder}. Untuk menjalankan \textit{autograder} pada lebih dari satu komputer, diperlukan komputer dengan spesifikasi yang sama untuk menjaga keadilan penilaian.
 
-\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} yang berjalan. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
+\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} untuk meningkatkan kinerja penilaian. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
 
 \par Dalam mengikuti kompetisi \textit{competitive programming}, peserta umumnya menggunakan komputer pribadinya untuk menulis program yang digunakan untuk menyelesaikan soal yang diberikan. Setiap komputer yang digunakan oleh peserta umumnya memiliki spesifikasi yang cukup untuk melakukan kompilasi pada \textit{source code} yang ditulis oleh peserta dan melakukan eksekusi program hasil kompilasi tersebut. Oleh sebab itu, komputer peserta berpotensi untuk menjadi infrastruktur yang dapat digunakan untuk melakukan penilaian program oleh \textit{autograder}.
 
 \section{Rumusan Masalah}
 
-\par Masalah yang diselesaikan dalam Tugas Akhir ini adalah:
+\par Masalah yang diselesaikan dalam tugas akhir ini adalah:
 \begin{enumerate}
 
 	\item Sistem \textit{autograder} yang sering digunakan saat ini melakukan penilaian terhadap kode peserta dengan melakukan kompilasi dan eksekusi pada komputer yang disediakan oleh juri. Komputer yang digunakan oleh peserta kompetisi \textit{competitive programming} memiliki kemampuan untuk menjalankan sistem \textit{autograder}. Bagaimana memanfaatkan komputer peserta tersebut untuk menjalankan sistem \textit{autograder} untuk menilai jawaban peserta saat kompetisi sedang berlangsung.
@@ -23,52 +23,37 @@
 
 \section{Tujuan}
 
-\par Tujuan dari Tugas Akhir ini adalah meningkatkan kinerja penilaian jawaban peserta pada kompetisi \textit{competitive programming} dengan menciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
+\par Tujuan dari tugas akhir ini adalah meningkatkan kinerja penilaian jawaban peserta pada kompetisi \textit{competitive programming} dengan menciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
 
 \section{Batasan Masalah}
 
-\par Pada pengerjaan Tugas Akhir ini, diasumsikan seluruh peserta yang menggunakan perangkat lunak ini memiliki komputer dengan spesifikasi yang cukup untuk menjalankan sistem \textit{autograder} dan memiliki sistem operasi berbasis Linux. Perangkat lunak yang dibangun untuk menjalankan sistem \textit{autograder} hanya mencakup sistem \textit{autograder} untuk domain \textit{competitive programming} saja.
+\par Pada pengerjaan tugas akhir ini, diasumsikan seluruh peserta yang menggunakan perangkat lunak ini memiliki komputer dengan spesifikasi yang cukup untuk menjalankan sistem \textit{autograder} dan memiliki sistem operasi berbasis Linux. Perangkat lunak yang dibangun untuk menjalankan sistem \textit{autograder} hanya mencakup sistem \textit{autograder} untuk domain \textit{competitive programming} saja. Selain itu, peserta diasumsikan tidak melakukan serangan yang berbentuk \textit{reverse engineering}.
 
 \section{Metodologi}
 
 \par Metodologi yang dilakukan dalam pengerjaan Tugas Akhir ini adalah:
 \begin{enumerate}
 
-	\item Menganalisis dan Mendesain Sistem \textit{Autograder} \\ Pada tahap ini dilakukan analisis terhadap teknik pembuatan sistem \textit{autograder} beserta aspek-aspek yang perlu diperhatikan dalam melakukan pengembangan sistem \textit{autograder}. Selain itu, pada tahap ini juga dihasilkan metode yang akan digunakan untuk mengembangkan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
+	\item Menganalisis dan mendesain sistem \textit{autograder} \\ Pada tahap ini dilakukan analisis terhadap teknik pembuatan sistem \textit{autograder} beserta aspek-aspek yang perlu diperhatikan dalam melakukan pengembangan sistem \textit{autograder}. Selain itu, pada tahap ini juga dihasilkan metode yang akan digunakan untuk mengembangkan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
 	
-	\item Desain dan Analisis Perangkat Lunak \\ Pada tahap ini dilakukan analisis terhadap kebutuhan perangkat lunak beserta membuat desain perangkat lunak yang akan diimplementasikan.
+	\item Desain dan analisis perangkat lunak \\ Pada tahap ini dilakukan analisis terhadap kebutuhan perangkat lunak beserta membuat desain perangkat lunak yang akan diimplementasikan.
 	
-	\item Implementasi Pengembangan Perangkat Lunak \\ Pada tahap ini, implementasi dari pengembangan perangkat lunak dilakukan berdasarkan desain yang sudah dibuat pada tahap sebelumnya.
+	\item Implementasi pengembangan perangkat punak \\ Pada tahap ini, implementasi dari pengembangan perangkat lunak dilakukan berdasarkan desain yang sudah dibuat pada tahap sebelumnya.
 	
 	\item Pengujian \\ Perangkat lunak yang telah dihasilkan diuji pada tahap ini sesuai dengan kebutuhan yang telah didefinisikan.
 	
-	\item Penarikan Kesimpulan \\ Pada tahap ini, hasil pengujian digunakan untuk melakukan penarikan kesimpulan.
+	\item Penarikan kesimpulan \\ Pada tahap ini, hasil pengujian digunakan untuk melakukan penarikan kesimpulan.
 
 \end{enumerate}
 
-\section{Jadwal Pelaksanaan Tugas Akhir}
+\section{Sistematika Pembahasan}
 
-\par Rencana kegiatan dan jadwal pengerjaan Tugas Akhir 1 hingga sidang tugas akhir dapat dilihat pada Tabel \ref{tab:final-project-schedule} berikut.
+\par Sistematika pembahasan dari Laporan Tugas Akhir ini adalah sebagai berikut.
 
-\begin{longtable}{|p{.33\textwidth}|p{.33\textwidth}|p{.33\textwidth}|}
-	\caption{Tabel Jadwal Pengerjaan Tugas Akhir}
-	\label{tab:final-project-schedule}
-	\endfirsthead
-	\endhead
-	\hline
-	Tanggal & Kegiatan & \textit{Deliverable} \\\hline
-	1 Oktober 2018 - 28 Oktober 2018 & Melakukan studi literatur & Studi Literatur (Bab 2) \\ \hline
-	29 Oktober 2018 - 12 November 2018 & Penulisan Bab 1 & Pendahuluan (Bab 1) \\ \hline
-	13 November 2018 - 30 November 2018 & Mendesain arsitektur perangkat lunak yang akan dibangun & Rancangan arsitektur perangkat lunak \\ \hline
-	1 Desember 2018 - 8 Desember 2018 & Penulisan Bab 3 & Rencana Penyelesaian Masalah (Bab 3) \\ \hline
-	9 Desember 2018 - 15 Desember 2018 & Melakukan revisi Bab 1 - 3 & Draft buku TA 1 \\ \hline
-	16 Desember 2018 - 22 Desember 2018 & Mengumpulkan buku TA 1 & Buku TA 1 \\ \hline
-	14 Januari 2019 & Melakukan seminar TA 1 & Seminar TA 1 \\ \hline
-	1 Januari 2019 - 31 Maret 2019 & Melakukan implementasi dari perangkat lunak yang dibangun & Perangkat lunak \\ \hline
-	1 April 2019 - 15 April 2019 & Melakukan pengujian perangkat lunak & Hasil pengujian perangkat lunak \\ \hline
-	16 April 2019 - 30 April 2019 & Menyelesaikan laporan tugas akhir & Laporan tugas akhir \\ \hline
-	19 Mei 2019 & Seminar TA 2 & Presentasi seminar TA II, laporan tugas akhir hasil revisi \\ \hline
-	27 Mei 2019 & Sidang TA & - \\ \hline
-	3 Juni 2019 & Mengumpulkan buku laporan tugas akhir & Buku laporan tugas akhir \\
-	\hline
-\end{longtable}
+\begin{enumerate}
+	\item BAB I PENDAHULUAN berisi penjelasan mengenai latar belakang, rumusan masalah, tujuan, batasan masalah, metodologi, serta sistematika pembahasan tugas akhir.
+	\item BAB II STUDI LITERATUR berisi hasil studi literatur berupa teori yang melandasai rancangan penyelesaian tugas akhir. Landasan teori terdiri dari kompetisi \textit{competitive programming}, sistem \textit{online judge}, \textit{autograder}, \textit{virtual machine}, \textit{containerization} dan \textit{webassembly}.
+	\item BAB III ANALISIS MASALAH DAN RANCANGAN SOLUSI berisi persoalan yang muncul ketika menggunakan komputer peserta sebagai \textit{worker} dari \textit{autograder} beserta penyelesaian dari permasalahan tersebut.
+	\item BAB IV PENGEMBANGAN DAN PENGUJIAN berisi bahasa pemrograman, \textit{tools} dan komponen-komponen yang dibuat dalam mengimplementasikan rancangan solusi pada BAB III.
+	\item BAB V SIMPULAN DAN SARAN berisi kesimpulan dan saran dari proses dan hasil pengembangan dan pengujian perangkat lunak.
+\end{enumerate}
