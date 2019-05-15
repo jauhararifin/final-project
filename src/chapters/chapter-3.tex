@@ -1,7 +1,5 @@
 \chapter{Analisis Masalah Dan Rancangan Solusi}
 
-% TODO: mockup
-
 \par Dalam mengadakan kompetisi \textit{competitive programming} diperlukan sebuah sistem \textit{online judge}. Sistem \textit{online judge} memerlukan dua buah komponen utama yaitu \textit{autograder} dan sistem manajemen kompetisi. Sistem manajemen kompetisi memberikan layanan yang berhubungan dengan kompetisi seperti melihat soal, mengirim jawaban, membuat klarifikasi, dan melihat \textit{scoreboard}. Sistem \textit{autograder} berfungsi untuk melakukan penilaian terhadap jawaban yang telah dikirim secara \textit{realtime}. Gambar \ref{fig:architecture-old} menggambarkan arsitektur sistem \textit{online judge} yang saat ini sering digunakan.
 
 \begin{figure}[ht!]
@@ -102,6 +100,8 @@
 \par Selain pendekatan \textit{push-based} dan \textit{pull-based}, terdapat pendekatan lain yang lebih sederhana yaitu \textit{self-grading}. Pada \textit{self-grading}, peserta akan menilai jawabannya sendiri. Dengan menggunakan pendekatan ini, tidak diperlukan adanya \textit{master}. Meskipun begitu, pendekatan \textit{self-grading} memiliki celah keamanan karena peserta mengetahui jawaban siapa yang dinilai pada komputernya. Hal ini memungkinkan peserta untuk melakukan serangan-serangan yang mengakibatkan jawaban yang dinilai pada komputernya selalu dianggap benar.
 
 \par Pendekatan \textit{pull-based} lebih adil dan lebih mudah diimplementasikan dibandingkan dengan pendekatan \textit{push-based}. Pendekatan \textit{pull-based} lebih aman dibandingkan dengan pendekatan \textit{self-grading} karena identitas jawaban yang dinilai pada \textit{worker} lebih rahasia. Oleh karena itu, pendekatan \textit{pull-based load balancing} digunakan pada tugas akhir ini karena lebih adil dan lebih aman dibandingkan dengan dua pendekatan lainnya.
+
+\par Untuk meningkatkan keamanan, jawaban peserta dapat dinilai pada lebih dari satu buah \textit{worker}. Jawaban peserta dinilai benar jika mayoritas dari \textit{worker} yang menilai jawaban peserta tersebut menyatakan bahwa jawaban tersebut adalah benar. Dengan menilai jawaban peserta di banyak \textit{worker}, risiko yang timbul sebab adanya kecurangan yang dilakukan peserta dapat berkurang. Pada tugas akhir ini, \textit{load balancing} dilakukan dengan pendekatan \textit{pull-based} dan dengan melakukan penilaian jawaban peserta pada lebih dari satu buah \textit{worker}.
 
 \subsection{Evaluasi Jawaban Menggunakan Sandbox}
 
@@ -214,20 +214,33 @@
 
 \par Komponen pengguna dibuat pada sistem manajemen kompetisi untuk melakukan otentikasi dan otorisasi pengguna. Untuk menyederhanakan persoalan, pada tugas akhir ini komponen pengguna yang bertugas melakukan otentikasi dan otorisasi pengguna tidak akan menggunakan layanan pihak ketiga. Beberapa \textit{software development framework} seperti Django, Express, dan Laravel memiliki kemampuan untuk menangani masalah ini dengan mudah. Informasi pengguna akan disimpan pada sistem basis data yang sudah tersedia. Otentikasi pengguna akan dilakukan dengan sederhana, yaitu menggunakan \textit{username} dan \textit{password}.
 
-\par Otorisasi pengguna juga dilakukan secara sederhana yaitu dengan sistem \textit{Role-based access control}. Setiap pengguna akan diberikan \textit{role} tertentu. Aksi-aksi yang dapat dilakukan oleh pengguna ditentukan oleh \textit{role} yang dimilikinya. Setiap pengguna yang berhasil \textit{login} kedalam sistem akan diberikan \textit{token} unik. \textit{Token} unik ini digunakan untuk menentukan \textit{role} dari pengguna yang melakukan aksi pada sistem. \textit{Token} yang akan digunakan dalam tugas akhir ini adalah \textit{JWT (JSON Web Token)} karena mudah untuk digunakan dan aman.
+\par Otorisasi pengguna juga dilakukan secara sederhana yaitu dengan sistem \textit{Role-based access control}. Setiap pengguna akan diberikan \textit{role} tertentu. Aksi-aksi yang dapat dilakukan oleh pengguna ditentukan oleh \textit{role} yang dimilikinya. Setiap pengguna yang berhasil \textit{login} kedalam sistem akan diberikan \textit{token} unik. \textit{Token} unik ini digunakan untuk menentukan \textit{role} dari pengguna yang melakukan aksi pada sistem. \textit{Token} yang akan digunakan dalam tugas akhir ini adalah JWT (JSON \textit{Web Token}) karena mudah untuk digunakan dan aman.
 
 \subsection{Komponen Soal}
 
-\par Pada kompetisi \textit{competitive programming}, deskripsi soal dapat diakses melalui sistem \textit{online judge} yang biasanya berupa halaman web. Dalam beberapa kompetisi, peserta kompetisi akan mendapatkan \textit{hard-copy} dari soal. Komponen soal dibutuhkan oleh sistem manajemen kompetisi untuk mengelola soal yang ada pada kompetisi. Komponen ini memberikan layanan kepada pengguna untuk melihat soal. Terkadang terdapat kesalahan pada soal ketika kompetisi berlangsung sehingga komponen ini perlu memberikan layanan kepada juri untuk mengganti soal.
+\par Pada kompetisi \textit{competitive programming}, deskripsi soal dapat diakses melalui sistem \textit{online judge} yang biasanya berupa halaman web. Dalam beberapa kompetisi, peserta kompetisi akan mendapatkan soal dalam bentuk \textit{hard-copy}. Komponen soal dibutuhkan oleh sistem manajemen kompetisi untuk mengelola soal yang ada pada kompetisi. Komponen ini memberikan layanan kepada pengguna untuk melihat soal. Terkadang terdapat kesalahan pada soal ketika kompetisi berlangsung sehingga komponen ini perlu memberikan layanan kepada juri untuk mengganti soal.
 
 \par Soal pada kompetisi \textit{competitive programming} memiliki deskripsi yang merupakan penjelasan terhadap masalah yang harus diselesaikan peserta. Pada deskripsi soal terdapat penjelasan mengenai permasalahan yang dimaksud, format masukan, format keluaran, contoh masukan, dan contoh keluaran. \textit{Online judge} yang populer saat ini memberikan deskripsi soal kepada peserta dengan format \textit{pdf} atau menampilkannya dalam halaman web. Komponen soal perlu menyimpan deskripsi soal untuk dapat memberikannya kepada pengguna. Deskripsi soal dapat disimpan pada \textit{filesystem} dalam bentuk pdf atau disimpan dalam sistem manajemen basis data dalam bentuk HTML. Untuk memudahkan implementasi pada tugas akhir ini, deskripsi soal akan disimpan dalam basis data.
 
 \par Setiap soal perlu memiliki program \textit{test-case generator}, \textit{solution}, dan \textit{checker}. Ketiga buah program ini dibuat oleh juri untuk melakukan penilaian jawaban peserta. \textit{Test-case generator} adalah program yang dibuat oleh juri untuk membangkitkan \textit{test-case} seperti yang sudah dijelaskan pada bagian \ref{subsec:sending-test-case-to-worker}. \textit{Solution} adalah program yang merupakan solusi valid dari soal. Program solusi ini dibuat oleh juri untuk dibandingkan dengan jawaban peserta seperti yang sudah dijelaskan pada bagian \ref{subsec:time-memory-measure-compare-with-jury}. Program \textit{checker} akan digunakan oleh \textit{worker} untuk menentukan kebenaran jawaban peserta. Terkadang terdapat lebih dari satu jawab yang benar pada sebuah soal. Oleh karena itu, program \textit{checker} ini dibutuhkan untuk menilai jawaban peserta. 
 
-\par Program \textit{test-case generator}, \textit{solution}, dan \textit{checker} dapat disimpan dalam \textit{filesystem} atau sistem basis data. Untuk memudahkan implementasi pada tugas akhir ini, ketiga program ini akan disimpan dalam bentuk \textit{source code} pada sistem basis data.
+\par Program \textit{test-case generator}, \textit{solution}, dan \textit{checker} dapat disimpan dalam \textit{filesystem} atau sistem basis data. Pada tugas akhir ini, program-program tersebut disimpan pada \textit{filesystem} dan alamat dari program tersebut disimpan dalam sistem basis data.
 
 \subsection{Komponen Jawaban}
 
-\par Sistem manajemen kompetisi perlu menyediakan layanan kepada peserta untuk mengirimkan jawaban. Jawaban yang dikirimkan peserta berupa program dalam bentuk \textit{source code} dalam bahasa pemrograman yang diizinkan oleh juri. Selain itu, sistem manajemen kompetisi juga harus memberikan layanan kepada peserta untuk dapat melihat kembali jawabannya. Juri juga perlu mengawasi jawaban dari peserta untuk menghindari adanya kecurangan.  Oleh karena itu, sistem manajemen kompetisi juga harus dapat memberikan layanan kepada juri untuk melihat seluruh jawaban yang pernah dikirimkan oleh peserta. Untuk memudahkan implementasi, pada tugas akhir ini jawaban peserta akan disimpan dalam bentuk \textit{source code} pada sistem basis data.
+\par Sistem manajemen kompetisi perlu menyediakan layanan kepada peserta untuk mengirimkan jawaban. Jawaban yang dikirimkan peserta berupa program dalam bentuk \textit{source code} dalam bahasa pemrograman yang diizinkan oleh juri. Selain itu, sistem manajemen kompetisi juga harus memberikan layanan kepada peserta untuk dapat melihat kembali jawabannya. Juri juga perlu mengawasi jawaban dari peserta untuk menghindari adanya kecurangan.  Oleh karena itu, sistem manajemen kompetisi juga harus dapat memberikan layanan kepada juri untuk melihat seluruh jawaban yang pernah dikirimkan oleh peserta. Pada sistem \textit{online judge} yang dibangun, komponen jawaban berguna untuk memberikan layanan-layanan tersebut. Pada tugas akhir ini jawaban peserta akan disimpan dalam bentuk \textit{file source code} pada \textit{filesystem}.
+
+\subsection{Komponen Antar Muka}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/mockup}
+    \caption{Desain Tampilan Antar Muka Sistem \textit{Online Judge}.}
+    \label{fig:mockup}
+\end{figure}
+
+\par Untuk memudahkan peserta dan juri berinteraksi dengan sistem \textit{online judge}, diperlukan komponen antar muka. Pengguna yang merupakan peserta dan juri menggunakan antar muka ini untuk melakukan aksi-aksi pada sistem \textit{online judge}. Kebanyakan sistem \textit{online judge} yang populer saat ini menggunakan antar muka berbasis \textit{web}. Antar muka berbasis \textit{web} digunakan karena mudah diakses oleh pengguna, dan cukup ringan untuk dijalankan.
+
+\par Pada tugas akhir ini, antar muka dibuat dalam bentuk tampilan grafis berbasis web. Untuk memudahkan pengguna, antar muka dibuat sebagai aplikasi \textit{desktop}. Hal ini bertujuan agar komponen antar muka dan \textit{grader} dapat berjalan secara sekaligus. Gambar \ref{fig:mockup} merupakan rancangan halaman-halaman yang dibangun pada komponen antar muka.
 
 % TODO: tambah penjelasan tentang submission, grading_group, grading, erd diagram dari db
