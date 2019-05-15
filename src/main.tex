@@ -22,8 +22,10 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage[titles]{tocloft}
+\usepackage{tikz,pgfplots}
 
-\hyphenation{di-ban-ding-kan jud-ge domjudge meng-gu-na-kan me-nye-le-sai-kan pe-rang-kat men-ja-lan-kan di-la-ku-kan on-line ja-wab-an WebAssembly a-kan mem-be-ri-kan}
+
+\hyphenation{di-se-bab-kan di-ban-ding-kan jud-ge domjudge meng-gu-na-kan me-nye-le-sai-kan pe-rang-kat men-ja-lan-kan di-la-ku-kan on-line ja-wab-an WebAssembly a-kan mem-be-ri-kan}
 
 \hypersetup{colorlinks=false, pdfborder={0 0 0},}
 
@@ -33,7 +35,8 @@
 \lstdefinestyle{CStyle}{
     belowcaptionskip=1\baselineskip,
     breaklines=true,
-    frame=L,
+    frame=trbl,
+    numbers=left,
     xleftmargin=\parindent,
     language=C,
     showstringspaces=false,
@@ -46,7 +49,8 @@
 \lstdefinestyle{BashStyle}{
     belowcaptionskip=1\baselineskip,
     breaklines=true,
-    frame=L,
+    frame=trbl,
+    numbers=left,
     xleftmargin=\parindent,
     language=Bash,
     showstringspaces=false,

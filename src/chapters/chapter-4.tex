@@ -1,24 +1,24 @@
 \chapter{Pengembangan Dan Pengujian}
 
-\par Pada Tugas Akhir ini, perangkat lunak yang dikembangan berupa sistem manajemen kompetisi, \textit{autograder} dan program antar muka pengguna.  Sistem manajemen kompetisi di\textit{deploy} pada komputer yang disediakan oleh juri dan bertindak sebagai \textit{server}. \textit{Autograder} dan program antar muka akan didistribusikan kepada peserta dan juri untuk dijalankan pada komputernya. Secara keseluruhan, perangkat lunak yang dikembangkan dinamakan \textit{UGrade}. Nama tersebut berasal dari kata \textit{you} dan \textit{grade}. Nama tersebut dipilih karena proses penilaian atau \textit{grading} dilakukan oleh masing-masing peserta.
+\par Pada tugas akhir ini, perangkat lunak yang dikembangan berupa sistem manajemen kompetisi, \textit{autograder} dan program antar muka pengguna.  Sistem manajemen kompetisi di-\textit{deploy} pada komputer yang disediakan oleh juri dan bertindak sebagai \textit{server}. \textit{Autograder} dan program antar muka akan didistribusikan kepada peserta dan juri untuk dijalankan pada komputernya. Secara keseluruhan, perangkat lunak yang dikembangkan dinamakan UGrade. Nama tersebut berasal dari kata \textit{you} dan \textit{grade}. Nama tersebut dipilih karena proses penilaian atau \textit{grading} dilakukan oleh masing-masing peserta.
 
-\par Terdapat tiga program utama yang dikembangkan pada \textit{UGrade} yaitu: \textit{UGServer}, \textit{UGJob} dan \textit{UGDesktop}. \textit{UGServer} berfungsi sebagai sistem manajemen kompetisi yang bertindak sebagai server. \textit{UGJob} berfungsi sebagai \textit{worker} dari \textit{autograder}. \textit{UGDesktop} berfungsi sebagai antar muka antara pengguna dengan sistem \textit{online judge}. Selain tiga program utama tersebut, terdapat program lain yang digunakan untuk membantu proses pengembangan. Untuk melakukan \textit{sandboxing}, dikembangan program yang bernama \textit{UGSbox}. Selain itu, untuk memudahkan proses testing, dikembangankan program \textit{UGCtl} yang dapat digunakan sebagai antar muka pengguna dalam bentuk \textit{command-line}.
+\par Terdapat tiga program utama yang dikembangkan pada UGrade yaitu: UGServer, UGJob dan UGDesktop. UGServer berfungsi sebagai sistem manajemen kompetisi yang bertindak sebagai server. UGJob berfungsi sebagai \textit{worker} dari \textit{autograder}. UGDesktop berfungsi sebagai antar muka antara pengguna dengan sistem \textit{online judge}. Selain tiga program utama tersebut, terdapat program lain yang digunakan untuk membantu proses pengembangan. Untuk melakukan \textit{sandboxing}, dikembangan program yang bernama UGSbox. Selain itu, untuk memudahkan proses testing, dikembangankan program UGCtl yang dapat digunakan sebagai antar muka pengguna dalam bentuk \textit{command-line}.
 
-\section{\textit{UGServer} (Sistem Manajemen Kompetisi)}
+\section{UGServer (Sistem Manajemen Kompetisi)}
 
-\par \textit{UGServer} merupakan sistem manejem kompetisi yang berfungsi untuk mengatur keberjalanan kompetisi. \textit{UGServer} memberikan layanan kepada peserta dan juri untuk berinteraksi dengan kompetisi. Layanan yang diberikan oleh \textit{UGServer} antara lain:
+\par UGServer merupakan sistem manejem kompetisi yang berfungsi untuk mengatur keberjalanan kompetisi. UGServer memberikan layanan kepada peserta dan juri untuk berinteraksi dengan kompetisi. Layanan yang diberikan oleh UGServer antara lain:
 \begin{enumerate}
   \item Otentikasi dan otorisasi pengguna.
-  \item Pembuatan dan akses kompetisi.
-  \item Pembuatan dan akses soal pada kompetisi.
-  \item Pengiriman dan akses jawaban pada kompetisi.
+  \item Pembuatan dan pengaksesan kompetisi.
+  \item Pembuatan dan pengaksesan soal pada kompetisi.
+  \item Pengiriman dan pengaaksesan jawaban pada kompetisi.
 \end{enumerate}
 
-\par Sebenarnya masih banyak layanan lain yang harus diberikan oleh sistem manajemen kompetisi. Akan tetapi, Tugas Akhir ini lebih difokuskan untuk mengembangkan \textit{autograder} dibandingkan dengan sistem manajemen kompetisi. Hal ini dikarenakan tujuan dari Tugas Akhir ini lebih berfokus pada proses penilaian jawaban peserta. Oleh karena itu, fungsionalitas yang dipaparkan pada paragram di atas sudah cukup untuk memenuhi tujuan dari Tugas Akhir ini.
+\par Sebenarnya masih banyak layanan lain yang harus diberikan oleh sistem manajemen kompetisi. Akan tetapi, tugas akhir ini lebih difokuskan pada pengembangan \textit{autograder} dibandingkan dengan sistem manajemen kompetisi. Hal ini dikarenakan tujuan dari tugas akhir ini lebih berfokus pada proses penilaian jawaban peserta. Oleh karena itu, fungsionalitas yang dipaparkan pada paragraf di atas sudah cukup untuk memenuhi tujuan dari tugas akhir ini.
 
-\par \textit{UGServer} dikembangkan dengan menggunakan \textit{framework django}. Pengembangan perangkat lunak berbasis \textit{web} dapat dengan cepat dan mudah dilakukan menggunakan \textit{framework django}. Selain itu, \textit{django} telah memberikan banyak fitur yang sangat membantu proses pengembangan perangkat lunak seperti otorisasi, otentikasi, dan \textit{ORM}. Terdapat beberapa alternatif lain yang dapat meningkatkan kinerja sistem manajemen kompetisi seperti menggunakan \textit{express} atau \textit{GO}. Kedua alternatif tersebut tidak digunakan karena membutuhkan waktu pengembangan yang lama dan tidak terlalu memberikan perunbahan yang signifikan. Oleh karena itu, \textit{Framework} \textit{django} dipilih untuk mengembangkan \textit{UGServer} karena mudah dan cepat untuk dikembangkan.
+\par UGServer dikembangkan dengan menggunakan \textit{framework django}. Pengembangan perangkat lunak berbasis \textit{web} dapat dengan cepat dan mudah dilakukan menggunakan \textit{framework django}. Kemudahan dan kecepatan pengembangan tersebut disebabkan karena \textit{django} telah memberikan banyak fitur yang sangat membantu proses pengembangan perangkat lunak seperti otorisasi, otentikasi, dan ORM (\textit{object relational mapper}). Terdapat beberapa teknologi alternatif lain yang dapat digunakan dan dapat meningkatkan kinerja sistem manajemen kompetisi seperti Express atau Go. Kedua alternatif tersebut tidak digunakan karena membutuhkan waktu pengembangan yang lama dan tidak memberikan peningkatan kinerja yang signifikan. Oleh karena itu, \textit{framework} \textit{django} dipilih untuk mengembangkan UGServer karena mudah dan cepat untuk dikembangkan.
 
-\par \textit{UGServer} memberikan \textit{API} yang dapat digunakan oleh pengguna. \textit{API} yang diberikan oleh \textit{UGServer} berupa \textit{GraphQL} yang berjalan di atas protokol \textit{HTTP}. \textit{GraphQL} digunakan karena mudah untuk diimplementasikan dan digunakan. \textit{UGDesktop} dan \textit{UGCtl} merupakan program antar muka pengguna yang menggunakan \textit{API} ini. Terdapat beberapa alternatif lain yang dapat digunakan untuk mengembangkan \textit{API} dari \textit{UGServer} seperti menggunakan arsitektur \textit{REST} atau menggunakan teknik seperti \textit{RPC}. Alternatif tersebut tidak digunakan karena lebih tidak fleksibel dan lebih sulit untuk diimplementasikan.
+\par UGServer memberikan API (\textit{application programming interface}) yang dapat digunakan oleh pengguna. API yang diberikan oleh UGServer berupa GraphQL yang berjalan di atas protokol HTTP. GraphQL digunakan karena mudah untuk diimplementasikan dan digunakan. UGDesktop dan UGCtl merupakan program antar muka pengguna yang menggunakan API ini. Terdapat beberapa alternatif lain yang dapat digunakan untuk mengembangkan API dari UGServer seperti menggunakan arsitektur REST (\textit{representational state transfer}) atau menggunakan RPC (\textit{remote procedure call}). Alternatif tersebut tidak digunakan karena tidak fleksibel dan sulit untuk diimplementasikan.
 
 \begin{figure}[ht!]
     \centering
@@ -27,12 +27,12 @@
     \label{fig:dbschemas}
 \end{figure}
 
-\par Dalam menjalankan fungsinya, \textit{UGServer} menggunakan sistem manajemen basis data untuk menyimpan informasi terkait kompetisi. Pada saat ini, \textit{UGServer} dapat berjalan menggunakan sistem basis data \textit{Postgresql} atau \textit{SQLite}. \textit{Framework django} memiliki fitur \textit{ORM} yang siap digunakan untuk basis data yang bersifat relasional. Karena adanya fitur tersebut, data lebih mudah untuk diatur menggunakan basis data relasional. Oleh karena itu, pada Tugas Akhir ini penyimpanan data dilakukan menggunakan sistem basis data relasional. Gambar \ref{fig:dbschemas} merupakan skema basis data yang digunakan untuk menyimpan informasi terkait kompetisi.
+\par Dalam menjalankan fungsinya, UGServer menggunakan sistem manajemen basis data untuk menyimpan informasi terkait kompetisi. Pada saat ini, UGServer dapat berjalan menggunakan sistem basis data Postgresql atau SQLite. \textit{Framework django} memiliki fitur ORM yang siap digunakan untuk basis data yang bersifat relasional. Karena adanya fitur tersebut, data lebih mudah untuk diatur menggunakan basis data relasional. Oleh karena itu, pada tugas akhir ini penyimpanan data dilakukan dengan memanfaatkan sistem basis data relasional. Gambar \ref{fig:dbschemas} merupakan skema basis data yang digunakan untuk menyimpan informasi terkait kompetisi.
 
 \subsection{Manajemen Pengguna} \label{subsec:user-management}
 
 % akun
-\par \textit{UGServer} memberikan layanan untuk melakukan manajemen pengguna. Pengguna pada \textit{UGrade} terikat pada suatu kompetisi. Pengguna pada suatu kompetisi tidak dapat mengikuti kompetisi lain. Pengguna yang ingin mengikuti dua buah kompetisi harus membuat dua akun. Pengguna dapat membuat akun dengan cara membuat kompetisi. Ketika seseorang membuat kompetisi, maka sebuah akun akan tercipta sesuai dengan alamat \textit{email} orang tersebut. Selain itu, akun dapat dibuat dengan mengundang orang lain ke dalam kompetisi.
+\par UGServer memberikan layanan untuk melakukan manajemen pengguna. Pengguna pada UGrade terikat pada suatu kompetisi. Pengguna pada suatu kompetisi tidak dapat mengikuti kompetisi lain. Pengguna yang ingin mengikuti dua buah kompetisi harus membuat dua akun. Pengguna dapat membuat akun dengan cara membuat kompetisi. Ketika seseorang membuat kompetisi, maka sebuah akun akan tercipta sesuai dengan alamat \textit{email} orang tersebut. Selain itu, akun dapat dibuat dengan mengundang orang lain ke dalam kompetisi.
 
 % otentikasi
 \par Akun yang pertama kali dibuat hanya mengandung informasi alamat \textit{email} pengguna dan kode untuk otentikasi. Kode tersebut akan dikirim ke \textit{email} pengguna. Hal ini berfungsi sebagai cara untuk mengotentikasi pengguna dengan cara mengotentikasi \textit{email} pengguna. Pengguna kemudian harus memasukkan kode tersebut untuk mengotentikasi dirinya. Pengguna yang telah terotentikasi akan memasukkan informasi mengenai nama lengkap, \textit{username} dan kata sandi. Nama lengkap merupakan nama yang akan ditampilkan pada antar muka kompetisi. \textit{Username} merupakan nama pengguna yang unik untuk setiap kontes dan bersifat mudah untuk dibaca oleh manusia. Setelah melakukan otentikasi \textit{email}, pengguna selanjutnya dapat melakukan otentikasi dengan kombinasi kompetisi yang diikuti, alamat \textit{email} dan kata sandi yang dipilih. 
@@ -48,7 +48,7 @@
 \end{figure}
 
 % user permissions
-Pengguna dalam perangkat lunak ini umumnya meliputi juri, peserta dan admin. Perangkat lunak \textit{UGServer} sebenarnya tidak membeda-bedakan pengguna sebagai juri, peserta ataupun admin. Otorisasi dilakukan dengan memberikan label \textit{permission} kepada setiap pengguna yang ada. Setiap pengguna memiliki himpunan \textit{permission} yang menandakan aksi-aksi apa saja yang dapat dilakukan. Pada saati ini, terdapat beberapa \textit{permission} yang mengatur hak akses pengguna yaitu:
+Pengguna dalam perangkat lunak ini umumnya meliputi juri, peserta dan admin. Perangkat lunak UGServer sebenarnya tidak membeda-bedakan pengguna sebagai juri, peserta ataupun admin. Otorisasi dilakukan dengan memberikan label \textit{permission} kepada setiap pengguna yang ada. Setiap pengguna memiliki himpunan \textit{permission} yang menandakan aksi-aksi apa saja yang dapat dilakukan. Pada saati ini, terdapat beberapa \textit{permission} yang mengatur hak akses pengguna yaitu:
 \begin{enumerate}
     \item \textit{update:contest}: pengguna dengan \textit{permission} ini dapat mengubah informasi kompetisi.
     \item \textit{create:problems}: pengguna dengan \textit{permission} ini dapat membuat soal baru.
@@ -75,17 +75,17 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \label{fig:problem-schema}
 \end{figure}
 
-\par Setiap soal pada \textit{UGServer} akan terikat pada suatu kompetisi. Suatu soal tidak dapat berada pada dua kompetisi sekaligus. Jika terdapat soal yang sama pada kompetisi yang berbeda, maka soal tersebut harus ditambahkan dua kali dan tetap dianggap soal yang berbeda. Setiap soal pada kompetisi memiliki nama dan \textit{short id}. Nama soal merupakan judul soal yang akan ditampilkan pada sistem antar muka yang digunakan pengguna. \textit{Short id} merupakan kode soal yang unik untuk setiap kompetisi dan mudah untuk dibaca oleh manusia. \textit{Short id} berguna untuk mengidentifikasi soal dengan mudah.
+\par Setiap soal pada UGServer akan terikat pada suatu kompetisi. Suatu soal tidak dapat berada pada dua kompetisi sekaligus. Jika terdapat soal yang sama pada kompetisi yang berbeda, maka soal tersebut harus ditambahkan dua kali dan tetap dianggap soal yang berbeda. Setiap soal pada kompetisi memiliki nama dan \textit{short id}. Nama soal merupakan judul soal yang akan ditampilkan pada sistem antar muka yang digunakan pengguna. \textit{Short id} merupakan kode soal yang unik untuk setiap kompetisi dan mudah untuk dibaca oleh manusia. \textit{Short id} berguna untuk mengidentifikasi soal dengan mudah.
 
 \par Informasi mengenai soal disimpan di sistem basis data pada tabel \textit{problems}. Skema basis data yang digunakan untuk menyimpan informasi soal digambarkan pada Gambar \ref{fig:problem-schema}. Aksi-aksi yang dapat dilakukan oleh pengguna terhadap soal ditentukan berdasarkan \textit{permission} yang dimiliki oleh pengguna tersebut.
 
 % TODO: screenshot ui
 
-\par Setiap soal memiliki deskripsi soal. Deskripsi soal merupakan penjelasan mengenai soal, format masukan, format keluaran, contoh masukan dan contoh keluaran. Deskripsi soal ditulis dalam format \textit{markdown} dan disimpan pada \textit{field} \textit{statement} pada tabel \textit{problems}. Pemilihan format \textit{markdown} bertujuan untuk kemudahan melakukan penyimpanan deskripsi soal. Beberapa sistem \textit{online judge} lain memungkinkan melakukan penyimpanan soal dalam bentuk \textit{file} seperti \textit{pdf}. \textit{UGServer} tidak mendukung penyisipan \textit{file} pada deskripsi soal. Hal ini bertujuan untuk memudahkan implementasi.
+\par Setiap soal memiliki deskripsi soal. Deskripsi soal merupakan penjelasan mengenai soal, format masukan, format keluaran, contoh masukan dan contoh keluaran. Deskripsi soal ditulis dalam format \textit{markdown} dan disimpan pada \textit{field} \textit{statement} pada tabel \textit{problems}. Pemilihan format \textit{markdown} bertujuan untuk kemudahan melakukan penyimpanan deskripsi soal. Beberapa sistem \textit{online judge} lain memungkinkan melakukan penyimpanan soal dalam bentuk \textit{file} seperti \textit{pdf}. UGServer tidak mendukung penyisipan \textit{file} pada deskripsi soal. Hal ini bertujuan untuk memudahkan implementasi.
 
 \par Untuk melakukan penilaian terhadap jawaban peserta, setiap soal dilengkapi dengan beberapa informasi terkait penilaian. Beberapa informasi yang terkait dengan penilaian adalah: batas waktu eksekusi, batas penggunaan \textit{memory}, batas \textit{output file} yang dihasilkan, faktor toleransi, \textit{testcase generator}, solusi juri dan \textit{checker}. Batas waktu eksekusi disimpan pada \textit{field timelimit} dalam bentuk bilangan bulat yang menyatakan lamanya batas waktu eksekusi dalam satuan milidetik. Batas waktu ini digunakan oleh \textit{autograder} untuk menghentikan program secara paksa ketika berjalan terlalu lama. Batas penggunaan memory dan \textit{output file} yang dihasilkan disimpan pada \textit{field memorylimit} dan \textit{outputlimit} di tabel \textit{problems}. Batas tersebut disimpan dalam bentuk bilangan bulat yang menyatakan batas dalam satuan \textit{bytes}. Faktor toleransi disimpan pada \textit{field tolerance} di tabel \textit{problems} sebagai \textit{float}.
 
-\par Dalam melakukan penilaian, \textit{autograder} memerlukan informasi mengenai \textit{testcase generator}, solusi juri, dan \textit{checker}. Informasi tersebut berupa \textit{source code} pada bahasa pemrograman tertentu. \textit{UGServer} menyimpan informasi bahasa pemrograman yang digunakan oleh \textit{testcase generator}, solusi juri dan \textit{checker} pada sistem basis data sebagai \textit{foreign key} ke tabel \textit{languages}. Informasi bahasa pemrograman tersebut disimpan pada \textit{field tcgen\_language, solution\_language}, dan \textit{checker\_language} di tabel \textit{problems}. Informasi mengenai kode sumber tidak disimpan dalam sistem basis data karena dianggap kurang efisien jika ukuran \textit{source code} terlalu besar. Oleh karena itu, kode sumber disimpan sebagai \textit{file} yang berada pada \textit{disk}. Dengan begitu, sistem basis data hanya perlu menyimpan informasi mengenai alamat file dari \textit{source code} yang disimpan.
+\par Dalam melakukan penilaian, \textit{autograder} memerlukan informasi mengenai \textit{testcase generator}, solusi juri, dan \textit{checker}. Informasi tersebut berupa \textit{source code} pada bahasa pemrograman tertentu. UGServer menyimpan informasi bahasa pemrograman yang digunakan oleh \textit{testcase generator}, solusi juri dan \textit{checker} pada sistem basis data sebagai \textit{foreign key} ke tabel \textit{languages}. Informasi bahasa pemrograman tersebut disimpan pada \textit{field tcgen\_language, solution\_language}, dan \textit{checker\_language} di tabel \textit{problems}. Informasi mengenai kode sumber tidak disimpan dalam sistem basis data karena dianggap kurang efisien jika ukuran \textit{source code} terlalu besar. Oleh karena itu, kode sumber disimpan sebagai \textit{file} yang berada pada \textit{disk}. Dengan begitu, sistem basis data hanya perlu menyimpan informasi mengenai alamat file dari \textit{source code} yang disimpan.
 
 % TODO: graphql API
 
@@ -112,12 +112,12 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \item \textit{Time Limit Exceeded}: menandakan bahwa jawaban melebihi batasan waktu yang sudah ditetapkan.
     \item \textit{Runtime Error}: menandakan bahwa jawaban tidak berhasil dieksekusi karena adanya kesalahan pada jawaban.
     \item \textit{Compile Error}: menandakan jawaban tidak dapat dikompilasi.
-    \item \textit{Internal Error}: menandakan adanya kesalahan pada sistem \textit{UGrade} sehingga jawaban tidak dapat dinilai.
+    \item \textit{Internal Error}: menandakan adanya kesalahan pada sistem UGrade sehingga jawaban tidak dapat dinilai.
 \end{enumerate}
 
 \subsection{Penilain Jawaban}
 
-\par Setiap jawaban yang dikirimkan oleh pengguna akan dinilai secara otomatis oleh \textit{UGServer}. Penilaian dilakukan secara \textit{asynchronous}. Oleh karena itu, peserta tidak perlu menunggu penilaian selesai untuk melakukan aksi-aksi lain. Seringkali terdapat beberapa masalah teknis yang mengakibatkan jawaban peserta perlu dinilai ulang. Oleh sebab itu, setiap jawaban peserta dapat dinilai lebih dari satu kali. Hasil penilaian yang digunakan adalah hasil penilaian yang terakhir.
+\par Setiap jawaban yang dikirimkan oleh pengguna akan dinilai secara otomatis oleh UGServer. Penilaian dilakukan secara \textit{asynchronous}. Oleh karena itu, peserta tidak perlu menunggu penilaian selesai untuk melakukan aksi-aksi lain. Seringkali terdapat beberapa masalah teknis yang mengakibatkan jawaban peserta perlu dinilai ulang. Oleh sebab itu, setiap jawaban peserta dapat dinilai lebih dari satu kali. Hasil penilaian yang digunakan adalah hasil penilaian yang terakhir.
 
 \subsubsection{\textit{Grading Group}}
 
@@ -145,7 +145,7 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 \subsubsection{\textit{Grading Size}}
 
-\par Setiap penilaian yang ditandai dengan \textit{grading group} memiliki suatu nilai \textit{grading size}. Nilai dari \textit{grading size} digunakan untuk mengurangi risiko serangan yang mungkin dilakukan pengguna. Sebuah penilaian dapat dilakukan oleh lebih dari satu \textit{worker}. Setiap worker akan memberikan hasil penilaiannya kepada \textit{UGServer}. Jawaban peserta akan dinilai benar ketika mayoritas dari \textit{worker} yang melakukan penilaian memberikan \textit{verdict} \textit{accepted}. Nilai dari \textit{grading size} mengindikasikan banyaknya \textit{worker} yang melakukan penilaian.
+\par Setiap penilaian yang ditandai dengan \textit{grading group} memiliki suatu nilai \textit{grading size}. Nilai dari \textit{grading size} digunakan untuk mengurangi risiko serangan yang mungkin dilakukan pengguna. Sebuah penilaian dapat dilakukan oleh lebih dari satu \textit{worker}. Setiap worker akan memberikan hasil penilaiannya kepada UGServer. Jawaban peserta akan dinilai benar ketika mayoritas dari \textit{worker} yang melakukan penilaian memberikan \textit{verdict} \textit{accepted}. Nilai dari \textit{grading size} mengindikasikan banyaknya \textit{worker} yang melakukan penilaian.
 
 \par Nilai \textit{grading size} yang besar akan lebih aman karena dapat lebih mengurangi risiko kecurangan peserta. Hal ini dikarenakan kemungkinan terjadinya kecurangan lebih kecil sebab \textit{worker} yang bekerja lebih banyak. Meskipun begitu, tingginya nilai \textit{grading size} menyebabkan proses penilaian menjadi lebih lambat karena penilaian harus menunggu banyak \textit{worker} untuk selesai terlebih dahulu. Sebaliknya, nilai \textit{grading size} yang kecil dapat mempercepat penilaian akan tetapi mengurangi keamanan. Nilai \textit{grading size} dapat diatur dalam pengaturan kompetisi oleh pengguna yang memiliki \textit{permission} \textit{update:contests}.
 
@@ -166,7 +166,7 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \label{fig:grading-example-1}
 \end{figure}
 
-\par Sebagai contoh, seorang pengguna telah melakukan pengiriman jawaban terhadap suatu soal. Setelah pengiriman jawaban tersebut berhasil dilakukan, akan tercipta sebuah \textit{submission} yang dapat kita beri nama \textit{Submission \#1}. \textit{UGServer} kemudian akan secara otomatis membuat \textit{grading group} untuk menilai jawaban tersebut. Kita dapat memisalkan \textit{grading group} tersebut bernama \textit{Grading Group \#1}. Pada \textit{Grading Group \#1} terdapat informasi mengenai \textit{grading size}. Informasi \textit{grading size} didapatkan dari konfigurasi kompetisi. Pengguna dengan \textit{permission update:contest} dapat mengubah nilai ini. Dalam contoh ini, kita misalnya nilai \textit{grading size} dari kompetisi tersebut adalah tiga. Setelah \textit{grading group} terbentuk, \textit{UGServer} akan membuat \textit{grading size} buah \textit{grading}. Dalam contoh ini berarti akan tercipta tiga buah \textit{grading}. Untuk kemudahan penjelasan, tiga buah \textit{grading} ini dapat kita sebut dengan \textit{Grading \#1} , \textit{Grading \#2}, dan \textit{Grading \#3}. Setiap \textit{grading} yang diciptakan akan memiliki nilai \textit{grader group} yang unik dan terurut dari nol hingga $\textit{grading size} - 1$. Dalam contoh ini \textit{Grading \#1} memiliki nilai \textit{grader group} nol, \textit{Grading \#2} memiliki nilai \textit{grader group} satu, dan \textit{Grading \#3} memiliki nilai \textit{grader group} dua. Gambar \ref{fig:grading-example-1} menggambarkan \textit{submission}, \textit{grading group} dan \textit{grading} pada contoh di paragraf ini.
+\par Sebagai contoh, seorang pengguna telah melakukan pengiriman jawaban terhadap suatu soal. Setelah pengiriman jawaban tersebut berhasil dilakukan, akan tercipta sebuah \textit{submission} yang dapat kita beri nama \textit{Submission \#1}. UGServer kemudian akan secara otomatis membuat \textit{grading group} untuk menilai jawaban tersebut. Kita dapat memisalkan \textit{grading group} tersebut bernama \textit{Grading Group \#1}. Pada \textit{Grading Group \#1} terdapat informasi mengenai \textit{grading size}. Informasi \textit{grading size} didapatkan dari konfigurasi kompetisi. Pengguna dengan \textit{permission update:contest} dapat mengubah nilai ini. Dalam contoh ini, kita misalnya nilai \textit{grading size} dari kompetisi tersebut adalah tiga. Setelah \textit{grading group} terbentuk, UGServer akan membuat \textit{grading size} buah \textit{grading}. Dalam contoh ini berarti akan tercipta tiga buah \textit{grading}. Untuk kemudahan penjelasan, tiga buah \textit{grading} ini dapat kita sebut dengan \textit{Grading \#1} , \textit{Grading \#2}, dan \textit{Grading \#3}. Setiap \textit{grading} yang diciptakan akan memiliki nilai \textit{grader group} yang unik dan terurut dari nol hingga $\textit{grading size} - 1$. Dalam contoh ini \textit{Grading \#1} memiliki nilai \textit{grader group} nol, \textit{Grading \#2} memiliki nilai \textit{grader group} satu, dan \textit{Grading \#3} memiliki nilai \textit{grader group} dua. Gambar \ref{fig:grading-example-1} menggambarkan \textit{submission}, \textit{grading group} dan \textit{grading} pada contoh di paragraf ini.
 
 \begin{figure}[ht!]
     \centering
@@ -175,9 +175,9 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \label{fig:grading-example-2}
 \end{figure}
 
-\par Setelah terbentuk tiga buah \textit{grading} seperti pada paragraf sebelumnya, penilaian dapat mulai dilakukan oleh \textit{worker}. \textit{Worker} secara periodik akan selalu bertanya pada \textit{UGServer} apakah terdapat \textit{grading} yang perlu dikerjakan. \textit{UGServer} akan memberikan \textit{grading} yang sesuai dengan nilai dari \textit{grader group} \textit{worker} yang bersangkutan. Setiap \textit{grading} memiliki informasi \textit{claimed\_by} yang akan berisi ID dari peserta yang sedang melakukan penilaian terhadap \textit{grading} tersebut. Nilai tersebut bertujuan agar \textit{grading} yang sedang dinilai tidak akan dinilai oleh \textit{worker} lain. Gambar \ref{fig:grading-example-2} menjelaskan pemberian \textit{grading} pada \textit{worker} yang dilakukan oleh \textit{UGServer}.
+\par Setelah terbentuk tiga buah \textit{grading} seperti pada paragraf sebelumnya, penilaian dapat mulai dilakukan oleh \textit{worker}. \textit{Worker} secara periodik akan selalu bertanya pada UGServer apakah terdapat \textit{grading} yang perlu dikerjakan. UGServer akan memberikan \textit{grading} yang sesuai dengan nilai dari \textit{grader group} \textit{worker} yang bersangkutan. Setiap \textit{grading} memiliki informasi \textit{claimed\_by} yang akan berisi ID dari peserta yang sedang melakukan penilaian terhadap \textit{grading} tersebut. Nilai tersebut bertujuan agar \textit{grading} yang sedang dinilai tidak akan dinilai oleh \textit{worker} lain. Gambar \ref{fig:grading-example-2} menjelaskan pemberian \textit{grading} pada \textit{worker} yang dilakukan oleh UGServer.
 
-\par \textit{Worker} yang telah melakukan penilaian akan mengirimkan hasil penilaiannya kepada \textit{UGServer}. \textit{UGServer} kemudian akan mengubah nilai \textit{verdict} dari \textit{grading} dan mencatat waktu selesainya penilaian. Jika jumlah \textit{grading} yang selesai dinilai sudah lebih dari setengah dari \textit{grading size}, maka \textit{verdict} dari \textit{grading group} akan diubah. Setelah tahap tersebut, pengguna dapat melihat hasil akhir penilaiannya. 
+\par \textit{Worker} yang telah melakukan penilaian akan mengirimkan hasil penilaiannya kepada UGServer. UGServer kemudian akan mengubah nilai \textit{verdict} dari \textit{grading} dan mencatat waktu selesainya penilaian. Jika jumlah \textit{grading} yang selesai dinilai sudah lebih dari setengah dari \textit{grading size}, maka \textit{verdict} dari \textit{grading group} akan diubah. Setelah tahap tersebut, pengguna dapat melihat hasil akhir penilaiannya. 
 
 % TODO: jelasin API waktu grading
 
@@ -187,29 +187,29 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 % TODO: further works
 
-\section{\textit{UGSbox}}
+\section{UGSbox}
 
 % TODO: jelasin kodenya
 
-\par Dalam menjalankan penilaian, \textit{UGSbox} berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah: \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri, dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada Tugas Akhir ini, \textit{UGSbox} berperan dalam memberikan isolasi tersebut.
+\par Dalam menjalankan penilaian, UGSbox berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah: \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri, dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada tugas akhir ini, UGSbox berperan dalam memberikan isolasi tersebut.
 
-\par \textit{UGSbox} memberikan isolasi pada proses yang berjalan dengan menggunakan beberapa fitur dari linux. Isolasi yang diberikan \textit{ugsbox} antara lain adalah sebagai berikut:
+\par UGSbox memberikan isolasi pada proses yang berjalan dengan menggunakan beberapa fitur dari linux. Isolasi yang diberikan \textit{ugsbox} antara lain adalah sebagai berikut:
 \begin{itemize}
     \item isolasi \textit{filesystem}. \\ Isolasi terhadap \textit{filesystem} dilakukan dengan menggunakan \textit{system call chroot}. Dengan menggunakan \textit{chroot}, direktori \textit{root} dari suatu  proses dapat diganti menjadi direktori lain. Mengganti \textit{root} dari proses mengakibatkan proses tersebut tidak dapat mengakses \textit{file} yang ada di luar \textit{root}. \textit{Filesystem} yang akan digunakan oleh proses dapat dimuat dari \textit{file} yang memiliki format \textit{.tar.xz}. File tersebut dinamakan \textit{image file}. Proses isolasi \textit{filesystem} dimulai dengan melakukan ekstraksi \textit{image file} kemudian mengganti \textit{root} dari proses ke dalam direktori \textit{image file} yang sudah berhasil diekstrak. 
 
-    \item \textit{filesystem binding}. \\ \textit{UGSbox} memberikan fitur \textit{filesystem binding} yang dapat digunakan oleh pengguna untuk memasukkan \textit{filesystem} lain ke dalam \textit{filesystem} yang sudah diisolasi. Fitur ini berguna untuk menyimpan \textit{testcase} ke dalam suatu \textit{filesystem} khusus yang kemudian dapat dimuat ke dalam \textit{filesystem} yang sudah diisolasi.
+    \item \textit{filesystem binding}. \\ UGSbox memberikan fitur \textit{filesystem binding} yang dapat digunakan oleh pengguna untuk memasukkan \textit{filesystem} lain ke dalam \textit{filesystem} yang sudah diisolasi. Fitur ini berguna untuk menyimpan \textit{testcase} ke dalam suatu \textit{filesystem} khusus yang kemudian dapat dimuat ke dalam \textit{filesystem} yang sudah diisolasi.
 
-    \item isolasi \textit{network}. \\ Untuk menjaga keamanan, setiap proses yang berjalan di dalam lingkungan yang diisolasi tidak boleh menggunakan \textit{network} untuk berkomunikasi dengan dunia luar. Untuk mengatasi masalah ini, \textit{UGSbox} menggunakan fitur \textit{namespace} dari linux. Proses yang diisolasi akan mendapat \textit{namespace} dengan \textit{network interface} yang terisolasi dari \textit{network interface} milik \textit{host}.
+    \item isolasi \textit{network}. \\ Untuk menjaga keamanan, setiap proses yang berjalan di dalam lingkungan yang diisolasi tidak boleh menggunakan \textit{network} untuk berkomunikasi dengan dunia luar. Untuk mengatasi masalah ini, UGSbox menggunakan fitur \textit{namespace} dari linux. Proses yang diisolasi akan mendapat \textit{namespace} dengan \textit{network interface} yang terisolasi dari \textit{network interface} milik \textit{host}.
 
     \item isolasi \textit{user}. \\ Selain isolasi \textit{network}, \textit{namespace} pada Linux juga digunakan untuk melakukan isolasi \textit{user}. Dengan mengisolasi \textit{user}, proses yang terisolasi tidak dapat mengetahui adanya \textit{user} lain di luar lingkungannya.
 
-    \item batas penggunaan CPU dan \textit{memory}. \\ Penggunaan CPU dan \textit{memory} dari proses yang diisolasi tentunya perlu dibatasi. Hal ini bertujuan agar proses yang berjalan tidak memberatkan komputer pengguna ketika penilaian sedang berlangsung. Untuk mengatasi masalah ini, \textit{UGSbox} menggunakan fitur \textit{cgroup} dari linux. Dengan menggunakan \textit{cgroup}, penggunaan \textit{memory} dan CPU dapat dibatasi dan dimonitor. Proses yang menggunakan CPU atau \textit{memory} melebihi batasan akan dihentikan secara paksa. 
+    \item batas penggunaan CPU dan \textit{memory}. \\ Penggunaan CPU dan \textit{memory} dari proses yang diisolasi tentunya perlu dibatasi. Hal ini bertujuan agar proses yang berjalan tidak memberatkan komputer pengguna ketika penilaian sedang berlangsung. Untuk mengatasi masalah ini, UGSbox menggunakan fitur \textit{cgroup} dari linux. Dengan menggunakan \textit{cgroup}, penggunaan \textit{memory} dan CPU dapat dibatasi dan dimonitor. Proses yang menggunakan CPU atau \textit{memory} melebihi batasan akan dihentikan secara paksa. 
 
-    \item batas ukuran \textit{file} yang dapat dihasilkan. \\ Program yang dikirimkan oleh pengguna mungkin saja memuat kode yang dapat memberatkan \textit{disk} karena melakukan penulisan secara terus menerus. Hal ini dapat mengakibatkan komputer pengguna menjadi lambat karena \textit{disk}-nya tidak dapat digunakan. Untuk mengatasi masalah ini, \textit{UGSbox} membatasi ukuran \textit{file} yang dapat diciptakan oleh proses di dalam lingkungan yang diisolasi. Pembatasan ini dicapai dengan menggunakan \textit{system call setrlimit}.
+    \item batas ukuran \textit{file} yang dapat dihasilkan. \\ Program yang dikirimkan oleh pengguna mungkin saja memuat kode yang dapat memberatkan \textit{disk} karena melakukan penulisan secara terus menerus. Hal ini dapat mengakibatkan komputer pengguna menjadi lambat karena \textit{disk}-nya tidak dapat digunakan. Untuk mengatasi masalah ini, UGSbox membatasi ukuran \textit{file} yang dapat diciptakan oleh proses di dalam lingkungan yang diisolasi. Pembatasan ini dicapai dengan menggunakan \textit{system call setrlimit}.
 
     \item batas jumlah \textit{file} yang dapat dibuka. \\ Untuk meningkatkan keamanan, jumlah \textit{file} yang dapat dibuka oleh proses yang diisolasi juga dibatasi menggunakan \textit{system call setrlimit}.
 
-    \item batas proses yang dapat diciptakan. \\ Selain membatasi ukuran \textit{file} yang dihasilkan, dan jumlah \textit{file} yang dapat dibuka, \textit{UGSbox} juga menggunakan \textit{setrlimit} untuk membatasi proses yang dapat diciptakan.
+    \item batas proses yang dapat diciptakan. \\ Selain membatasi ukuran \textit{file} yang dihasilkan, dan jumlah \textit{file} yang dapat dibuka, UGSbox juga menggunakan \textit{setrlimit} untuk membatasi proses yang dapat diciptakan.
 
 \end{itemize}
 
@@ -240,19 +240,19 @@ Global Flags:
       --trace   show trace log
 \end{lstlisting}
 
-\par \textit{UGSBox} dapat digunakan dengan dua cara yaitu: sebagai \textit{executable program} atau sebagai \textit{library}. Pengguna dapat menggunakan perintah \textit{ugsbox guard} untuk menjalankan \textit{UGSbox} melalui CLI. Kode \ref{lst:ugsbox-guard} merupakan contoh hasil pemanggilan \textit{ugsbox guard}.
+\par UGSBox dapat digunakan dengan dua cara yaitu: sebagai \textit{executable program} atau sebagai \textit{library}. Pengguna dapat menggunakan perintah \textit{ugsbox guard} untuk menjalankan UGSbox melalui CLI. Kode \ref{lst:ugsbox-guard} merupakan contoh hasil pemanggilan \textit{ugsbox guard}.
 
-\par Selain melalui CLI, \textit{UGSbox} juga dapat digunakan melalui pemanggilan fungsi pada bahasa pemrograman GO. Untuk dapat menggunakan \textit{UGSbox} sebagai \textit{library}, pengguna dapat meng-\textit{import} \textit{package https://github.com/jauhararifin/ugrade} dan \textit{https://github.com/jauhararifin/ugrade/sandbox}. Penggunaan \textit{library} tersebut dapat dapat dilihat pada dokumentasi \textit{UGrade} di \textit{https://godoc.org/github.com/jauhararifin/ugrade}.
+\par Selain melalui CLI, UGSbox juga dapat digunakan melalui pemanggilan fungsi pada bahasa pemrograman GO. Untuk dapat menggunakan UGSbox sebagai \textit{library}, pengguna dapat meng-\textit{import} \textit{package https://github.com/jauhararifin/ugrade} dan \textit{https://github.com/jauhararifin/ugrade/sandbox}. Penggunaan \textit{library} tersebut dapat dapat dilihat pada dokumentasi UGrade di \textit{https://godoc.org/github.com/jauhararifin/ugrade}.
 
-\section{\textit{UGJob}}
+\section{UGJob}
 
 % TODO: jelasin kodenya
 
-\par \textit{UGJob} merupakan implementasi dari \textit{worker} pada keluarga perangkat lunak \textit{UGrade}. \textit{UGJob} dikembangkan menggunakan bahasa GO dan berperan dalam menilai jawaban pengguna. \textit{UGJob} dikembangkan sebagai sebuah \textit{executable} yang dapat dijalankan melalui CLI. \textit{UGDesktop} akan secara periodik menjalankan \textit{UGJob} untuk melakukan penilaian.
+\par UGJob merupakan implementasi dari \textit{worker} pada keluarga perangkat lunak UGrade. UGJob dikembangkan menggunakan bahasa GO dan berperan dalam menilai jawaban pengguna. UGJob dikembangkan sebagai sebuah \textit{executable} yang dapat dijalankan melalui CLI. UGDesktop akan secara periodik menjalankan UGJob untuk melakukan penilaian.
 
-\par Setiap \textit{grading} yang dihasilkan oleh \textit{UGServer} akan dinilai oleh \textit{worker} yang ada pada komputer pengguna. \textit{Worker} pada komputer pengguna tidak perlu mengetahui adanya konsep \textit{grading group}, \textit{grading size}, dan \textit{grader group}. \textit{Worker} hanya perlu meminta \textit{grading} pada \textit{UGServer} untuk dinilai. Dalam meminta \textit{grading}, \textit{worker} hanya perlu mengirimkan ID dari pengguna yang bertindak sebagai \textit{worker}. \textit{UGServer} akan memberikan \textit{grading} yang sesuai dengan ID pengguna dari \textit{worker} tersebut.
+\par Setiap \textit{grading} yang dihasilkan oleh UGServer akan dinilai oleh \textit{worker} yang ada pada komputer pengguna. \textit{Worker} pada komputer pengguna tidak perlu mengetahui adanya konsep \textit{grading group}, \textit{grading size}, dan \textit{grader group}. \textit{Worker} hanya perlu meminta \textit{grading} pada UGServer untuk dinilai. Dalam meminta \textit{grading}, \textit{worker} hanya perlu mengirimkan ID dari pengguna yang bertindak sebagai \textit{worker}. UGServer akan memberikan \textit{grading} yang sesuai dengan ID pengguna dari \textit{worker} tersebut.
 
-\par Di sisi \textit{worker}, semua \textit{grading} yang perlu dinilai akan dipandang sebagai sebuah \textit{job}. Pada Tugas Akhir ini, \textit{job} dapat disamakan dengan \textit{grading} karena sebuah \textit{grading} akan dianggap sebagai sebuah \textit{job} oleh \textit{worker}. Istilah \textit{job} digunakan untuk meningkatkan abstraksi dari \textit{worker}. \textit{Worker} tidak perlu mengetahui konsep penilaian yang dilakukan di sisi \textit{UGServer}. \textit{Worker} tidak perlu mengetahui adanya konsep \textit{grading} pada \textit{UGServer}. Semua penilaian yang perlu dilakukan oleh \textit{worker} akan dianggap sebagai sebuah \textit{job}. Dengan menggunakan istilah \textit{job}, sistem penilaian yang ada pada sisi \textit{UGServer} dapat dengan mudah dimodifikasi tanpa memengaruhi \textit{worker}.
+\par Di sisi \textit{worker}, semua \textit{grading} yang perlu dinilai akan dipandang sebagai sebuah \textit{job}. Pada tugas akhir ini, \textit{job} dapat disamakan dengan \textit{grading} karena sebuah \textit{grading} akan dianggap sebagai sebuah \textit{job} oleh \textit{worker}. Istilah \textit{job} digunakan untuk meningkatkan abstraksi dari \textit{worker}. \textit{Worker} tidak perlu mengetahui konsep penilaian yang dilakukan di sisi UGServer. \textit{Worker} tidak perlu mengetahui adanya konsep \textit{grading} pada UGServer. Semua penilaian yang perlu dilakukan oleh \textit{worker} akan dianggap sebagai sebuah \textit{job}. Dengan menggunakan istilah \textit{job}, sistem penilaian yang ada pada sisi UGServer dapat dengan mudah dimodifikasi tanpa memengaruhi \textit{worker}.
 
 \begin{lstlisting}[caption={Contoh Hasil Eksekusi Perintah \textit{ugjob consume}},label={lst:ugjob-consume},language=Bash,style=BashStyle]
 $ ugjob consume --help
@@ -271,13 +271,13 @@ Global Flags:
       --trace   show trace message
 \end{lstlisting}
 
-\par \textit{UGJob} dapat dijalankan melalui CLI dengan mengetikkan perintah \textit{ugjob consume}. \textit{UGJob} memerlukan \textit{token} yang bisa didapatkan oleh pengguna pada saat melakukan \textit{sign in}. \textit{Token} ini berguna untuk mengidentifikasi ID dari pengguna. \textit{UGServer} akan menggunakan \textit{token} untuk menentukan \textit{job} mana yang akan dikerjakan oleh \textit{worker}. Kode \ref{lst:ugjob-consume} merupakan contoh hasil pemanggilan \textit{ugjob consume}.
+\par UGJob dapat dijalankan melalui CLI dengan mengetikkan perintah \textit{ugjob consume}. UGJob memerlukan \textit{token} yang bisa didapatkan oleh pengguna pada saat melakukan \textit{sign in}. \textit{Token} ini berguna untuk mengidentifikasi ID dari pengguna. UGServer akan menggunakan \textit{token} untuk menentukan \textit{job} mana yang akan dikerjakan oleh \textit{worker}. Kode \ref{lst:ugjob-consume} merupakan contoh hasil pemanggilan \textit{ugjob consume}.
 
-\par Pemanggilan \textit{ugjob consume} akan menjalankan \textit{worker} pada komputer pengguna dan proses penilaian akan mulai dilakukan. Penilaian diawali dengan pengambilan \textit{job} oleh \textit{UGJob}. \textit{UGJob} akan meminta \textit{job} kepada \textit{UGServer} dengan mengirimkan \textit{GET HTTP request} ke \textit{UGServer} dengan menyertakan \textit{token} yang dimilikinya. \textit{HTTP Request} tersebut akan dikirimkan ke URL \textit{/gradings} pada \textit{UGServer} dengan menyertakan \textit{token} pada bagian \textit{header}.
+\par Pemanggilan \textit{ugjob consume} akan menjalankan \textit{worker} pada komputer pengguna dan proses penilaian akan mulai dilakukan. Penilaian diawali dengan pengambilan \textit{job} oleh UGJob. UGJob akan meminta \textit{job} kepada UGServer dengan mengirimkan \textit{GET HTTP request} ke UGServer dengan menyertakan \textit{token} yang dimilikinya. \textit{HTTP Request} tersebut akan dikirimkan ke URL \textit{/gradings} pada UGServer dengan menyertakan \textit{token} pada bagian \textit{header}.
 
-\par Setiap permintaan \textit{job} yang dilakukan oleh \textit{UGJob} akan diproses oleh \textit{UGServer}. \textit{UGServer} akan memberikan job yang sesuai kepada \textit{UGJob}. Pemberian \textit{job} dilakukan dengan memandang \textit{token} yang disertakan oleh \textit{UGJob} ketika melakukan permintaan \textit{job}. Jika tidak terdapat \textit{job} yang perlu dikerjakan, maka \textit{UGServer} akan memberikan \textit{HTTP response} dengan status 404. \textit{UGServer} akan memberikan \textit{job} kepada \textit{UGJob} dengan bentuk \textit{tar file} yang dikirimkan melalui \textit{body} pada \textit{HTTP response}. Selain itu, \textit{UGServer} juga menyertakan \textit{job token} pada setiap \textit{job} yang dikirimkan. \textit{Job token} ini berguna untuk membedakan antara satu buah \textit{job} dengan yang lainnya.
+\par Setiap permintaan \textit{job} yang dilakukan oleh UGJob akan diproses oleh UGServer. UGServer akan memberikan job yang sesuai kepada UGJob. Pemberian \textit{job} dilakukan dengan memandang \textit{token} yang disertakan oleh UGJob ketika melakukan permintaan \textit{job}. Jika tidak terdapat \textit{job} yang perlu dikerjakan, maka UGServer akan memberikan \textit{HTTP response} dengan status 404. UGServer akan memberikan \textit{job} kepada UGJob dengan bentuk \textit{tar file} yang dikirimkan melalui \textit{body} pada \textit{HTTP response}. Selain itu, UGServer juga menyertakan \textit{job token} pada setiap \textit{job} yang dikirimkan. \textit{Job token} ini berguna untuk membedakan antara satu buah \textit{job} dengan yang lainnya.
 
-\par Setelah mendapatkan \textit{job} dari \textit{UGServer}, \textit{UGJob} akan melakukan penilaian dengan mengekstrak \textit{job} yang didapatkannya. \textit{Job} akan diekstrak pada suatu direktori sementara di \textit{/tmp}. Direktori \textit{/tmp} dipilih karena sistem secara otomatis akan menghapus isi dari direktori ini ketika \textit{booting}. Selain itu, direktori ini juga sudah standar digunakan sebagai tempat penyimpanan \textit{file} yang bersifat sementara. Direktori \textit{Job} yang sudah berhasil dinilai secara otomatis akan dihapus oleh \textit{UGJob}. 
+\par Setelah mendapatkan \textit{job} dari UGServer, UGJob akan melakukan penilaian dengan mengekstrak \textit{job} yang didapatkannya. \textit{Job} akan diekstrak pada suatu direktori sementara di \textit{/tmp}. Direktori \textit{/tmp} dipilih karena sistem secara otomatis akan menghapus isi dari direktori ini ketika \textit{booting}. Selain itu, direktori ini juga sudah standar digunakan sebagai tempat penyimpanan \textit{file} yang bersifat sementara. Direktori \textit{Job} yang sudah berhasil dinilai secara otomatis akan dihapus oleh UGJob. 
 
 \subsection{Pembangkitan \textit{Testcase}}
 
@@ -293,21 +293,21 @@ Global Flags:
 
 \par Waktu dan \textit{memory} dari eksekusi solusi juri perlu dihitung untuk menentukan batasan waktu dan \textit{memory} solusi peserta. Waktu dan \textit{memory} eksekusi solusi juri dihitung pada saat pembangkitan \textit{testcase}. Solusi juri diperlukan dalam membangkitkan keluaran dari \textit{testcase}. Pada saat keluaran \textit{testcase} dibangkitkan, lamanya waktu eksekusi dan penggunaan \textit{memory}-nya dihitung dan dicatat.
 
-\par Perhitungan waktu eksekusi dilakukan dengan menggunakan \textit{UGSbox}. Proses yang dijalankan menggunakan \textit{UGSbox} dapat dihitung penggunaan waktu dan \textit{memory}-nya. Jika solusi juri melebihi batas waktu yang ditentukan oleh juri, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{internal error} yang menandakan bahwa penilaian gagal dilakukan. Hal ini dapat terjadi ketika komputer peserta sangat lambat.
+\par Perhitungan waktu eksekusi dilakukan dengan menggunakan UGSbox. Proses yang dijalankan menggunakan UGSbox dapat dihitung penggunaan waktu dan \textit{memory}-nya. Jika solusi juri melebihi batas waktu yang ditentukan oleh juri, maka UGJob akan memberikan \textit{verdict} \textit{internal error} yang menandakan bahwa penilaian gagal dilakukan. Hal ini dapat terjadi ketika komputer peserta sangat lambat.
 
 \subsection{Eksekusi Solusi Peserta}
 
-\par Setelah \textit{testcase} berhasil dibangkitkan dan batasan untuk peserta sudah berhasil dihitung, solusi peserta akan mulai dijalankan. Seperti program lainnya, solusi peserta dijalankan menggunakan \textit{UGSbox} untuk menghindari penggunaan \textit{resource} yang berlebihan dan menghindari risiko dari adanya serangan yang ada pada program solusi peserta.
+\par Setelah \textit{testcase} berhasil dibangkitkan dan batasan untuk peserta sudah berhasil dihitung, solusi peserta akan mulai dijalankan. Seperti program lainnya, solusi peserta dijalankan menggunakan UGSbox untuk menghindari penggunaan \textit{resource} yang berlebihan dan menghindari risiko dari adanya serangan yang ada pada program solusi peserta.
 
-\par Sebelum solusi peserta dijalankan, tentunya perlu ada proses kompilasi. Proses kompilasi ini dilakukan dengan cara yang sama untuk mengkompilasi program lain. Pada saat kompilasi, beberapa kegagalan mungkin terjadi seperti: kesalahan \textit{syntax}, penggunaan \textit{memory} terlalu besar, dan proses kompilasi berjalan terlalu lama. Jika terjadi kegagalan pada tahap kompilasi, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{compile error}.
+\par Sebelum solusi peserta dijalankan, tentunya perlu ada proses kompilasi. Proses kompilasi ini dilakukan dengan cara yang sama untuk mengkompilasi program lain. Pada saat kompilasi, beberapa kegagalan mungkin terjadi seperti: kesalahan \textit{syntax}, penggunaan \textit{memory} terlalu besar, dan proses kompilasi berjalan terlalu lama. Jika terjadi kegagalan pada tahap kompilasi, maka UGJob akan memberikan \textit{verdict} \textit{compile error}.
 
-\par Penggunaan CPU dan \textit{memory} dari program solusi peserta dibatasi berdasarkan batasan yang diperoleh ketika menjalankan program solusi juri. Jika solusi peserta menggunakan \textit{memory} melebihi batasan yang sudah dihitung, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{memory limit exceeded}. Selain itu, jika solusi peserta berjalan terlalu lama dan melebihi batasan waktu yang sudah dihitung maka \textit{UGJob} akan memberikan \textit{verdict} \textit{time limit exceeded}. Program solusi peserta mungkin saja melakukan kesalahan yang menyebabkan munculnya \textit{error} seperti pembagian dengan nol, atau mengakses alamat \textit{memory} yang belum dialokasikan. Jika hal ini terjadi, maka \textit{UGJob} akan memberikan \textit{verdict} \textit{runtime error}.
+\par Penggunaan CPU dan \textit{memory} dari program solusi peserta dibatasi berdasarkan batasan yang diperoleh ketika menjalankan program solusi juri. Jika solusi peserta menggunakan \textit{memory} melebihi batasan yang sudah dihitung, maka UGJob akan memberikan \textit{verdict} \textit{memory limit exceeded}. Selain itu, jika solusi peserta berjalan terlalu lama dan melebihi batasan waktu yang sudah dihitung maka UGJob akan memberikan \textit{verdict} \textit{time limit exceeded}. Program solusi peserta mungkin saja melakukan kesalahan yang menyebabkan munculnya \textit{error} seperti pembagian dengan nol, atau mengakses alamat \textit{memory} yang belum dialokasikan. Jika hal ini terjadi, maka UGJob akan memberikan \textit{verdict} \textit{runtime error}.
 
 \par Keluaran dari program solusi peserta disimpan pada direktori sementara yang diletakkan pada \textit{/tmp}. Selanjutnya keluaran dari program solusi peserta akan dinilai dengan cara dibandingkan dengan keluaran solusi juri. Setelah penilaian selesai dilakukan, keluaran program solusi peserta sudah tidak digunakan lagi. Oleh sebab itu, keluaran program solusi peserta dihapus setelah penilaian selesai dilakukan.
 
 \subsection{Penilaian Keluaran Solusi Peserta}
 
-\par Keluaran dari program solusi peserta perlu dinilai kebenarannya. Penilaian kebenaran dari program solusi peserta dilakukan dengan cara membandingkannya dengan keluaran solusi juri. \textit{UGJob} membandingkan keluaran program solusi peserta dengan program solusi juri dengan menggunakan \textit{checker}.
+\par Keluaran dari program solusi peserta perlu dinilai kebenarannya. Penilaian kebenaran dari program solusi peserta dilakukan dengan cara membandingkannya dengan keluaran solusi juri. UGJob membandingkan keluaran program solusi peserta dengan program solusi juri dengan menggunakan \textit{checker}.
 
 \par \textit{Checker} merupakan sebuah program yang dibuat oleh juri dan digunakan untuk menilai kebenaran program solusi peserta. Seperti pada program lainnya, perlu adanya proses kompilasi yang dilakukan pada \textit{checker}. Proses kompilasi \textit{checker} dilakukan dengan cara yang sama seperti kompilasi program lainnya.
 
@@ -315,38 +315,140 @@ Global Flags:
 
 \par Setelah \textit{checker} selesai dikompilasi, \textit{checker} akan dijalankan dengan memberikan masukan berupa masukan \textit{testcase}, keluaran program solusi juri dan keluaran program solusi peserta. \textit{Checker} kemudian akan memberikan keluaran berupa kebenaran dari program solusi peserta. Kode \ref{lst:exact-match-checker} merupakan contoh \textit{checker} yang membandingkan kesamaan tiap \textit{byte} dari keluaran solusi peserta dan solusi juri.
 
-\par Program \textit{checker} akan memberikan keluaran berupa \textit{string} yang dapat bernilai \textit{AC} atau \textit{WA}. Keluaran \textit{checker} akan bernilai \textit{AC} jika solusi peserta dianggap benar, dan akan bernilai \textit{WA} jika sebaliknya. \textit{UGJob} kemudian akan mengirimkan \textit{verdict} kepada \textit{UGServer} sesuai dengan hasil penilaian \textit{checker}.
+\par Program \textit{checker} akan memberikan keluaran berupa \textit{string} yang dapat bernilai \textit{AC} atau \textit{WA}. Keluaran \textit{checker} akan bernilai \textit{AC} jika solusi peserta dianggap benar, dan akan bernilai \textit{WA} jika sebaliknya. UGJob kemudian akan mengirimkan \textit{verdict} kepada UGServer sesuai dengan hasil penilaian \textit{checker}.
 
-\par Program \textit{checker} yang dibuat oleh juri mungkin saja memiliki kesalahan. Kesalahan tersebut mengakibatkan program \textit{checker} menghasilkan \textit{error}. Selain itu, jika program \textit{checker} juga mungkin menggunakan terlalu banyak \textit{memory} dan menghabiskan terlalu banyak \textit{waktu}. Jika hal ini terjadi, maka program \textit{checker} akan dihentikan dan \textit{UGJob} akan menghasilkan \textit{verdict} \textit{internal error}.
+\par Program \textit{checker} yang dibuat oleh juri mungkin saja memiliki kesalahan. Kesalahan tersebut mengakibatkan program \textit{checker} menghasilkan \textit{error}. Selain itu, jika program \textit{checker} juga mungkin menggunakan terlalu banyak \textit{memory} dan menghabiskan terlalu banyak \textit{waktu}. Jika hal ini terjadi, maka program \textit{checker} akan dihentikan dan UGJob akan menghasilkan \textit{verdict} \textit{internal error}.
 
-\par Setelah penilaian selesai dilakukan dan \textit{verdict} sudah ditentukan, hasil penilaian akan dikirmkan ke \textit{UGServer}. Hasil penilaian yang dikirimkan berupa \textit{verdict} hasil penilaian. Pengiriman dilakukan melalui \textit{POST HTTP request}. \textit{Job token} disertakan pada \textit{header} dari \textit{HTTP request} sebagai identitas dari \textit{job} yang telah diselesaikan.
+\par Setelah penilaian selesai dilakukan dan \textit{verdict} sudah ditentukan, hasil penilaian akan dikirmkan ke UGServer. Hasil penilaian yang dikirimkan berupa \textit{verdict} hasil penilaian. Pengiriman dilakukan melalui \textit{POST HTTP request}. \textit{Job token} disertakan pada \textit{header} dari \textit{HTTP request} sebagai identitas dari \textit{job} yang telah diselesaikan.
 
-\section{\textit{UGDesktop}}
+\section{UGDesktop}
 
-\par Dalam kelompok perangkat lunak \textit{UGrade}, pengguna dapat berinteraksi dengan sistem kompetisi dengan \textit{UGDesktop}. \textit{UGDesktop} memudahkan interaksi pengguna dengan memberikan antar-muka berbasis grafis. Pengguna dapat meng-\textit{install} \textit{UGDesktop} pada komputernya. Pengguna kemudian dapat menjalankan \textit{UGDesktop} sebagai aplikasi \textit{desktop} pada komputernya.
+\par Dalam kelompok perangkat lunak UGrade, pengguna dapat berinteraksi dengan sistem kompetisi dengan UGDesktop. UGDesktop memudahkan interaksi pengguna dengan memberikan antar-muka berbasis grafis. Pengguna dapat meng-\textit{install} UGDesktop pada komputernya. Pengguna kemudian dapat menjalankan UGDesktop sebagai aplikasi \textit{desktop} pada komputernya.
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=\textwidth]{images/ugdesktop-example}
-    \caption{Halaman Kompetisi Dari \textit{UGDesktop}}
+    \caption{Halaman Kompetisi Dari UGDesktop}
     \label{fig:ugdesktop-example}
 \end{figure}
 
-\par \textit{UGDesktop} dikembangkan menggunakan \textit{typescript}, \textit{react} dan \textit{electron}. \textit{React} dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis \textit{react}. \textit{React} umumnya digunakan untuk mengembangkan aplikasi berbasis \textit{web} dan membutuhkan \textit{web browser} untuk menjalankan aplikasi tersebut. Pengguna membutuhkan aplikasi yang dapat berjalan sebagai \textit{desktop app} untuk dapat menjalankan sistem antar muka pengguna sekaligus \textit{worker}. Untuk mengatasi hal tersebut, \textit{electron} digunakan untuk menjalankan aplikasi \textit{web} yang berbasis \textit{react} sebagai aplikasi \textit{desktop}. Gambar \ref{fig:ugdesktop-example} merupakan contoh salah satu halaman pada \textit{UGDesktop}.
+\par UGDesktop dikembangkan menggunakan \textit{typescript}, \textit{react} dan \textit{electron}. \textit{React} dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis \textit{react}. \textit{React} umumnya digunakan untuk mengembangkan aplikasi berbasis \textit{web} dan membutuhkan \textit{web browser} untuk menjalankan aplikasi tersebut. Pengguna membutuhkan aplikasi yang dapat berjalan sebagai \textit{desktop app} untuk dapat menjalankan sistem antar muka pengguna sekaligus \textit{worker}. Untuk mengatasi hal tersebut, \textit{electron} digunakan untuk menjalankan aplikasi \textit{web} yang berbasis \textit{react} sebagai aplikasi \textit{desktop}. Gambar \ref{fig:ugdesktop-example} merupakan contoh salah satu halaman pada UGDesktop.
 
-\par Untuk melakukan penilaian, \textit{UGDesktop} secara periodik akan meminta menjalankan \textit{UGJob}. Dalam menjalankan \textit{UGJob}, \textit{UGDesktop} menggunakan \textit{token} yang didapatkannya ketika pengguna melakukan \textit{sign in}. \textit{UGJob} yang dijalankan \textit{UGDesktop} akan meminta \textit{job} dari \textit{UGServer} untuk dinilai.
+\par Untuk melakukan penilaian, UGDesktop secara periodik akan meminta menjalankan UGJob. Dalam menjalankan UGJob, UGDesktop menggunakan \textit{token} yang didapatkannya ketika pengguna melakukan \textit{sign in}. UGJob yang dijalankan UGDesktop akan meminta \textit{job} dari UGServer untuk dinilai.
 
 \section{Pengujian}
 
-\par Pengujian dilakukan dengan menyimulasikan proses pengiriman jawaban oleh pengguna. Sebuah kompetisi diciptakan dengan beberapa pengguna yang akan mengirimkan jawaban secara periodik. Kinerja sistem yang dibangun dibandingkan dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu \textit{DOMJudge}. \textit{DOMJudge} dipilih karena bersifat \textit{open source} dan sudah populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. \textit{DOMJudge} telah digunakan untuk menyelenggarakan ACM-ICPC, Arkavidia, Vocompfest dan banyak kompetisi lainnya.
+\par Pada tugas akhir ini, dilakukan tiga pengujian terhadap yaitu kinerja, kebenaran dan keamanan. Kinerja dari sistem yang dibangun pada tugas akhir ini diuji dengan melakukan simulasi pengiriman jawaban oleh peserta. Untuk mengukur peningkatan kinerja, sistem \textit{online judge} yang dibangun dibandingkan dengan sistem \textit{online judge} lain yang populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. Kebenaran dari sistem yang dibangun diuji dengan mengirimkan berbagai jenis jawaban kepada sistem. Kebenaran dari sistem ditentukan berdasarkan hasil yang diberikan oleh sistem terhadap berbagai jenis jawaban yang dinilai. Keamanan dari sistem diuji dengan melakukan beberapa jenis serangan kepada sistem. Keamanan dari sisem ditentukan berdasarkan ketahanan sistem terhadap serangan-serangan yang diberikan.
+
+\subsection{Pengujian Kinerja}
+
+\par Pengujian kinerja dilakukan dengan menyimulasikan proses pengiriman jawaban oleh pengguna. Sebuah kompetisi diciptakan dengan beberapa pengguna yang akan mengirimkan jawaban secara periodik. Kinerja sistem yang dibangun dibandingkan dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu DOMJudge. DOMJudge dipilih karena bersifat \textit{open source} dan sudah populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. DOMJudge telah digunakan untuk menyelenggarakan ACM-ICPC, Arkavidia, Vocompfest dan banyak kompetisi lainnya.
+
+\par Lima belas peserta disiapkan intuk melakukan pengujian kinerja sistem \textit{online judge} yang akan dibandingkan. Lima belas peserta tersebut akan mengirimkan beberapa \textit{source code} kepada sistem \textit{online judge} secara periodik. Pengujian dilakukan dengan membuat sebuah soal \textit{competitive programming}. Soal yang digunakan pada pengujian adalah soal perkalian dua buah polinomial berderajat $N$. Kompleksitas yang diharapkan oleh juri dari soal tersebut adalah $O(N log N)$. Soal ini dipilih karena memiliki beragam solusi dengan kompleksitas yang berbeda-beda. Solusi dengan kompleksitas yang lebih buruk dari $O(N log N)$ akan dianggap sebagai solusi yang salah.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/performance-testing-activity}
+    \caption{Diagram Aktivitas Dari Pengiriman Jawaban Peserta}
+    \label{fig:performance-testing-activity}
+\end{figure}
+
+\par Setiap peserta dari lima belas peserta yang telah disiapkan akan menunggu selama lima puluh hingga seratus detik kemudian mengirimkan jawaban secara periodik tiap dua puluh hingga empat puluh detik. Terdapat empat jenis jawaban yang akan dikirimkan oleh peserta yaitu:
+\begin{enumerate}
+    \item Jawaban dengan kompleksitas $O(N log N)$. Jawaban ini merupakan jawaban yang diharapkan oleh juri dan akan dinilai sebagai jawaban yang benar.
+    \item Jawaban dengan kompleksitas $O(N^{log_2{3}})$.
+    \item Jawaban dengan kompleksitas $O(N^2)$.
+    \item Jawaban dengan kompleksitas $O(N^2)$ tetapi berbeda implementasi dengan jawaban ketiga.
+\end{enumerate}
+Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap jawaban dari empat jawaban tersebut akan dikirimkan oleh setiap peserta sebanyak dua kali. Jumlah jawaban yang dikirimkan oleh peserta adalah delapan buah jawaban karena setiap peserta mengirimkan setiap jenis jawaban dua kali. Setelah delapan buah jawaban tersebut dikirimkan oleh peserta, peserta akan berhenti mengirimkan jawaban. Diagram aktivitas pada Gambar \ref{fig:performance-testing-activity} menggambarkan alur pengiriman jawaban yang dilakukan oleh setiap peserta.
+
+\par Sistem \textit{online judge} yang akan diuji yaitu DOMJudge dan UGrade di-\textit{deploy} dengan menggunakan layanan EC2 dari AWS (Amazon Web Service). DOMJudge terdiri dari dua jenis program yaitu DOMServer dan JudgeHost. DOMServer merupakan program yang digunakan oleh DOMJudge sebagai sistem manajemen kompetisi sedangkan JudgeHost merupakan program yang berperan sebagai \textit{autograder}. Pada pengujian kinerja, DOMServer dijalankan pada mesin EC2 dengan tipe \textit{t2.medium}. Mesin tersebut memiliki RAM sebesar 4GB dan dua buah \textit{virtual} CPU. Jenis mesin ini dipilih karena murah dan cukup untuk menangani pengiriman jawaban dari pengguna. JudgeHost dijalankan pada EC2 dengan tipe \textit{t2.micro} yang memiliki 1GB RAM dan satu buah \textit{virtual} CPU. EC2 jenis tersebut dipilih karena murah dan cukup untuk melakukan penilaian jawaban peserta.
+
+\par DOMJudge diuji dengan menjalankan satu buah DOMServer dan dua buah JudgeHost. JudgeHost dijalankan pada dua buah mesin karena umumnya dua buah mesin sudah sangat cukup untuk melakukan penilaian jawaban lima belas peserta. Hal ini didasari oleh keberjalanan kompetisi \textit{competitive programming} Arkavidia pada tahun 2018 yang diikuti lebih dari seratus orang dengan hanya menggunakan enam buah JudgeHost. Kompetisi tersebut berjalan dengan cukup lancar sehingga dua buah JudgeHost dinilai cukup untuk menilai jawaban dari lima belas orang peserta.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{| c | c | c | c |}
+        \hline
+        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
+        \hline
+        \hline
+        1 & 0.068 & 384.008 & 188.073 \\
+        \hline
+        2 & 0.143 & 384.832 & 192.339 \\
+        \hline
+        3 & 1.3138 & 390.6347 & 194.1095 \\
+        \hline
+    \end{tabular}
+    \caption{Tabel Data Lamanya Jawaban Berada Dalam Antrian Sistem Pada Saat Pengujian DOMJudge}
+    \label{tab:domjudge-wait-time}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{| c | c | c | c |}
+        \hline
+        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
+        \hline
+        \hline
+        1 & 9.0931 & 12.4293 & 10.011825 \\
+        \hline
+        2 & 9.0994 & 16.1991 & 10.06895833 \\
+        \hline
+        3 & 9.0742 & 15.9872 & 10.05397167 \\
+        \hline
+    \end{tabular}
+    \caption{Tabel Data Lamanya Jawaban Dinilai Oleh Sistem Pada Saat Pengujian DOMJudge}
+    \label{tab:domjudge-process-time}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{| c | c | c | c |}
+        \hline
+        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
+        \hline
+        \hline
+        1 & 12.3457 & 393.2282 & 198.0845733 \\
+        \hline
+        2 & 16.3426 & 393.9705 & 202.4083175 \\
+        \hline
+        3 & 17.301 & 399.7231 & 204.1634717 \\
+        \hline
+    \end{tabular}
+    \caption{Tabel Data Lamanya Jawaban Berada Dalam Sistem Pada Saat Pengujian DOMJudge}
+    \label{tab:domjudge-system-time}
+\end{table}
+
+\pgfplotsset{width=\textwidth, compat=1.14}
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=700, ymin=0, ymax=100, legend pos=north east, ymajorgrids=true, grid style=dashed,]
+            \addplot[color=blue,] table {data/domjudge-queue-test1.txt};
+            \addlegendentry{Pengujian pertama}
+            \addplot[color=red,] table {data/domjudge-queue-test2.txt};
+            \addlegendentry{Pengujian kedua}
+            \addplot[color=green] table {data/domjudge-queue-test3.txt};
+            \addlegendentry{Pengujian ketiga}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Diagram Jumlah Jawaban Pada Antrian DOMJudge}
+    \label{fig:domjudge-queue}
+\end{figure}
+
+\par Pengujian pada sistem \textit{online judge} dilakukan sebanyak tiga kali. Hal ini bertujuan untuk meningkatkan keakuratan pengujian. Waktu lamanya penilaian sebuah dan banyaknya antrian jawaban yang ada pada sistem dicatat untuk menentukan kinerja sistem. Tabel \ref{tab:domjudge-wait-time}, \ref{tab:domjudge-process-time} dan \ref{tab:domjudge-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} DOMJudge. Gambar \ref{fig:domjudge-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem DOMJudge dari waktu ke waktu.
+
+\subsection{Pengujian Kebenaran}
 
 \par Selain pengujian kinerja, diperlukan pengujian kebenaran dari sistem yang dibangun. Pengujian kebenaran dilakukan dengan menyimulasikan proses pengiriman jawaban oleh peserta. Kebenaran sistem yang dibangun ditentukan berdasarkan \textit{verdict} penilaian yang diberikan oleh sistem. Sistem yang benar akan memberikan \textit{verdict} yang sama ketika jawaban yang sama dinilai berkali-kali di komputer yang berbeda. Pada pengujian kebenaran, digunakan sebuah soal dengan enam buah jawaban yang diharapkan akan memiliki \textit{verdict} \textit{accepted}, \textit{wrong answer}, \textit{memory limit exceeded}, \textit{time limit exceeded}, \textit{runtime error}, dan \textit{compile error}.
+
+\subsection{Pengujian Keamanan}
 
 \par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Jawaban yang dikirimkan adalah sebagai berikut:
 \begin{enumerate}
     \item jawaban yang berisi \textit{fork bomb}
     \item jawaban yang berisi \textit{compile bomb}
-    \item jawaban yang berisi \textit{reverse shell}
     \item jawaban yang mencoba keluar dari lingkungan \textit{sandbox}
 \end{enumerate} 
 Komputer yang bertindak sebagai worker diharapkan dapat tetap berjalan setelah jawaban tersebut dieksekusi.
