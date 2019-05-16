@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=1000, ymin=0, ymax=20, legend pos=north east, ymajorgrids=true, grid style=dashed,]
+        \addplot[color=green,] table {data/ugrade-queue-gz5-test1.txt};
+        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 5$}
+        \addplot[color=green,] table {data/ugrade-queue-gz5-test2.txt};
+        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 5$}
+        \addplot[color=green,] table {data/ugrade-queue-gz5-test3.txt};
+        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 5$}
+
+        \addplot[color=red,] table {data/ugrade-queue-gz2-test1.txt};
+        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 2$}
+        \addplot[color=red,] table {data/ugrade-queue-gz2-test2.txt};
+        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 2$}
+        \addplot[color=red,] table {data/ugrade-queue-gz2-test3.txt};
+        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 2$}
+
+        \addplot[color=blue,] table {data/ugrade-queue-gz1-test1.txt};
+        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 1$}
+        \addplot[color=blue,] table {data/ugrade-queue-gz1-test2.txt};
+        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 1$}
+        \addplot[color=blue] table {data/ugrade-queue-gz1-test3.txt};
+        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 1$}
+    \end{axis}
+\end{tikzpicture}

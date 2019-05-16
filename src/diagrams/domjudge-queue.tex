@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+    \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=700, ymin=0, ymax=100, legend pos=north east, ymajorgrids=true, grid style=dashed,]
+        \addplot[color=blue,] table {data/domjudge-queue-test1.txt};
+        \addlegendentry{Pengujian pertama}
+        \addplot[color=red,] table {data/domjudge-queue-test2.txt};
+        \addlegendentry{Pengujian kedua}
+        \addplot[color=green] table {data/domjudge-queue-test3.txt};
+        \addlegendentry{Pengujian ketiga}
+    \end{axis}
+\end{tikzpicture}

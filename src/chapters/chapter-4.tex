@@ -368,54 +368,21 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        \hline
-        1 & 0.068 & 384.008 & 188.073 \\
-        \hline
-        2 & 0.143 & 384.832 & 192.339 \\
-        \hline
-        3 & 1.3138 & 390.6347 & 194.1095 \\
-        \hline
-    \end{tabular}
+    \input{tables/domjudge-wait-time}
     \caption{Tabel Data Lamanya Jawaban Berada Dalam Antrian Sistem Pada Saat Pengujian DOMJudge}
     \label{tab:domjudge-wait-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        \hline
-        1 & 9.0931 & 12.4293 & 10.011825 \\
-        \hline
-        2 & 9.0994 & 16.1991 & 10.06895833 \\
-        \hline
-        3 & 9.0742 & 15.9872 & 10.05397167 \\
-        \hline
-    \end{tabular}
+    \input{tables/domjudge-process-time}
     \caption{Tabel Data Lamanya Jawaban Dinilai Oleh Sistem Pada Saat Pengujian DOMJudge}
     \label{tab:domjudge-process-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        \hline
-        1 & 12.3457 & 393.2282 & 198.0845733 \\
-        \hline
-        2 & 16.3426 & 393.9705 & 202.4083175 \\
-        \hline
-        3 & 17.301 & 399.7231 & 204.1634717 \\
-        \hline
-    \end{tabular}
+    \input{tables/domjudge-system-time}
     \caption{Tabel Data Lamanya Jawaban Berada Dalam Sistem Pada Saat Pengujian DOMJudge}
     \label{tab:domjudge-system-time}
 \end{table}
@@ -423,16 +390,7 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 \pgfplotsset{width=\textwidth, compat=1.14}
 \begin{figure}[ht!]
     \centering
-    \begin{tikzpicture}
-        \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=700, ymin=0, ymax=100, legend pos=north east, ymajorgrids=true, grid style=dashed,]
-            \addplot[color=blue,] table {data/domjudge-queue-test1.txt};
-            \addlegendentry{Pengujian pertama}
-            \addplot[color=red,] table {data/domjudge-queue-test2.txt};
-            \addlegendentry{Pengujian kedua}
-            \addplot[color=green] table {data/domjudge-queue-test3.txt};
-            \addlegendentry{Pengujian ketiga}
-        \end{axis}
-    \end{tikzpicture}
+    \input{diagrams/domjudge-queue}
     \caption{Diagram Jumlah Jawaban Pada Antrian DOMJudge}
     \label{fig:domjudge-queue}
 \end{figure}
@@ -445,121 +403,21 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \multicolumn{4}{ c }{$\textit{grading size} = 1$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 0.042419 & 1.344883 & 0.404296916 \\
-        \hline
-        2 & 0.042548 & 1.557151 & 0.3983604034 \\
-        \hline
-        3 & 0.047345 & 1.923494 & 0.4087344167 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 2$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 0.043881 & 3.361493 & 0.7797795063 \\
-        \hline
-        2 & 0.046084 & 4.424307 & 0.8150252743 \\
-        \hline
-        3 & 0.040115 & 3.757078 & 0.8969267395 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 5$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 0.043896 & 22.403105 & 4.316621826 \\
-        \hline
-        2 & 0.049549 & 16.500838 & 3.108732139 \\
-        \hline
-        3 & 0.052324 & 27.276638 & 4.006910664 \\
-        \hline
-    \end{tabular}
+    \input{tables/ugrade-wait-time}
     \caption{Tabel Data Lamanya Jawaban Berada Dalam Antrian Sistem Pada Saat Pengujian UGrade}
     \label{tab:ugrade-wait-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \multicolumn{4}{ c }{$\textit{grading size} = 1$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.401662 & 39.077579 & 12.13586354 \\
-        \hline
-        2 & 8.411528 & 31.197043 & 11.9722958 \\
-        \hline
-        3 & 8.364863 & 30.426985 & 11.89300238 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 2$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.009209 & 29.991333 & 10.59105839 \\
-        \hline
-        2 & 8.315464 & 30.062005 & 10.60783176 \\
-        \hline
-        3 & 8.114838 & 30.923159 & 10.63290684 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 5$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.388995 & 28.913371 & 9.896686938 \\
-        \hline
-        2 & 8.396959 & 29.173359 & 9.882655417 \\
-        \hline
-        3 & 8.050263 & 29.357337 & 9.698689441 \\
-        \hline
-    \end{tabular}
+    \input{tables/ugrade-process-time}
     \caption{Tabel Data Lamanya Jawaban Dinilai Oleh Sistem Pada Saat Pengujian UGrade}
     \label{tab:ugrade-process-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{| c | c | c | c |}
-        \multicolumn{4}{ c }{$\textit{grading size} = 1$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.525866 & 40.033336 & 12.54016045 \\
-        \hline
-        2 & 8.454445 & 31.536312 & 12.3706562 \\
-        \hline
-        3 & 8.445607 & 31.41732 & 12.3017368 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 2$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.140914 & 32.316424 & 11.3708379 \\
-        \hline
-        2 & 8.418419 & 31.976166 & 11.42285704 \\
-        \hline
-        3 & 8.367557 & 33.021025 & 11.52983358 \\
-        \hline
-
-        \multicolumn{4}{ c }{$\textit{grading size} = 5$} \\
-        \hline
-        Nomor pengujian & Minimum (detik) & Maksimum (detik) & Rata-rata (detik) \\
-        \hline
-        1 & 8.538458 & 34.79008 & 14.21330876 \\
-        \hline
-        2 & 8.558542 & 34.040856 & 12.99138756 \\
-        \hline
-        3 & 8.260255 & 35.796819 & 13.70560011 \\
-        \hline
-
-    \end{tabular}
+    \input{tables/ugrade-system-time}
     \caption{Tabel Data Lamanya Jawaban Berada Dalam Sistem Pada Saat Pengujian UGrade}
     \label{tab:ugrade-system-time}
 \end{table}
@@ -567,30 +425,7 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 \pgfplotsset{width=\textwidth, compat=1.14}
 \begin{figure}[ht!]
     \centering
-    \begin{tikzpicture}
-        \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=1000, ymin=0, ymax=20, legend pos=north east, ymajorgrids=true, grid style=dashed,]
-            \addplot[color=green,] table {data/ugrade-queue-gz5-test1.txt};
-            \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 5$}
-            \addplot[color=green,] table {data/ugrade-queue-gz5-test2.txt};
-            \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 5$}
-            \addplot[color=green,] table {data/ugrade-queue-gz5-test3.txt};
-            \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 5$}
-
-            \addplot[color=red,] table {data/ugrade-queue-gz2-test1.txt};
-            \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 2$}
-            \addplot[color=red,] table {data/ugrade-queue-gz2-test2.txt};
-            \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 2$}
-            \addplot[color=red,] table {data/ugrade-queue-gz2-test3.txt};
-            \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 2$}
-
-            \addplot[color=blue,] table {data/ugrade-queue-gz1-test1.txt};
-            \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 1$}
-            \addplot[color=blue,] table {data/ugrade-queue-gz1-test2.txt};
-            \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 1$}
-            \addplot[color=blue] table {data/ugrade-queue-gz1-test3.txt};
-            \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 1$}
-        \end{axis}
-    \end{tikzpicture}
+    \input{diagrams/ugrade-queue}
     \caption{Diagram Jumlah Jawaban Pada Antrian UGrade}
     \label{fig:ugrade-queue}
 \end{figure}
