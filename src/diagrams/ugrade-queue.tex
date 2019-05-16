@@ -1,24 +1,30 @@
 \begin{tikzpicture}
-    \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=1000, ymin=0, ymax=20, legend pos=north east, ymajorgrids=true, grid style=dashed,]
-        \addplot[color=green,] table {data/ugrade-queue-gz5-test1.txt};
-        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 5$}
+    \begin{groupplot}[group style={group size=1 by 3}, xmin=0,xmax=1000, ymin=0, ymax=20, legend pos=north east, ymajorgrids=true, grid style=dashed, height=0.3\textwidth, width=\textwidth]
+        \nextgroupplot
+        \addplot[color=green,] table {data/ugrade-queue-gz5-test1.txt}; \label{plots:ugrade-queue-gz5}
+        \addplot[color=red,] table {data/ugrade-queue-gz2-test1.txt}; \label{plots:ugrade-queue-gz2}
+        \addplot[color=blue,] table {data/ugrade-queue-gz1-test1.txt}; \label{plots:ugrade-queue-gz1}
+        \coordinate (top) at (rel axis cs:0,1);% coordinate at top of the first plot
+        
+        \nextgroupplot[ylabel={Jumlah jawaban pada antrian}]
         \addplot[color=green,] table {data/ugrade-queue-gz5-test2.txt};
-        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 5$}
-        \addplot[color=green,] table {data/ugrade-queue-gz5-test3.txt};
-        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 5$}
-
-        \addplot[color=red,] table {data/ugrade-queue-gz2-test1.txt};
-        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 2$}
         \addplot[color=red,] table {data/ugrade-queue-gz2-test2.txt};
-        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 2$}
-        \addplot[color=red,] table {data/ugrade-queue-gz2-test3.txt};
-        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 2$}
-
-        \addplot[color=blue,] table {data/ugrade-queue-gz1-test1.txt};
-        \addlegendentry{Pengujian pertama dengan $\textit{grading size} = 1$}
         \addplot[color=blue,] table {data/ugrade-queue-gz1-test2.txt};
-        \addlegendentry{Pengujian kedua dengan $\textit{grading size} = 1$}
+        
+        \nextgroupplot[xlabel={Waktu (detik)}]
+        \addplot[color=green,] table {data/ugrade-queue-gz5-test3.txt};
+        \addplot[color=red,] table {data/ugrade-queue-gz2-test3.txt};
         \addplot[color=blue] table {data/ugrade-queue-gz1-test3.txt};
-        \addlegendentry{Pengujian ketiga dengan $\textit{grading size} = 1$}
-    \end{axis}
+        \coordinate (bot) at (rel axis cs:1,0);% coordinate at bottom of the last plot
+    \end{groupplot}
+
+    \path (top|-current bounding box.north)--
+      coordinate(legendpos)
+      (bot|-current bounding box.north);
+    \matrix[matrix of nodes,anchor=south,draw,inner sep=0.2em,draw]
+        at([yshift=1ex]legendpos) {
+            \ref{plots:ugrade-queue-gz5}& $\textit{grading size} = 5$ &[5pt]
+            \ref{plots:ugrade-queue-gz2}& $\textit{grading size} = 2$ &[5pt]
+            \ref{plots:ugrade-queue-gz1}& $\textit{grading size} = 1$ \\
+        };
 \end{tikzpicture}

@@ -6,7 +6,7 @@ pdf:
 	mv temp/main.pdf Laporan-TA.pdf
 
 clean:
-	rm -r temp
+	rm -rf temp
 	find . -iname "*~" -exec rm '{}' ';'
 	rm src/main-blx.bib \
 	src/main.aux \
