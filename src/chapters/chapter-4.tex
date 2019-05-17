@@ -425,11 +425,20 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 \begin{figure}[ht!]
     \centering
     \input{diagrams/ugrade-queue}
-    \caption{Diagram Jumlah Jawaban Pada Antrian UGrade}
+    \caption{Diagram Jumlah Jawaban Pada Antrian UGrade Dengan Tiga Kali Pengujian}
     \label{fig:ugrade-queue}
 \end{figure}
 
 \par Pengujian UGrade dilakukan dengan beberapa nilai \textit{grading size}. Nilai \textit{grading size} yang diuji adalah satu, dua dan lima. Untuk meningkatkan keakuratan pengujian, setiap nilai \textit{grading size} diuji sebanyak tiga kali. Tabel \ref{tab:ugrade-wait-time}, \ref{tab:ugrade-process-time} dan \ref{tab:ugrade-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} UGrade. Gambar \ref{fig:ugrade-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem UGrade dari waktu ke waktu.
+
+% jelasin gambar fig:domjudge-queue
+\par Berdasarkan Gambar \ref{fig:domjudge-queue}, puncak jumlah antrian jawaban dari sistem DOMJudge memiliki nilai yang cukup tinggi yaitu tujuh puluh buah jawaban. Dari Gambar tersebut terlihat bahwa jumlah antrian pada DOMJudge terus meningkat hingga mencapai suatu puncak tertentu kemudian menurun hingga mencapai angka nol. Terjadinya peningkatan jumlah antrian di awal waktu tersebut disebabkan karena peserta sedang aktif mengirimkan jawaban kepada sistem sedangkan seluruh \textit{worker} sedang sibuk melakukan penilaian. Karena tidak ada \textit{worker} yang tersedia, jawaban peserta terus menerus dimasukkan kedalam antrian sistem dan mengakibatkan jumlah antrian sistem terus meningkat. Tidak tersedianya \textit{worker} disebabkan karena jumlah \textit{worker} yang tidak sebanding dengan jumlah peserta. Setelah jumlah antrian sistem mencapai puncaknya, jumlah antrian tersebut perlahan-lahan mulai turun. Hal ini disebabkan karena peserta sudah tidak aktif mengirimkan jawaban sehingga jumah antrian tidak bertambah lagi dan mulai turun karena \textit{worker} masih melakukan penilaian pada sisa jawaban di antrian tersebut.  
+
+% jelasin gambar fig:ugrade-queue
+\par Berdasarkan Gambar \ref{fig:ugrade-queue}, jumlah antrian dari sistem UGrade bergantung pada nilai \textit{grading size}. \textit{Grading size} yang tinggi menybabkan jumlah antrian pada sistem menjadi tinggi pula. \textit{Grading size} yang tinggi menybabkan sebuah jawaban harus dinilai beberapa kali sehingga jumlah antrian pada sistem meningkat. Kinerja dari UGrade dapat ditingkatkan dengan memilih nilai \textit{grading size} yang rendah. Meskipun begitu, nilai \textit{grading size} yang rendah akan mengurangi tingkat keamanan dari UGrade. Juri perlu menentukan nilai \textit{grading size} yang tepat untuk mendapatkan hasil yang optimal. Nilai \textit{grading size} perlu dipilih sedemikian rupa sehingga cukup tinggi untuk menjamin keamanan kompetisi dan cukup rendah untuk dapat memberikan kinerja yang optimal.
+
+% jelasin perbedaan fig:domjudge-queue sama fig:ugrade-queue
+\par Berbeda dengan jumlah antrian pada DOMJudge, jumlah antrian pada UGrade jauh lebih rendah dibandingkan dengan DOMJudge. Hal ini dikarenakan jumlah \textit{worker} yang ada pada DOMJudge selalu tetap dan tidak bergantung pada jumlah peserta, sedangkan jumlah \textit{worker} pada UGrade akan mengikuti jumlah peserta yang ada pada kompetisi tersebut. Pada pengujian yang dilakukan, jumlah \textit{worker} pada DOMJudge jauh lebih kecil dibandingkan dengan jumlah peserta kompetisi sehingga jumlah antrian pada sistem DOMJudge mengalami kenaikan di awal waktu dan memiliki puncak yang cukup tinggi. Grafik antrian pada UGrade tidak memiliki kenaikan yang signifikan maupun puncak yang tinggi. Hal tersebut dikarenakan jumlah \textit{worker} pada UGrade akan mengikuti banyaknya peserta pada kompetisi tersebut sehingga beban dari setiap \textit{worker} akan cenderung konstan berapapun pesertanya.
 
 \subsection{Pengujian Kebenaran}
 
