@@ -344,7 +344,7 @@ Global Flags:
 
 \par Pengujian kinerja dilakukan dengan menyimulasikan proses pengiriman jawaban oleh pengguna. Sebuah kompetisi diciptakan dengan beberapa pengguna yang akan mengirimkan jawaban secara periodik. Kinerja sistem yang dibangun dibandingkan dengan sistem \textit{online judge} yang bersifat \textit{open source} yaitu DOMJudge. DOMJudge dipilih karena bersifat \textit{open source} dan sudah populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. DOMJudge telah digunakan untuk menyelenggarakan ACM-ICPC, Arkavidia, Vocompfest dan banyak kompetisi lainnya.
 
-\par Lima belas peserta disiapkan intuk melakukan pengujian kinerja sistem \textit{online judge} yang akan dibandingkan. Lima belas peserta tersebut akan mengirimkan beberapa \textit{source code} kepada sistem \textit{online judge} secara periodik. Pengujian dilakukan dengan membuat sebuah soal \textit{competitive programming}. Soal yang digunakan pada pengujian adalah soal perkalian dua buah polinomial berderajat $N$. Kompleksitas yang diharapkan oleh juri dari soal tersebut adalah $O(N log N)$. Soal ini dipilih karena memiliki beragam solusi dengan kompleksitas yang berbeda-beda. Solusi dengan kompleksitas yang lebih buruk dari $O(N log N)$ akan dianggap sebagai solusi yang salah.
+\par Lima belas peserta disiapkan untuk melakukan pengujian kinerja sistem \textit{online judge} yang akan dibandingkan. Lima belas peserta tersebut akan mengirimkan beberapa \textit{source code} kepada sistem \textit{online judge} secara periodik. Pengujian dilakukan dengan membuat sebuah soal \textit{competitive programming}. Soal yang digunakan pada pengujian adalah soal perkalian dua buah polinomial berderajat $N$. Kompleksitas yang diharapkan oleh juri dari soal tersebut adalah $O(N log N)$. Soal ini dipilih karena memiliki beragam solusi dengan kompleksitas yang berbeda-beda. Solusi dengan kompleksitas yang lebih buruk dari $O(N log N)$ akan dianggap sebagai solusi yang salah.
 
 \begin{figure}[ht!]
     \centering
@@ -362,40 +362,51 @@ Global Flags:
 \end{enumerate}
 Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap jawaban dari empat jawaban tersebut akan dikirimkan oleh setiap peserta sebanyak dua kali. Jumlah jawaban yang dikirimkan oleh peserta adalah delapan buah jawaban karena setiap peserta mengirimkan setiap jenis jawaban dua kali. Setelah delapan buah jawaban tersebut dikirimkan oleh peserta, peserta akan berhenti mengirimkan jawaban. Diagram aktivitas pada Gambar \ref{fig:performance-testing-activity} menggambarkan alur pengiriman jawaban yang dilakukan oleh setiap peserta.
 
-\par Sistem \textit{online judge} yang akan diuji yaitu DOMJudge dan UGrade di-\textit{deploy} dengan menggunakan layanan EC2 dari AWS (Amazon Web Service). DOMJudge terdiri dari dua jenis program yaitu DOMServer dan JudgeHost. DOMServer merupakan program yang digunakan oleh DOMJudge sebagai sistem manajemen kompetisi sedangkan JudgeHost merupakan program yang berperan sebagai \textit{autograder}. Pada pengujian kinerja, DOMServer dijalankan pada mesin EC2 dengan tipe \textit{t2.medium}. Mesin tersebut memiliki RAM sebesar 4GB dan dua buah \textit{virtual} CPU. Jenis mesin ini dipilih karena murah dan cukup untuk menangani pengiriman jawaban dari pengguna. JudgeHost dijalankan pada EC2 dengan tipe \textit{t2.micro} yang memiliki 1GB RAM dan satu buah \textit{virtual} CPU. EC2 jenis tersebut dipilih karena murah dan cukup untuk melakukan penilaian jawaban peserta.
+\par Sistem \textit{online judge} yang akan diuji (DOMJudge dan UGrade) di-\textit{deploy} dengan menggunakan layanan EC2 (\textit{elastic compute cloud}) dari AWS (Amazon Web Service). DOMJudge terdiri dari dua jenis program yaitu DOMServer dan JudgeHost. DOMServer merupakan program yang digunakan oleh DOMJudge sebagai sistem manajemen kompetisi sedangkan JudgeHost merupakan program yang berperan sebagai \textit{autograder}. Pada pengujian kinerja, DOMServer dijalankan pada mesin EC2 dengan tipe \textit{t2.medium}. Mesin tersebut memiliki RAM sebesar 4GB dan dua buah \textit{virtual} CPU. Jenis mesin ini dipilih karena murah dan cukup untuk menangani pengiriman jawaban dari pengguna. JudgeHost dijalankan pada EC2 dengan tipe \textit{t2.micro} yang memiliki 1GB RAM dan satu buah \textit{virtual} CPU. EC2 jenis tersebut dipilih karena murah dan cukup untuk melakukan penilaian jawaban peserta.
 
-\par DOMJudge diuji dengan menjalankan satu buah DOMServer dan dua buah JudgeHost. JudgeHost dijalankan pada dua buah mesin karena umumnya dua buah mesin sudah sangat cukup untuk melakukan penilaian jawaban lima belas peserta. Hal ini didasari oleh keberjalanan kompetisi \textit{competitive programming} Arkavidia pada tahun 2018 yang diikuti lebih dari seratus orang dengan hanya menggunakan enam buah JudgeHost. Kompetisi tersebut berjalan dengan cukup lancar sehingga dua buah JudgeHost dinilai cukup untuk menilai jawaban dari lima belas orang peserta.
+\par DOMJudge diuji dengan menjalankan satu buah DOMServer dan dua buah JudgeHost. JudgeHost dijalankan pada dua buah mesin karena umumnya dua buah mesin sudah lebih dari cukup untuk melakukan penilaian jawaban lima belas peserta. Keputusan ini didasari oleh keberjalanan kompetisi \textit{competitive programming} Arkavidia pada tahun 2018 yang diikuti lebih dari seratus orang dengan hanya menggunakan enam buah JudgeHost. Kompetisi tersebut berjalan dengan lancar sehingga dua buah JudgeHost dinilai cukup untuk menilai jawaban dari lima belas orang peserta.
+
+\par Pengujian pada sistem \textit{online judge} dilakukan sebanyak tiga kali. Hal ini bertujuan untuk meningkatkan keakuratan pengujian. Waktu lamanya penilaian sebuah jawaban dan banyaknya antrian jawaban yang ada pada sistem dicatat untuk menentukan kinerja sistem. Tabel \ref{tab:domjudge-wait-time}, \ref{tab:domjudge-process-time} dan \ref{tab:domjudge-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} DOMJudge. Gambar \ref{fig:domjudge-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem DOMJudge dari waktu ke waktu. Terdapat tiga jenis besaran yang dihitung untuk menentukan kinerja DOMJudge yaitu:
+\begin{enumerate}
+  \item Waktu tunggu \\ Waktu tunggu didefinisikan sebagai lamanya sebuah jawaban berada pada antrian sistem. Jawaban berada pada antrian sistem mulai dari jawaban tersebut dikirim hingga jawaban tersebut mulai dinilai oleh \textit{autograder}.
+  \item Waktu pemrosesan \\ Waktu pemrosesan didefinisikan sebagai lamanya sebuah jawaban dinilai oleh \textit{autograder}. Sebuah jawaban mulai dinilai ketika \textit{worker} dari \textit{autograder} mengambil jawaban tersebut dari antrian sistem.
+  \item Waktu penilaian \\ Waktu penilaian didefinisikan sebagai lamanya sebuah jawaban mulai dikirim hingga selesai dinilai. Secara sederhana waktu penilaian merupakan total lamanya sebuah jawaban berada dalam sistem \textit{online judge}. Waktu penilaian juga dapat dipandang sebagai total dari waktu tunggu, waktu pemrosesan dan waktu pengiriman jawaban. Untuk melakukan penilaian, \textit{worker} perlu mengambil jawaban yang ada pada antrian sistem \textit{online judge}. Pengambilan jawaban dari antrian sistem memerlukan waktu karena jawaban perlu dikirimkan melalui jaringan sehingga menimbulkan adanya tambahan waktu yang berupa \textit{network latency}. Pada pengujian yang dilakukan, nilai dari \textit{network latency} sangat kecil dan dapat diabaikan. Karena kecilnya \textit{network latency}, waktu penilaian dapat dipandang sebagai total dari waktu tunggu dan waktu pemrosesan.
+\end{enumerate}
 
 \begin{table}[ht]
     \centering
     \input{tables/domjudge-wait-time}
-    \caption{Tabel Data Lamanya Jawaban Berada Dalam Antrian Sistem Pada Saat Pengujian DOMJudge}
+    \caption{Data Waktu Tunggu Pada Pengujian Kinerja DOMJudge.}
     \label{tab:domjudge-wait-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
     \input{tables/domjudge-process-time}
-    \caption{Tabel Data Lamanya Jawaban Dinilai Oleh Sistem Pada Saat Pengujian DOMJudge}
+    \caption{Data Waktu Pemrosesan Pada Pengujian Kinerja DOMJudge.}
     \label{tab:domjudge-process-time}
 \end{table}
 
 \begin{table}[ht]
     \centering
     \input{tables/domjudge-system-time}
-    \caption{Tabel Data Lamanya Jawaban Berada Dalam Sistem Pada Saat Pengujian DOMJudge}
+    \caption{Data Waktu Penilaian Pada Pengujian Kinerja DOMJudge.}
     \label{tab:domjudge-system-time}
 \end{table}
 
-\pgfplotsset{width=\textwidth, compat=1.14}
+\par Berdasarkan Tabel \ref{tab:domjudge-system-time}, dapat dikatakan bahwa waktu penilaian dari DOMJudge berkisar antara lima belas detik hingga empat ratus detik dengan rata-rata sekitar dua ratus detik. Berdasarkan data tersebut, dapat dikatakan bahwa setiap peserta rata-rata perlu menunggu sekitar tiga hingga empat menit untuk mengetahui nilai dari jawaban yang dikirimkannya. Waktu penilaian ini tergolong tinggi untuk penilaian yang dilakukan oleh \textit{autograder}. Menurut \cite{danutamalms}, waktu penilaian yang dilakukan oleh \textit{autograder} bernilai kurang lebih sepuluh detik. 
+
+\par Waktu penilaian yang tinggi pada pengujian kinerja DOMJudge disebabkan oleh jumlah \textit{worker} yang tidak sebanding dengan jumlah jawaban yang dikirimkan oleh peserta. Umumnya, pada kompetisi \textit{competitive programming}, peserta jarang melakukan pengiriman jawaban dalam rentang waktu yang singkat, akan tetapi pengujian dilakukan dengan cara menyimulasikan peserta untuk mengirimkan jawaban dalam waktu yang singkat. Hal tersebut bertujuan untuk merepresentasikan keadaan dimana peserta kompetisi berjumlah banyak dan jawaban yang harus dinilai oleh sistem berjumlah banyak dalam waktu yang singkat. Sebenarnya pengujian dapat dilakukan dengan cara meningkatkan jumlah peserta, akan tetapi cara tersebut tidak digunakan karena membutuhkan biaya yang besar. Oleh karena itu, pengujian pada tugas akhir ini dilakukan dengan lima belas peserta yang melakukan pengiriman jawaban dalam waktu yang singkat (dua puluh hingga empat puluh detik).
+
 \begin{figure}[ht!]
     \centering
     \input{diagrams/domjudge-queue}
-    \caption{Diagram Jumlah Jawaban Pada Antrian DOMJudge}
+    \caption{Diagram Jumlah Jawaban Pada Antrian DOMJudge.}
     \label{fig:domjudge-queue}
 \end{figure}
 
-\par Pengujian pada sistem \textit{online judge} dilakukan sebanyak tiga kali. Hal ini bertujuan untuk meningkatkan keakuratan pengujian. Waktu lamanya penilaian sebuah dan banyaknya antrian jawaban yang ada pada sistem dicatat untuk menentukan kinerja sistem. Tabel \ref{tab:domjudge-wait-time}, \ref{tab:domjudge-process-time} dan \ref{tab:domjudge-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} DOMJudge. Gambar \ref{fig:domjudge-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem DOMJudge dari waktu ke waktu.
+% jelasin gambar fig:domjudge-queue
+\par Berdasarkan Gambar \ref{fig:domjudge-queue}, puncak jumlah antrian jawaban dari sistem DOMJudge memiliki nilai yang cukup tinggi yaitu tujuh puluh buah jawaban. Dari gambar tersebut terlihat bahwa jumlah antrian pada DOMJudge terus meningkat hingga mencapai suatu puncak tertentu kemudian menurun hingga mencapai angka nol. Terjadinya peningkatan jumlah antrian di awal waktu tersebut disebabkan karena peserta sedang aktif mengirimkan jawaban kepada sistem sedangkan seluruh \textit{worker} sedang sibuk melakukan penilaian. Karena tidak ada \textit{worker} yang tersedia, jawaban peserta terus menerus dimasukkan kedalam antrian sistem dan mengakibatkan jumlah antrian sistem terus meningkat. Tidak tersedianya \textit{worker} tersebut disebabkan karena jumlah \textit{worker} yang tidak sebanding dengan jumlah peserta. Setelah jumlah antrian sistem mencapai puncaknya, jumlah antrian tersebut perlahan-lahan mulai turun. Hal ini disebabkan karena peserta sudah tidak aktif mengirimkan jawaban sehingga jumah antrian tidak bertambah lagi dan mulai turun karena \textit{worker} masih melakukan penilaian pada sisa jawaban di antrian tersebut.  
 
 \par Sistem \textit{online judge} yang dibangun (UGrade) diuji dengan cara yang sama seperti DOMJudge. Seperti DOMJudge, UGrade juga memiliki dua jenis program yang harus dijalankan yaitu sistem manajemen kompetisi dan \textit{autograder}. Pada UGrade, program yang menjadi sistem manajemen kompetisi adalah UGServer dan program yang menjadi \textit{autograder} adalah UGJob. Pengujian dilakukan dengan menyimulasikan pengiriman jawaban oleh lima belas peserta seperti yang dilakukan pada pengujian DOMJudge.
 
@@ -430,9 +441,6 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 \end{figure}
 
 \par Pengujian UGrade dilakukan dengan beberapa nilai \textit{grading size}. Nilai \textit{grading size} yang diuji adalah satu, dua dan lima. Untuk meningkatkan keakuratan pengujian, setiap nilai \textit{grading size} diuji sebanyak tiga kali. Tabel \ref{tab:ugrade-wait-time}, \ref{tab:ugrade-process-time} dan \ref{tab:ugrade-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} UGrade. Gambar \ref{fig:ugrade-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem UGrade dari waktu ke waktu.
-
-% jelasin gambar fig:domjudge-queue
-\par Berdasarkan Gambar \ref{fig:domjudge-queue}, puncak jumlah antrian jawaban dari sistem DOMJudge memiliki nilai yang cukup tinggi yaitu tujuh puluh buah jawaban. Dari Gambar tersebut terlihat bahwa jumlah antrian pada DOMJudge terus meningkat hingga mencapai suatu puncak tertentu kemudian menurun hingga mencapai angka nol. Terjadinya peningkatan jumlah antrian di awal waktu tersebut disebabkan karena peserta sedang aktif mengirimkan jawaban kepada sistem sedangkan seluruh \textit{worker} sedang sibuk melakukan penilaian. Karena tidak ada \textit{worker} yang tersedia, jawaban peserta terus menerus dimasukkan kedalam antrian sistem dan mengakibatkan jumlah antrian sistem terus meningkat. Tidak tersedianya \textit{worker} disebabkan karena jumlah \textit{worker} yang tidak sebanding dengan jumlah peserta. Setelah jumlah antrian sistem mencapai puncaknya, jumlah antrian tersebut perlahan-lahan mulai turun. Hal ini disebabkan karena peserta sudah tidak aktif mengirimkan jawaban sehingga jumah antrian tidak bertambah lagi dan mulai turun karena \textit{worker} masih melakukan penilaian pada sisa jawaban di antrian tersebut.  
 
 % jelasin gambar fig:ugrade-queue
 \par Berdasarkan Gambar \ref{fig:ugrade-queue}, jumlah antrian dari sistem UGrade bergantung pada nilai \textit{grading size}. \textit{Grading size} yang tinggi menybabkan jumlah antrian pada sistem menjadi tinggi pula. \textit{Grading size} yang tinggi menybabkan sebuah jawaban harus dinilai beberapa kali sehingga jumlah antrian pada sistem meningkat. Kinerja dari UGrade dapat ditingkatkan dengan memilih nilai \textit{grading size} yang rendah. Meskipun begitu, nilai \textit{grading size} yang rendah akan mengurangi tingkat keamanan dari UGrade. Juri perlu menentukan nilai \textit{grading size} yang tepat untuk mendapatkan hasil yang optimal. Nilai \textit{grading size} perlu dipilih sedemikian rupa sehingga cukup tinggi untuk menjamin keamanan kompetisi dan cukup rendah untuk dapat memberikan kinerja yang optimal.
