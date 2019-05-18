@@ -462,16 +462,45 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 
 \par Selain pengujian kinerja, diperlukan pengujian kebenaran dari sistem yang dibangun. Pengujian kebenaran dilakukan dengan menyimulasikan proses pengiriman jawaban oleh peserta. Kebenaran sistem yang dibangun ditentukan berdasarkan \textit{verdict} penilaian yang diberikan oleh sistem. Sistem yang benar akan memberikan \textit{verdict} yang sama ketika jawaban yang sama dinilai berkali-kali di komputer yang berbeda. Pada pengujian kebenaran, digunakan sebuah soal dengan enam buah jawaban yang diharapkan akan memiliki \textit{verdict} \textit{accepted}, \textit{wrong answer}, \textit{memory limit exceeded}, \textit{time limit exceeded}, \textit{runtime error}, dan \textit{compile error}.
 
+\par Pengujian kebenaran dilakukan dengan mengirimkan berbagai jenis jawaban kepada sistem UGrade. Soal yang digunakan untuk melakukan pengujian merupakan soal perkalian polinomial berderajat seratus ribu. Soal tersebut didapatkan dari kompetisi Arkavidia 2018. Soal tersebut dipilih karena memiliki solusi yang beraneka ragam dengan kompleksitas yang berbeda-beda. Kompleksitas yang diharapkan dari soal tersebut adalah $O(N log N)$.
+
+\par Tujuh jenis jawaban dikirimkan ke sistem UGrade untuk menguji kebenaran dari sistem. Tujuh jenis jawaban tersebut adalah sebagai berikut:
+\begin{enumerate}
+	\item Jawaban yang diinginkan oleh juri, yaitu jawaban dengan kompleksitas $O(N log N)$.
+	\item Jawaban dengan kompleksitas $O(N log_2{3})$. Jawaban ini memiliki kompleksitas yang lebih buruk dari jawaban yang diharapkan oleh juri dan dianggap sebagai jawaban yang salah karena tidak berjalan dengan cukup cepat.
+	\item Jawaban dengan kompleksitas $O(N^2)$. Seperti pada jenis jawaban ke-dua, jawaban ini dinilai tidak cukup cepat untuk persoalan yang diberikan.
+	\item Jawaban dengan kompleksitas $I(N^2)$. Jawaban ini memiliki kompleksitas yang sama seperti pada jawaban jenis ketiga tetapi memiliki implementasi yang berbeda.
+	\item Jawaban dengan penggunaan memori yang terlalu banyak. Jawaban ini menggunakan memori yang melebihi batasan dari juri.
+	\item Jawaban yang menimbulkan adanya \textit{runtime error} karena ada pengaksesan memori yang belum dialokasikan.
+	\item Jawaban yang memiliki kesalahan penulisan dan tidak dapat dikompilasi.
+\end{enumerate}
+Jawaban tersebut akan dikirimkan ke sistem UGrade. \textit{Verdict} yang diberikan oleh UGrade dicatat untuk menentukan kebenaran dari program UGrade. Untuk meningkatkan akurasi, setiap jenis jawaban dikirimkan sebanyak lima puluh kali. Jawaban yang sama harus memiliki \textit{verdict} yang sama jika dinilai berkali-kali.
+
+\par Pengujian dilakukan pada komputer dengan \textit{clock speed} 2.5GHz dan RAM 8GB. Hasil pengujian tersebut adalah sebagai berikut:
+\begin{enumerate}
+	\item UGrade menghasilkan \textit{verdict} \textit{accepted} untuk seluruh jawaban jenis pertama yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{time limit exceeded} untuk seluruh jawaban jenis ke-dua yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{time limit exceeded} untuk seluruh jawaban jenis ke-tiga yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{time limit exceeded} untuk seluruh jawaban jenis ke-empat yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{memory limit exceeded} untuk seluruh jawaban jenis ke-lima yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{runtime error} untuk seluruh jawaban jenis ke-enam yang dikirimkan.
+	\item UGrade menghasilkan \textit{verdict} \textit{compile error} untuk seluruh jawaban jenis ke-tujuh yang dikirimkan.
+Hasil pengujian tersebut sesuai yang diharapkan. Oleh karena itu, berdasarkan hasil pengujian tersebut, sistem \textit{online judge} UGrade dapat dikatakan lolos uji kebenaran.
+
+\end{enumerate}
+
 \subsection{Pengujian Keamanan}
 
-\par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Jawaban yang dikirimkan adalah sebagai berikut:
+\par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Pengujian keamanan dilakukan dengan mengirimkan lima jenis jawaban yang berbahaya yaitu:
 \begin{enumerate}
-    \item jawaban yang berisi \textit{fork bomb}
-    \item jawaban yang berisi \textit{compile bomb}
-    \item jawaban yang mencoba keluar dari lingkungan \textit{sandbox}
+    \item Jawaban yang berisi \textit{fork bomb}.
+    \item Jawaban yang berisi \textit{compile bomb}.
+    \item Jawaban yang mencoba keluar dari lingkungan \textit{sandbox}.
+    \item Jawaban yang hanya melakukan \textit{sleep}.
+    \item Jawaban yang menghasilkan \textit{file} yang sangat besar.
 \end{enumerate} 
-Komputer yang bertindak sebagai worker diharapkan dapat tetap berjalan setelah jawaban tersebut dieksekusi.
+\textit{Worker} yang menjalankan lima jenis jawaban tersebut harus dapat menghentikan proses penilaian karena jawaban tersebut berpotensi menimbulkan kerusakan pada \textit{worker}. Komputer yang bertindak sebagai worker diharapkan dapat tetap berjalan setelah jawaban tersebut dieksekusi. Keamanan dari UGrade ditentukan berdasarkan adanya efek samping yang muncuk setelah jawaban-jawaban tersebut dieksekusi. Jika tidak ada efek samping yang muncul setelah jawaban tersebut dieksekusi, maka sistem UGrade dikatakan lolos uji keamanan. 
 
-\par Kerahasiaan dan integritas dari \textit{testcase}, solusi juri dan solusi peserta perlu dijaga. Untuk menjaga kerahasiaan dan integritas, diperlukan adanya pengujian. Pengujian integritas dilakukan dengan melakukan percobaan merusak \textit{testcase}, solusi juri dan solusi peserta yang ada pada komputer \textit{worker}. Perusakan pada \textit{testcase}, solusi juri ataupun solusi peserta diharapkan dapat dikenali dan diatasi sehingga hasil penilaian dari \textit{worker} akan tetap benar. Kerahasiaan \textit{testcase}, solusi juri dan solusi peserta hanya akan diuji dengan melihat isi dari \textit{file} \textit{testcase}, solusi juri dan solusi peserta. Kerahasiaan akan dianggap lolos uji jika isi dari \textit{file} \textit{testcase}, solusi juri maupun solusi peserta tidak dapat dibaca oleh pengguna.
+% \par Kerahasiaan dan integritas dari \textit{testcase}, solusi juri dan solusi peserta perlu dijaga. Untuk menjaga kerahasiaan dan integritas, diperlukan adanya pengujian. Pengujian integritas dilakukan dengan melakukan percobaan merusak \textit{testcase}, solusi juri dan solusi peserta yang ada pada komputer \textit{worker}. Perusakan pada \textit{testcase}, solusi juri ataupun solusi peserta diharapkan dapat dikenali dan diatasi sehingga hasil penilaian dari \textit{worker} akan tetap benar. Kerahasiaan \textit{testcase}, solusi juri dan solusi peserta hanya akan diuji dengan melihat isi dari \textit{file} \textit{testcase}, solusi juri dan solusi peserta. Kerahasiaan akan dianggap lolos uji jika isi dari \textit{file} \textit{testcase}, solusi juri maupun solusi peserta tidak dapat dibaca oleh pengguna.
 
 % TODO: data pengujian
