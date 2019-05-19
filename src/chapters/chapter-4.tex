@@ -2,7 +2,7 @@
 
 \par Pada tugas akhir ini, perangkat lunak yang dikembangan berupa sistem manajemen kompetisi, \textit{autograder} dan program antar muka pengguna.  Sistem manajemen kompetisi di-\textit{deploy} pada komputer yang disediakan oleh juri dan bertindak sebagai \textit{server}. \textit{Autograder} dan program antar muka akan didistribusikan kepada peserta dan juri untuk dijalankan pada komputernya. Secara keseluruhan, perangkat lunak yang dikembangkan dinamakan UGrade. Nama tersebut berasal dari kata \textit{you} dan \textit{grade}. Nama tersebut dipilih karena proses penilaian atau \textit{grading} dilakukan oleh masing-masing peserta.
 
-\par Terdapat tiga program utama yang dikembangkan pada UGrade yaitu: UGServer, UGJob dan UGDesktop. UGServer berfungsi sebagai sistem manajemen kompetisi yang bertindak sebagai server. UGJob berfungsi sebagai \textit{worker} dari \textit{autograder}. UGDesktop berfungsi sebagai antar muka antara pengguna dengan sistem \textit{online judge}. Selain tiga program utama tersebut, terdapat program lain yang digunakan untuk membantu proses pengembangan. Untuk melakukan \textit{sandboxing}, dikembangan program yang bernama UGSbox. Selain itu, untuk memudahkan proses testing, dikembangankan program UGCtl yang dapat digunakan sebagai antar muka pengguna dalam bentuk \textit{command-line}.
+\par Terdapat tiga program utama yang dikembangkan pada UGrade, yaitu: UGServer, UGJob dan UGDesktop. UGServer berfungsi sebagai sistem manajemen kompetisi yang bertindak sebagai server. UGJob berfungsi sebagai \textit{worker} dari \textit{autograder}. UGDesktop berfungsi sebagai antar muka antara pengguna dengan sistem \textit{online judge}. Selain tiga program utama tersebut, terdapat program lain yang digunakan untuk membantu proses pengembangan. Untuk melakukan \textit{sandboxing}, dikembangan program yang bernama UGSbox. Selain itu, untuk memudahkan proses testing, dikembangankan program UGCtl yang dapat digunakan sebagai antar muka pengguna dalam bentuk \textit{command-line}.
 
 \section{UGServer (Sistem Manajemen Kompetisi)}
 
@@ -48,7 +48,7 @@
 \end{figure}
 
 % user permissions
-Pengguna dalam perangkat lunak ini umumnya meliputi juri, peserta dan admin. Perangkat lunak UGServer sebenarnya tidak membeda-bedakan pengguna sebagai juri, peserta ataupun admin. Otorisasi dilakukan dengan memberikan label \textit{permission} kepada setiap pengguna yang ada. Setiap pengguna memiliki himpunan \textit{permission} yang menandakan aksi-aksi apa saja yang dapat dilakukan. Pada saati ini, terdapat beberapa \textit{permission} yang mengatur hak akses pengguna yaitu:
+Pengguna dalam perangkat lunak ini umumnya meliputi juri, peserta dan admin. Perangkat lunak UGServer sebenarnya tidak membeda-bedakan pengguna sebagai juri, peserta ataupun admin. Otorisasi dilakukan dengan memberikan label \textit{permission} kepada setiap pengguna yang ada. Setiap pengguna memiliki himpunan \textit{permission} yang menandakan aksi-aksi apa saja yang dapat dilakukan. Pada saati ini, terdapat beberapa \textit{permission} yang mengatur hak akses pengguna, yaitu:
 \begin{enumerate}
     \item \textit{update:contest}: pengguna dengan \textit{permission} ini dapat mengubah informasi kompetisi.
     \item \textit{create:problems}: pengguna dengan \textit{permission} ini dapat membuat soal baru.
@@ -138,8 +138,8 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \item solution.cpp\\ merupakan kode sumber  solusi juri pada soal yang bersangkutan. Ekstensi dari \textit{file} dapat berbeda sesuai bahasa pemrograman yang digunakan.
     \item checker.cpp\\ merupakan kode sumber \textit{checker} dari soal. Ekstensi dari \textit{file} dapat berbeda sesuai dengan bahasa pemrograman yang digunakan.
     \item submission.cpp\\ merupakan kode sumber solusi peserta. Ekstensi dari \textit{file} dapat berbeda sesuai dengan bahasa pemrograman yang digunakan.
-    \item lang.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan bahasa pemrograman yang digunakan sebagai \textit{testcase generator}, solusi juri, \textit{checker} dan solusi peserta. \textit{JSON document} pada \textit{file} ini hanya berisi empat \textit{key} yaitu \textit{tcgen}, \textit{solution}, \textit{checker}, dan \textit{submission}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value} yaitu bahasa \textit{ID} dari bahasa pemrograman yang digunakan.
-    \item problem.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan batasan dari soal. \textit{JSON document} pada file ini berisi empat buah \textit{key} yaitu \textit{timeLimit}, \textit{outputLimit}, \textit{memoryLimit}, dan \textit{tolerance}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value}  berupa bilangan yang menjelaskan batasan dari soal.
+    \item lang.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan bahasa pemrograman yang digunakan sebagai \textit{testcase generator}, solusi juri, \textit{checker} dan solusi peserta. \textit{JSON document} pada \textit{file} ini hanya berisi empat \textit{key}, yaitu \textit{tcgen}, \textit{solution}, \textit{checker}, dan \textit{submission}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value} yaitu bahasa \textit{ID} dari bahasa pemrograman yang digunakan.
+    \item problem.json\\ \textit{file} ini berisi \textit{JSON document} yang menjelaskan batasan dari soal. \textit{JSON document} pada file ini berisi empat buah \textit{key}, yaitu \textit{timeLimit}, \textit{outputLimit}, \textit{memoryLimit}, dan \textit{tolerance}. Setiap \textit{key} pada \textit{file} ini memiliki \textit{value}  berupa bilangan yang menjelaskan batasan dari soal.
 \end{enumerate}
 \par \textit{File} spesifikasi penilaian ini nantinya akan diunduh oleh \textit{autograder} yang berjalan pada komputer pengguna.
 
@@ -240,7 +240,7 @@ Global Flags:
       --trace   show trace log
 \end{lstlisting}
 
-\par UGSBox dapat digunakan dengan dua cara yaitu: sebagai \textit{executable program} atau sebagai \textit{library}. Pengguna dapat menggunakan perintah \textit{ugsbox guard} untuk menjalankan UGSbox melalui CLI. Kode \ref{lst:ugsbox-guard} merupakan contoh hasil pemanggilan \textit{ugsbox guard}.
+\par UGSBox dapat digunakan dengan dua cara, yaitu: sebagai \textit{executable program} atau sebagai \textit{library}. Pengguna dapat menggunakan perintah \textit{ugsbox guard} untuk menjalankan UGSbox melalui CLI. Kode \ref{lst:ugsbox-guard} merupakan contoh hasil pemanggilan \textit{ugsbox guard}.
 
 \par Selain melalui CLI, UGSbox juga dapat digunakan melalui pemanggilan fungsi pada bahasa pemrograman GO. Untuk dapat menggunakan UGSbox sebagai \textit{library}, pengguna dapat meng-\textit{import} \textit{package https://github.com/jauhararifin/ugrade} dan \textit{https://github.com/jauhararifin/ugrade/sandbox}. Penggunaan \textit{library} tersebut dapat dapat dilihat pada dokumentasi UGrade di \textit{https://godoc.org/github.com/jauhararifin/ugrade}.
 
@@ -338,7 +338,7 @@ Global Flags:
 
 \section{Pengujian}
 
-\par Pada tugas akhir ini, dilakukan tiga pengujian terhadap yaitu kinerja, kebenaran dan keamanan. Kinerja dari sistem yang dibangun pada tugas akhir ini diuji dengan melakukan simulasi pengiriman jawaban oleh peserta. Untuk mengukur peningkatan kinerja, sistem \textit{online judge} yang dibangun dibandingkan dengan sistem \textit{online judge} lain yang populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. Kebenaran dari sistem yang dibangun diuji dengan mengirimkan berbagai jenis jawaban kepada sistem. Kebenaran dari sistem ditentukan berdasarkan hasil yang diberikan oleh sistem terhadap berbagai jenis jawaban yang dinilai. Keamanan dari sistem diuji dengan melakukan beberapa jenis serangan kepada sistem. Keamanan dari sisem ditentukan berdasarkan ketahanan sistem terhadap serangan-serangan yang diberikan.
+\par Pada tugas akhir ini, dilakukan tiga jenis pengujian, yaitu: kinerja, kebenaran dan keamanan. Kinerja dari sistem yang dibangun pada tugas akhir ini diuji dengan melakukan simulasi pengiriman jawaban oleh peserta. Untuk mengukur peningkatan kinerja, sistem \textit{online judge} yang dibangun dibandingkan dengan sistem \textit{online judge} lain yang populer digunakan untuk menyelenggarakan kompetisi \textit{competitive programming}. Kebenaran dari sistem yang dibangun diuji dengan mengirimkan berbagai jenis jawaban kepada sistem. Kebenaran dari sistem ditentukan berdasarkan hasil yang diberikan oleh sistem terhadap berbagai jenis jawaban yang dinilai. Keamanan dari sistem diuji dengan melakukan beberapa jenis serangan kepada sistem. Keamanan dari sisem ditentukan berdasarkan ketahanan sistem terhadap serangan-serangan yang diberikan.
 
 \subsection{Pengujian Kinerja}
 
@@ -353,7 +353,7 @@ Global Flags:
     \label{fig:performance-testing-activity}
 \end{figure}
 
-\par Setiap peserta dari lima belas peserta yang telah disiapkan akan menunggu selama lima puluh hingga seratus detik kemudian mengirimkan jawaban secara periodik tiap dua puluh hingga empat puluh detik. Terdapat empat jenis jawaban yang akan dikirimkan oleh peserta yaitu:
+\par Setiap peserta dari lima belas peserta yang telah disiapkan akan menunggu selama lima puluh hingga seratus detik kemudian mengirimkan jawaban secara periodik tiap dua puluh hingga empat puluh detik. Terdapat empat jenis jawaban yang akan dikirimkan oleh peserta, yaitu:
 \begin{enumerate}
     \item Jawaban dengan kompleksitas $O(N log N)$. Jawaban ini merupakan jawaban yang diharapkan oleh juri dan akan dinilai sebagai jawaban yang benar.
     \item Jawaban dengan kompleksitas $O(N^{log_2{3}})$.
@@ -366,7 +366,7 @@ Setiap peserta akan mengirimkan empat jawaban tersebut secara periodik. Setiap j
 
 \par DOMJudge diuji dengan menjalankan satu buah DOMServer dan dua buah JudgeHost. JudgeHost dijalankan pada dua buah mesin karena umumnya dua buah mesin sudah lebih dari cukup untuk melakukan penilaian jawaban lima belas peserta. Keputusan ini didasari oleh keberjalanan kompetisi \textit{competitive programming} Arkavidia pada tahun 2018 yang diikuti lebih dari seratus orang dengan hanya menggunakan enam buah JudgeHost. Kompetisi tersebut berjalan dengan lancar sehingga dua buah JudgeHost dinilai cukup untuk menilai jawaban dari lima belas orang peserta.
 
-\par Pengujian pada sistem \textit{online judge} dilakukan sebanyak tiga kali. Hal ini bertujuan untuk meningkatkan keakuratan pengujian. Waktu lamanya penilaian sebuah jawaban dan banyaknya antrian jawaban yang ada pada sistem dicatat untuk menentukan kinerja sistem. Tabel \ref{tab:domjudge-wait-time}, \ref{tab:domjudge-process-time} dan \ref{tab:domjudge-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} DOMJudge. Gambar \ref{fig:domjudge-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem DOMJudge dari waktu ke waktu. Terdapat tiga jenis besaran yang dihitung untuk menentukan kinerja DOMJudge yaitu:
+\par Pengujian pada sistem \textit{online judge} dilakukan sebanyak tiga kali. Hal ini bertujuan untuk meningkatkan keakuratan pengujian. Waktu lamanya penilaian sebuah jawaban dan banyaknya antrian jawaban yang ada pada sistem dicatat untuk menentukan kinerja sistem. Tabel \ref{tab:domjudge-wait-time}, \ref{tab:domjudge-process-time} dan \ref{tab:domjudge-system-time} memaparkan data hasil pengujian kinerja sistem \textit{online judge} DOMJudge. Gambar \ref{fig:domjudge-queue} manggambarkan jumlah jawaban yang berada pada antrian sistem DOMJudge dari waktu ke waktu. Terdapat tiga jenis besaran yang dihitung untuk menentukan kinerja DOMJudge, yaitu:
 \begin{enumerate}
   \item Waktu tunggu \\ Waktu tunggu didefinisikan sebagai lamanya sebuah jawaban berada pada antrian sistem. Jawaban berada pada antrian sistem mulai dari jawaban tersebut dikirim hingga jawaban tersebut mulai dinilai oleh \textit{autograder}.
   \item Waktu pemrosesan \\ Waktu pemrosesan didefinisikan sebagai lamanya sebuah jawaban dinilai oleh \textit{autograder}. Sebuah jawaban mulai dinilai ketika \textit{worker} dari \textit{autograder} mengambil jawaban tersebut dari antrian sistem.
@@ -490,16 +490,31 @@ Hasil pengujian tersebut sesuai yang diharapkan. Oleh karena itu, berdasarkan ha
 \end{enumerate}
 
 \subsection{Pengujian Keamanan}
-
-\par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Pengujian keamanan dilakukan dengan mengirimkan lima jenis jawaban yang berbahaya yaitu:
+\par Sistem \textit{online judge} yang dibangun perlu memiliki tingkat keamanan yang cukup sehingga tidak membahayakan komputer peserta dan sistem. Pengujian keamanan dilakukan dengan menyimulasikan pengiriman jawaban yang berbahaya ke sistem \textit{online judge}. Pengujian keamanan dilakukan dengan mengirimkan lima jenis jawaban yang berbahaya, yaitu:
 \begin{enumerate}
-    \item Jawaban yang berisi \textit{fork bomb}.
-    \item Jawaban yang berisi \textit{compile bomb}.
-    \item Jawaban yang mencoba keluar dari lingkungan \textit{sandbox}.
-    \item Jawaban yang hanya melakukan \textit{sleep}.
-    \item Jawaban yang menghasilkan \textit{file} yang sangat besar.
+    \lstinputlisting[caption={\textit{Fork Bomb}},label={lst:prog-fork-bomb},language=C,style=CStyle]{listings/fork-bomb.cpp}
+    \item Jawaban yang berisi \textit{fork bomb} seperti pada Kode \ref{lst:prog-fork-bomb}.
+    \lstinputlisting[caption={\textit{Compile Bomb}},label={lst:prog-compile-bomb},language=C,style=CStyle]{listings/compile-bomb.c}
+    \item Jawaban yang berisi \textit{compile bomb} seperti pada Kode \ref{lst:prog-compile-bomb}.
+    \lstinputlisting[caption={\textit{Program Yang Mencoba Keluar Dari Lingkungan \textit{Chroot}}},label={lst:prog-chroot-break},language=C,style=CStyle]{listings/chroot-break.c}
+    \item Jawaban yang mencoba keluar dari lingkungan \textit{sandbox} seperti pada Kode \ref{lst:prog-chroot-break}.
+    \lstinputlisting[caption={\textit{\textit{Sleeping Program}}},label={lst:prog-timelimit},language=C,style=CStyle]{listings/busy-sleep.c}
+    \item Jawaban yang hanya melakukan \textit{sleep} seperti pada Kode \ref{lst:prog-timelimit}.
+    \lstinputlisting[caption={Program Dengan IO yang besar},label={lst:prog-huge-io},language=C,style=CStyle]{listings/huge-io.cpp}
+    \item Jawaban yang menghasilkan \textit{file} yang sangat besar seperti pada Kode \ref{lst:prog-huge-io}.
 \end{enumerate} 
 \textit{Worker} yang menjalankan lima jenis jawaban tersebut harus dapat menghentikan proses penilaian karena jawaban tersebut berpotensi menimbulkan kerusakan pada \textit{worker}. Komputer yang bertindak sebagai worker diharapkan dapat tetap berjalan setelah jawaban tersebut dieksekusi. Keamanan dari UGrade ditentukan berdasarkan adanya efek samping yang muncuk setelah jawaban-jawaban tersebut dieksekusi. Jika tidak ada efek samping yang muncul setelah jawaban tersebut dieksekusi, maka sistem UGrade dikatakan lolos uji keamanan. 
+
+\par Pengujian dilakukan menggunakan komputer yang memiliki empat buah \textit{core} CPU dengan \textit{clock speed} 2.5GHz dan memiliki RAM sebesar 8GB. Hasil dari pengujian yang dilakukan adalah sebagai berikut:
+\begin{enumerate}
+  \item \textit{Worker} berhasil menghentikan program solusi peserta yang mengandung \textit{fork bomb} dan memberikan \textit{verdict} \textit{time limit exceeded}. Hal tersebut dikarenakan program peserta hanya melakukan pemanggilan \textit{system call fork} secara terus menerus tanpa pernah berhenti sehingga \textit{worker} menganggap program tersebut menghabiskan \textit{resource} CPU. Pemanggilan \textit{system call} \textit{fork} berhasil digagalkan oleh \textit{worker} karena jumlah proses yang berada dalam lingkungan \textit{sandbox} sudah dibatasi menggunakan \textit{system call} \textit{setrlimit}.
+  \item \textit{Worker} berhasil menghentikan program solusi peserta yang berisi \textit{compile bomb} dan memberikan \textit{verdict} \textit{compile error}. Proses kompilasi kode program solusi peserta menghabiskan banyak memori dan \textit{disk space} sehingga \textit{worker} menghentikan proses kompilasi secara paksa. \textit{Worker} mengetahui penggunaan memori proses kompilasi dengan menggunakan fitur \textit{cgroup} yang ada pada Linux. Dengan mengetahui penggunaan memori dari proses kompilasi, \textit{worker} dapat menghentikan proses kompilasi tersebut secara paksa ketika penggunaan memorinya dinilai sudah berlebihan. Selain itu, \textit{worker} juga menggunakan \textit{system call setrlimit} untuk membatasi ukuran \textit{file} yang dihasilkan oleh proses kompilasi. 
+  \item \textit{Worker} berhasil melindungi komputer yang digunakan sebagai \textit{worker} terhadap program solusi peserta yang mencoba keluar dari lingkungan \textit{sandbox}. Kode yang digunakan untuk melakukan pengujian ini adalah Kode \ref{lst:prog-chroot-break}. Jika serangan tersebut berhasil dilakukan, maka akan tercipta \textit{file breakout} pada direktori \textit{/tmp}. Setelah pengujian dilakukan, \textit{file} tersebut tidak ditemukan pada direktori \textit{/tmp} sehingga dapat dikatakan serangan yang dilakukan tidak berhasil.
+  \item \textit{Worker} berhasil menghentikan program solusi peserta yang hanya melakukan \textit{sleep} tanpa menggunakan banyak \textit{resource}. Meskipun program tersebut hanya melakukan \textit{sleep} dan tidak menggunakan CPU secara berlebihan, \textit{worker} dapat menghentikan program tersebut karena terlah membatasi nilai \textit{wall-clock time} dari program tersebut.
+  \item \textit{Worker} berhasil menghentikan program solusi peserta yang menggunakan IO secara berlebihan dan menghasilkan \textit{file} yang sangat besar. Hal ini dicapai oleh \textit{worker} dengan memanfaatkan \textit{system call setrlimit} yang ada pada Linux. Dengan menggunakan \textit{setrlimit}, ukuran \textit{file} yang dapat dibuat oleh sebuah proses pada Linux dapat dibatasi.
+\end{enumerate}
+
+\par Berdasarkan hasil pengujian pada paragraf sebelumnya, tidak ditemukan adanya kerusakan maupun efek samping yang muncul pada sistem \textit{online judge} maupun \textit{worker}. Hal tersebut mengindikasikan bahwa serangan yang dilakukan oleh peserta tidak berhasil merusak sistem \textit{online judge} maupun \textit{worker}. Oleh karena itu, dapat dikatakan sistem \textit{online judge} yang dibangun pada tugas akhir ini lolos uji keamanan.
 
 % \par Kerahasiaan dan integritas dari \textit{testcase}, solusi juri dan solusi peserta perlu dijaga. Untuk menjaga kerahasiaan dan integritas, diperlukan adanya pengujian. Pengujian integritas dilakukan dengan melakukan percobaan merusak \textit{testcase}, solusi juri dan solusi peserta yang ada pada komputer \textit{worker}. Perusakan pada \textit{testcase}, solusi juri ataupun solusi peserta diharapkan dapat dikenali dan diatasi sehingga hasil penilaian dari \textit{worker} akan tetap benar. Kerahasiaan \textit{testcase}, solusi juri dan solusi peserta hanya akan diuji dengan melihat isi dari \textit{file} \textit{testcase}, solusi juri dan solusi peserta. Kerahasiaan akan dianggap lolos uji jika isi dari \textit{file} \textit{testcase}, solusi juri maupun solusi peserta tidak dapat dibaca oleh pengguna.
 
