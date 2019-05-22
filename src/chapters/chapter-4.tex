@@ -328,7 +328,7 @@ Global Flags:
 
 \section{UGDesktop}
 
-\par Dalam kelompok perangkat lunak UGrade, pengguna dapat berinteraksi dengan sistem kompetisi dengan UGDesktop. UGDesktop memudahkan interaksi pengguna dengan memberikan antar-muka berbasis grafis. Pengguna dapat meng-\textit{install} UGDesktop pada komputernya. Pengguna kemudian dapat menjalankan UGDesktop sebagai aplikasi \textit{desktop} pada komputernya.
+\par Dalam kelompok perangkat lunak UGrade, pengguna dapat berinteraksi dengan sistem kompetisi menggunakan UGDesktop. UGDesktop memudahkan interaksi antara pengguna dengan sistem UGrade dengan memberikan antar-muka berbasis grafis kepada pengguna. Pengguna dapat meng-\textit{install} UGDesktop pada komputernya kemudian menjalankan UGDesktop sebagai aplikasi \textit{desktop} pada komputernya.
 
 \begin{figure}[ht!]
     \centering
@@ -337,9 +337,9 @@ Global Flags:
     \label{fig:ugdesktop-example}
 \end{figure}
 
-\par UGDesktop dikembangkan menggunakan \textit{typescript}, \textit{react} dan \textit{electron}. \textit{React} dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis \textit{react}. \textit{React} umumnya digunakan untuk mengembangkan aplikasi berbasis \textit{web} dan membutuhkan \textit{web browser} untuk menjalankan aplikasi tersebut. Pengguna membutuhkan aplikasi yang dapat berjalan sebagai \textit{desktop app} untuk dapat menjalankan sistem antar muka pengguna sekaligus \textit{worker}. Untuk mengatasi hal tersebut, \textit{electron} digunakan untuk menjalankan aplikasi \textit{web} yang berbasis \textit{react} sebagai aplikasi \textit{desktop}. Gambar \ref{fig:ugdesktop-example} merupakan contoh salah satu halaman pada UGDesktop.
+\par UGDesktop dikembangkan menggunakan TypeScript, React, dan Electron. React dipilih karena mudah untuk digunakan dan banyak \textit{library} yang mendukung pengembangan aplikasi berbasis React. React umumnya digunakan untuk mengembangkan aplikasi berbasis \textit{web} dan membutuhkan \textit{web browser} untuk menjalankan aplikasi tersebut. Pengguna membutuhkan aplikasi yang dapat berjalan sebagai aplikasi \textit{desktop} untuk dapat menjalankan sistem antar muka pengguna sekaligus \textit{worker}. Untuk mengatasi hal tersebut, Electron digunakan untuk menjalankan aplikasi \textit{web} yang berbasis React sebagai aplikasi \textit{desktop}. Gambar \ref{fig:ugdesktop-example} merupakan contoh salah satu halaman pada UGDesktop.
 
-\par Untuk melakukan penilaian, UGDesktop secara periodik akan meminta menjalankan UGJob. Dalam menjalankan UGJob, UGDesktop menggunakan \textit{token} yang didapatkannya ketika pengguna melakukan \textit{sign in}. UGJob yang dijalankan UGDesktop akan meminta \textit{job} dari UGServer untuk dinilai.
+\par Untuk melakukan penilaian, UGDesktop secara periodik menjalankan UGJob. Dalam menjalankan UGJob, UGDesktop menggunakan \textit{token} yang didapatkannya ketika pengguna melakukan \textit{sign in}. UGJob yang dijalankan oleh UGDesktop akan meminta \textit{job} dari UGServer untuk dinilai. UGJob kemudian menilai \textit{job} yang diberikan oleh UGServer dan mengirimkan hasil penilaiannya kembali kepada UGServer.
 
 \section{Pengujian}
 
