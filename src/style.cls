@@ -87,3 +87,22 @@
 
 \setlength{\cftfignumwidth}{4em}
 \setlength{\cfttabnumwidth}{4em}
+
+\def\today{
+    \number\day\space
+    \ifcase \month
+        \or Januari
+        \or Februari
+        \or Maret
+        \or April
+        \or Mei
+        \or Juni
+        \or Juli
+        \or Agustus
+        \or September
+        \or Oktober
+        \or November
+        \or Desember
+    \fi
+    \space\number\year
+}
