@@ -51,18 +51,20 @@
 \renewcommand{\listfigurename}{\uppercase{Daftar Gambar}}
 \renewcommand{\listtablename}{\uppercase{Daftar Tabel}}
  
-\chapterfont{\centering \Large}
+\chapterfont{\centering \large}
 \titleformat
     {\chapter} % command
     [display] % shape
-    {\Large\centering\bfseries} % format
+    {\large\centering\bfseries} % format
     {\chaptertitlename\ \thechapter} % label
     {0pt} % sep
-    {\Large\bfseries\uppercase} % before
+    {\large\bfseries\uppercase} % before
 
-\titlespacing\section{0pt}{\parskip}{0.5pt}
-\titlespacing\subsection{0pt}{\parskip}{0pt}
-\titlespacing\subsubsection{0pt}{\parskip}{0pt}
+\titlespacing*{\chapter}{0pt}{-40pt}{40pt}
+% TODO: reduce space between section and paragraph
+% \titlespacing{\section}{15pt}{15pt}{15pt}
+% \titlespacing{\subsection}{0pt}{0pt}{0pt}
+% \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
 
 \sectionfont{\normalsize\bfseries}
 \subsectionfont{\normalsize\bfseries}
