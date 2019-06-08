@@ -1,92 +1,27 @@
-\documentclass[12pt, a4paper, onecolumn, oneside, final]{report}
+\documentclass{style}
 
 \usepackage{setspace}
-\usepackage{csquotes}
-\special{papersize=210mm,297mm}
 \usepackage[top=3cm,bottom=2.5cm,left=4cm,right=2.5cm]{geometry}
 \usepackage{mathptmx}
-\usepackage[bahasa]{babel}
-\usepackage[backend=biber,style=authoryear]{biblatex}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{titling}
 \usepackage{blindtext}
-\usepackage{sectsty}
-\usepackage{chngcntr}
 \usepackage{etoolbox}
-\usepackage{hyperref}
-\usepackage{titlesec}
 \usepackage{parskip}
 \usepackage{tabulary}
 \usepackage{longtable}
-\usepackage{listings}
 \usepackage{xcolor}
-\usepackage[titles]{tocloft}
 \usepackage{multicol}
 \usepackage{tikz,pgfplots}
 \usetikzlibrary{matrix}
 \usepgfplotslibrary{groupplots}
 
-
 \hyphenation{sand-box domjudge domserver judgehost test-case di-bang-kit-kan di-se-bab-kan di-ban-ding-kan jud-ge domjudge meng-gu-na-kan me-nye-le-sai-kan pe-rang-kat men-ja-lan-kan di-la-ku-kan on-line ja-wab-an WebAssembly a-kan mem-be-ri-kan ugrade ugserver ugjob http}
-
-\hypersetup{colorlinks=false, pdfborder={0 0 0},}
-
-\renewcommand{\baselinestretch}{1.5}
-
-\renewcommand{\lstlistingname}{Kode.}
-\lstdefinestyle{CStyle}{
-    belowcaptionskip=1\baselineskip,
-    breaklines=true,
-    frame=trbl,
-    numbers=left,
-    xleftmargin=\parindent,
-    language=C,
-    showstringspaces=false,
-    basicstyle=\footnotesize\ttfamily,
-    keywordstyle=\bfseries\color{green!40!black},
-    commentstyle=\itshape\color{purple!40!black},
-    identifierstyle=\color{blue},
-    stringstyle=\color{orange},
-}
-\lstdefinestyle{BashStyle}{
-    belowcaptionskip=1\baselineskip,
-    breaklines=true,
-    frame=trbl,
-    numbers=left,
-    xleftmargin=\parindent,
-    language=Bash,
-    showstringspaces=false,
-    basicstyle=\footnotesize\ttfamily,
-}
-
-\chapterfont{\centering \Large}
-\titleformat{\chapter}[display]
-    {\Large\centering\bfseries}
-    {\chaptertitlename\ \thechapter}{0pt}
-        {\Large\bfseries\uppercase}
 
 \setcounter{secnumdepth}{3}
 
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
-
-\renewcommand*{\nameyeardelim}{\addcomma\space}
 \addbibresource{references.bib}
-
-\DeclareQuoteStyle{bahasa}
-    {\textquotedblleft}
-    {\textquotedblright}
-    [0.05em]
-    {\textquotedblleft}
-    {\textquotedblright}
-
-\DefineBibliographyStrings{english}{
-    and = {\&}
-}
-
-\setlength{\cftfignumwidth}{4em}
-\setlength{\cfttabnumwidth}{4em}
 
 \begin{document}
 
@@ -125,8 +60,6 @@
     \titleformat*{\section}{\bfseries\Large}
     \pagenumbering{arabic}
     \setcounter{page}{1}
-    \renewcommand{\chaptername}{BAB}
-    \renewcommand{\thechapter}{\Roman{chapter}}
     
     \input{chapters/chapter-1}
     \input{chapters/chapter-2}
@@ -134,7 +67,6 @@
     \input{chapters/chapter-4}
     \input{chapters/chapter-5}
 
-    \renewcommand\bibname{DAFTAR PUSTAKA}
-    \printbibliography
+    \printbibliography[title=DAFTAR PUSTAKA]
 
 \end{document}
