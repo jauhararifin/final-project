@@ -120,7 +120,7 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
     \item \textit{Internal Error}: menandakan adanya kesalahan pada sistem UGrade sehingga jawaban tidak dapat dinilai.
 \end{enumerate}
 
-\subsection{Penilain Jawaban}
+\subsection{Penilaian Jawaban}
 
 \par Setiap jawaban yang dikirimkan oleh pengguna akan dinilai secara otomatis oleh UGServer. Penilaian dilakukan secara \textit{asynchronous}. Oleh karena itu, peserta tidak perlu menunggu penilaian selesai untuk melakukan aksi-aksi lain. Seringkali terdapat beberapa masalah teknis yang mengakibatkan jawaban peserta perlu dinilai ulang. Oleh sebab itu, setiap jawaban peserta dapat dinilai lebih dari satu kali. Hasil penilaian yang digunakan adalah hasil penilaian yang terakhir.
 
@@ -137,7 +137,7 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 \par Informasi dari \textit{grading group} disimpan dalam tabel \textit{GradingGroups} pada sistem basis data. Setiap \textit{grading group} memiliki informasi mengenai jawaban peserta, catatan waktu terciptanya \textit{grading group}, \textit{verdict}, spesifikasi penilaian, catatan waktu selesainya penilaian, dan \textit{grading size}. Informasi-informasi tersebut disimpan sebagai \textit{field} dalam tabel \textit{GradingGroups}. Spesifikasi penilaian berupa \textit{archive file} dan disimpan sebagai \textit{file} dalam \textit{disk}. Field \textit{spec} pada tabel \textit{GradingGroups} menyimpan informasi alamat \textit{file} dari spesifikasi penilaian. Skema basis data yang digunakan untuk melakukan penilaian ditunjukkan pada Gambar \ref{fig:grader-schema}.
 
-\par Penilaian diawali dengan pembuatan spesifikasi penilaian. Spesifikasi penilaian berisi informasi mengenai \textit{testcase generator}, solusi juri, \textit{checker}, solusi peserta dan batasan soal. Informasi tersebut disimpan sebagai \textit{file} dengan format \textit{tar}. Spesifikasi penilain tersebut terdiri dari beberapa file sebagai berikut:
+\par Penilaian diawali dengan pembuatan spesifikasi penilaian. Spesifikasi penilaian berisi informasi mengenai \textit{testcase generator}, solusi juri, \textit{checker}, solusi peserta dan batasan soal. Informasi tersebut disimpan sebagai \textit{file} dengan format \textit{tar}. Spesifikasi penilaian tersebut terdiri dari beberapa file sebagai berikut:
 \begin{enumerate}
     \item tcgen.cpp\\ merupakan kode sumber \textit{testcase generator} dari soal. Ekstensi dari \textit{file} dapat berbeda sesuai bahasa pemrograman yang digunakan.
     \item solution.cpp\\ merupakan kode sumber  solusi juri pada soal yang bersangkutan. Ekstensi dari \textit{file} dapat berbeda sesuai bahasa pemrograman yang digunakan.
