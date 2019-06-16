@@ -20,7 +20,9 @@
     \label{fig:architecture-new}
 \end{figure}
 
-\subsection{Pengukuran Waktu Dan Memori} \label{subsec:time-memory-measure}
+\par Dengan menggunakan sistem \textit{online judge} seperti pada Gambar \ref{fig:architecture-new}, jumlah \textit{worker} dari sistem akan sama dengan jumlah peserta. Jumlah jawaban yang perlu dinilai oleh sistem \textit{online judge} umumnya berbanding lurus dengan jumlah peserta dari kompetisi. Dengan memanfaatkan komputer peserta sebagai \textit{worker}, maka jumlah dari \textit{worker} juga akan mengikuti jumlah jawaban yang perlu dinilai oleh sistem \textit{online judge}. Oleh karena itu, pemanfaatan komputer peserta sebagai \textit{worker} seperti pada Gambar \ref{fig:architecture-new} akan meningkatkan kinerja penilaian.
+
+\subsection{Pengukuran Waktu Dan Memori Pada Penilaian Jawaban} \label{subsec:time-memory-measure}
 
 \par Komputer peserta memiliki spesifikasi yang berbeda-beda. Perbedaan spesifikasi tersebut menimbulkan beberapa perbedaan ketika sebuah program yang sama dieksekusi. Program yang sama dengan masukan yang sama dapat berjalan dengan waktu dan memori yang berbeda pada komputer yang berbeda. Komputer dengan \textit{clock-speed} yang lebih tinggi akan menjalankan program dengan lebih cepat. Komputer dengan \textit{core} yang lebih banyak juga akan menjalankan program parallel dengan lebih cepat. Selain itu, ukuran \textit{cache} dari komputer juga memengaruhi kecepatan waktu eksekusi. Kebutuhan memori dari suatu program juga ditentukan oleh spesifikasi komputer. Komputer dengan arsitektur 64-bit umumnya memerlukan memori yang lebih besar dibandingkan arsitektur 32-bit. Oleh karena itu, program yang dieksekusi pada komputer yang berbeda akan memerlukan waktu dan memori yang berbeda pula.
 
@@ -175,7 +177,7 @@ Pada tugas akhir ini, diasumsikan peserta tidak melakukan serangan dalam bentuk 
 
 \par Untuk lebih mengurangi risiko yang muncul akibat serangan \textit{reverse engineering}, juri dapat mengatur agar setiap jawaban peserta dinilai oleh banyak \textit{worker}. Jika terdapat serangan \textit{reverse engineering} yang mengakibatkan \textit{worker} mengirimkan \textit{verdict} yang salah kepada \textit{server}, maka masih terdapat beberapa \textit{worker} lain yang mengirimkan \textit{verdict} yang benar. Peserta yang melakukan serangan \textit{reverse engineering} kemudian dapat dideteksi ketika \textit{verdict} yang dikirimkannya berbeda dengan peserta lain.
 
-\par Sebagai contoh pada paragraf sebelumnya, misalkan setiap jawaban dinilai oleh lima buah \textit{worker}. Ketika sebuah jawaban dinilai, maka terdapat lima peserta berbeda yang melakukan penilain. Seorang peserta bisa saja melakukan serangan \textit{reverse engineering} dan mengakibatkan \textit{worker} pada komputernya mengirimkan \textit{verdict} yang salah kepada \textit{server}. Meskipun begitu, empat peserta lain yang tidak melakukan serangan \textit{reverse engineering} akan mengirimkan \textit{verdict} yang berbeda dengan peserta yang melakukan serangan \textit{reverse engineering}. Dengan mengamati kelima buah \textit{verdict} ini, peserta yang mengirimkan \textit{verdict} yang berbeda dapat dikatakan melakukan serangan.
+\par Sebagai contoh pada paragraf sebelumnya, misalkan setiap jawaban dinilai oleh lima buah \textit{worker}. Ketika sebuah jawaban dinilai, maka terdapat lima peserta berbeda yang melakukan penilaian. Seorang peserta bisa saja melakukan serangan \textit{reverse engineering} dan mengakibatkan \textit{worker} pada komputernya mengirimkan \textit{verdict} yang salah kepada \textit{server}. Meskipun begitu, empat peserta lain yang tidak melakukan serangan \textit{reverse engineering} akan mengirimkan \textit{verdict} yang berbeda dengan peserta yang melakukan serangan \textit{reverse engineering}. Dengan mengamati kelima buah \textit{verdict} ini, peserta yang mengirimkan \textit{verdict} yang berbeda dapat dikatakan melakukan serangan.
 
 % TODO: tambah cara penilaian, pikirin lagi tentang self-grading, tambah penjelasan satu jawaban bisa dinilai lebih dari satu kali, jelasin grading_size
 
@@ -219,12 +221,12 @@ Pada tugas akhir ini, diasumsikan peserta tidak melakukan serangan dalam bentuk 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{images/oj-components}
-    \caption{Diagram Komponen Sistem Manajemen Kompetisi}
+    \caption{Diagram Komponen Sistem \textit{Online Judge}}
     \label{fig:oj-components}
 \end{figure}
 % TODO: tambah komponen "kontes"
 
-\par Sistem manajemen kompetisi yang digunakan pada tugas akhir ini mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, antar muka dan \textit{grader}. Komponen \textit{grader} tidak lain adalah sistem \textit{autograder} yang telah dipaparkan pada bagian \ref{subsec:autograder}. Diagram komponen pada Gambar \ref{fig:oj-components} menggambarkan komponen yang digunakan dalam sistem manajemen kompetisi beserta keterhubungannya.
+\par Sistem manajemen kompetisi yang digunakan pada tugas akhir ini mengikuti sistem manajemen kompetisi yang saat ini banyak digunakan. Sistem manajemen kompetisi ini dapat dibagi menjadi beberapa komponen utama yaitu: pengguna, soal, jawaban, antarmuka dan \textit{grader}. Komponen \textit{grader} tidak lain adalah sistem \textit{autograder} yang telah dipaparkan pada bagian \ref{subsec:autograder}. Diagram komponen pada Gambar \ref{fig:oj-components} menggambarkan komponen yang digunakan dalam sistem manajemen kompetisi beserta keterhubungannya.
 
 \subsection{Komponen Pengguna}
 
@@ -248,17 +250,17 @@ Pada tugas akhir ini, diasumsikan peserta tidak melakukan serangan dalam bentuk 
 
 \par Sistem manajemen kompetisi perlu menyediakan layanan kepada peserta untuk mengirimkan jawaban. Jawaban yang dikirimkan peserta berupa program dalam bentuk \textit{source code} dalam bahasa pemrograman yang diizinkan oleh juri. Selain itu, sistem manajemen kompetisi juga harus memberikan layanan kepada peserta untuk dapat melihat kembali jawabannya. Juri juga perlu mengawasi jawaban dari peserta untuk menghindari adanya kecurangan.  Oleh karena itu, sistem manajemen kompetisi juga harus dapat memberikan layanan kepada juri untuk melihat seluruh jawaban yang pernah dikirimkan oleh peserta. Pada sistem \textit{online judge} yang dibangun, komponen jawaban berguna untuk memberikan layanan-layanan tersebut. Pada tugas akhir ini jawaban peserta akan disimpan dalam bentuk \textit{file source code} pada \textit{filesystem}.
 
-\subsection{Komponen Antar Muka}
+\subsection{Komponen Antarmuka}
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.85\textwidth]{images/mockup}
-    \caption{Desain Tampilan Antar Muka Sistem \textit{Online Judge}.}
+    \caption{Desain Tampilan Antarmuka Sistem \textit{Online Judge}.}
     \label{fig:mockup}
 \end{figure}
 
-\par Untuk memudahkan peserta dan juri berinteraksi dengan sistem \textit{online judge}, diperlukan komponen antar muka. Pengguna yang merupakan peserta dan juri menggunakan antar muka ini untuk melakukan aksi-aksi pada sistem \textit{online judge}. Kebanyakan sistem \textit{online judge} yang populer saat ini menggunakan antar muka berbasis \textit{web}. Antar muka berbasis \textit{web} digunakan karena mudah diakses oleh pengguna, dan cukup ringan untuk dijalankan.
+\par Untuk memudahkan peserta dan juri berinteraksi dengan sistem \textit{online judge}, diperlukan komponen antarmuka. Pengguna yang merupakan peserta dan juri menggunakan antarmuka ini untuk melakukan aksi-aksi pada sistem \textit{online judge}. Kebanyakan sistem \textit{online judge} yang populer saat ini menggunakan antarmuka berbasis \textit{web}. Antarmuka berbasis \textit{web} digunakan karena mudah diakses oleh pengguna, dan cukup ringan untuk dijalankan.
 
-\par Pada tugas akhir ini, antar muka dibuat dalam bentuk tampilan grafis berbasis web. Untuk memudahkan pengguna, antar muka dibuat sebagai aplikasi \textit{desktop}. Hal ini bertujuan agar komponen antar muka dan \textit{grader} dapat berjalan secara sekaligus. Gambar \ref{fig:mockup} merupakan rancangan halaman-halaman yang dibangun pada komponen antar muka.
+\par Pada tugas akhir ini, antarmuka dibuat dalam bentuk tampilan grafis berbasis web. Untuk memudahkan pengguna, antarmuka dibuat sebagai aplikasi \textit{desktop}. Hal ini bertujuan agar komponen antarmuka dan \textit{grader} dapat berjalan secara sekaligus. Gambar \ref{fig:mockup} merupakan rancangan halaman-halaman yang dibangun pada komponen antarmuka.
 
 % TODO: tambah penjelasan tentang submission, grading_group, grading, erd diagram dari db
