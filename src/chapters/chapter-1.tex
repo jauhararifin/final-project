@@ -6,7 +6,7 @@
 
 \par Di dalam sistem \textit{online judge}, terdapat sistem \textit{autograder} yang digunakan untuk menilai jawaban peserta. Jawaban peserta yang berupa \textit{source code} dalam bahasa pemrograman tertentu akan dinilai kebenarannya oleh sistem \textit{autograder} dengan cara melakukan kompilasi pada kode tersebut kemudian mengeksekusi program hasil kompilasi dengan \textit{test-case} yang sudah disiapkan oleh juri atau pembuat soal. Menurut \cite{jordanioi}, cara tersebut disebut sebagai \textit{black-box grading}. Dengan menggunakan \textit{autograder}, penilaian jawaban peserta dapat dilakukan secara otomatis dan keterlibatan manusia menjadi lebih sedikit. Untuk meningkatkan jumlah jawaban peserta yang dapat dinilai dalam satuan waktu, biasanya juri menyiapkan lebih dari satu komputer yang menjalankan sistem \textit{autograder}. Untuk menjalankan \textit{autograder} pada lebih dari satu komputer, diperlukan komputer dengan spesifikasi yang sama untuk menjaga keadilan penilaian.
 
-\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} untuk meningkatkan kinerja penilaian. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
+\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} untuk meningkatkan kinerja penilaian. Kinerja penilaian didefinisikan sebagai banyaknya jawaban yang dapat dinilai oleh sistem \textit{online judge} dalam satuan waktu. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
 
 \par Dalam mengikuti kompetisi \textit{competitive programming}, peserta umumnya menggunakan komputer pribadinya untuk menulis program yang digunakan untuk menyelesaikan soal yang diberikan. Setiap komputer yang digunakan oleh peserta umumnya memiliki spesifikasi yang cukup untuk melakukan kompilasi pada \textit{source code} yang ditulis oleh peserta dan melakukan eksekusi program hasil kompilasi tersebut. Oleh sebab itu, komputer peserta berpotensi untuk menjadi infrastruktur yang dapat digunakan untuk melakukan penilaian program oleh \textit{autograder}.
 
@@ -23,18 +23,18 @@
 
 \section{Tujuan}
 
-\par Tujuan dari tugas akhir ini adalah meningkatkan kinerja penilaian jawaban peserta pada kompetisi \textit{competitive programming} dengan menciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
+\par Tujuan dari tugas akhir ini adalah meningkatkan kinerja penilaian jawaban peserta pada kompetisi \textit{competitive programming} dengan menciptakan sistem \textit{autograder} yang dapat berjalan pada komputer peserta dengan tetap mempertahankan aspek keadilan dan keamanan dari sistem.
 
 \section{Batasan Masalah}
 
-\par Pada pengerjaan tugas akhir ini, diasumsikan seluruh peserta yang menggunakan perangkat lunak ini memiliki komputer dengan spesifikasi yang cukup untuk menjalankan sistem \textit{autograder} dan memiliki sistem operasi berbasis Linux. Perangkat lunak yang dibangun untuk menjalankan sistem \textit{autograder} hanya mencakup sistem \textit{autograder} untuk domain \textit{competitive programming} saja. Selain itu, peserta diasumsikan tidak melakukan serangan yang berbentuk \textit{reverse engineering}.
+\par Pada pengerjaan tugas akhir ini, seluruh peserta yang menggunakan perangkat lunak ini dianggap memiliki komputer dengan spesifikasi yang cukup untuk menjalankan sistem \textit{autograder} yaitu komputer dengan CPU yang memiliki \textit{clock speed} 2.5 GHz atau lebih, RAM sebesar 4 GB atau lebih dan menggunakan sistem operasi berbasis Linux. Perangkat lunak yang dibangun untuk menjalankan sistem \textit{autograder} hanya mencakup sistem \textit{autograder} untuk domain \textit{competitive programming} saja. Selain itu, peserta diasumsikan tidak melakukan serangan yang berbentuk \textit{reverse engineering}.
 
 \section{Metodologi}
 
 \par Metodologi yang dilakukan dalam pengerjaan Tugas Akhir ini adalah:
 \begin{enumerate}
 
-	\item Menganalisis dan mendesain sistem \textit{autograder} \\ Pada tahap ini dilakukan analisis terhadap teknik pembuatan sistem \textit{autograder} beserta aspek-aspek yang perlu diperhatikan dalam melakukan pengembangan sistem \textit{autograder}. Selain itu, pada tahap ini juga dihasilkan metode yang akan digunakan untuk mengembangkan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
+	\item Menganalisis dan mendesain sistem \textit{autograder} \\ Pada tahap ini dilakukan analisis terhadap teknik pembuatan sistem \textit{autograder} beserta aspek-aspek yang perlu diperhatikan dalam melakukan pengembangan sistem \textit{autograder}. Selain itu, pada tahap ini juga dihasilkan usulan solusi yang akan digunakan untuk mengembangkan sistem \textit{autograder} yang dapat berjalan pada komputer peserta.
 	
 	\item Desain dan analisis perangkat lunak \\ Pada tahap ini dilakukan analisis terhadap kebutuhan perangkat lunak beserta membuat desain perangkat lunak yang akan diimplementasikan.
 	
@@ -53,7 +53,7 @@
 \begin{enumerate}
 	\item BAB I PENDAHULUAN berisi penjelasan mengenai latar belakang, rumusan masalah, tujuan, batasan masalah, metodologi, serta sistematika pembahasan tugas akhir.
 	\item BAB II STUDI LITERATUR berisi hasil studi literatur berupa teori yang melandasai rancangan penyelesaian tugas akhir. Landasan teori terdiri dari kompetisi \textit{competitive programming}, sistem \textit{online judge}, \textit{autograder}, \textit{virtual machine}, \textit{containerization} dan \textit{webassembly}.
-	\item BAB III ANALISIS MASALAH DAN RANCANGAN SOLUSI berisi persoalan yang muncul ketika menggunakan komputer peserta sebagai \textit{worker} dari \textit{autograder} beserta penyelesaian dari permasalahan tersebut.
+	\item BAB III ANALISIS MASALAH DAN RANCANGAN SOLUSI berisi persoalan yang muncul ketika menggunakan komputer peserta sebagai \textit{worker} dari \textit{autograder} beserta beberapa usulan penyelesaian dari permasalahan tersebut.
 	\item BAB IV PENGEMBANGAN DAN PENGUJIAN berisi bahasa pemrograman, \textit{tools} dan komponen-komponen yang dibuat dalam mengimplementasikan rancangan solusi pada BAB III.
 	\item BAB V SIMPULAN DAN SARAN berisi kesimpulan dan saran dari proses dan hasil pengembangan dan pengujian perangkat lunak.
 \end{enumerate}
