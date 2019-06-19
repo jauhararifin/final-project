@@ -290,7 +290,14 @@ Global Flags:
       --trace   show trace message
 \end{lstlisting}
 
-\par UGJob dapat dijalankan melalui CLI dengan mengetikkan perintah \textit{ugjob consume}. UGJob memerlukan \textit{token} yang bisa didapatkan oleh pengguna pada saat melakukan \textit{sign in}. \textit{Token} ini berguna untuk mengidentifikasi ID dari pengguna. UGServer akan menggunakan \textit{token} untuk menentukan \textit{job} mana yang akan dikerjakan oleh \textit{worker}. Kode \ref{lst:ugjob-consume} merupakan contoh hasil pemanggilan \textit{ugjob consume}.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/job-activity}
+    \caption{Diagram Aktivitas Dari UGJob}
+    \label{fig:job-activity}
+\end{figure}
+
+\par UGJob dapat dijalankan melalui CLI dengan mengetikkan perintah \textit{ugjob consume}. UGJob memerlukan \textit{token} yang bisa didapatkan oleh pengguna pada saat melakukan \textit{sign in}. \textit{Token} ini berguna untuk mengidentifikasi ID dari pengguna. UGServer akan menggunakan \textit{token} untuk menentukan \textit{job} mana yang akan dikerjakan oleh \textit{worker}. Kode \ref{lst:ugjob-consume} merupakan contoh hasil pemanggilan \textit{ugjob consume}. Gambar \ref{fig:job-activity} merupakan diagram aktivitas dari UGJob.
 
 \par Pemanggilan \textit{ugjob consume} akan menjalankan \textit{worker} pada komputer pengguna dan proses penilaian akan mulai dilakukan. Penilaian diawali dengan pengambilan \textit{job} oleh UGJob. UGJob akan meminta \textit{job} kepada UGServer dengan mengirim \textit{request} HTTP ke UGServer dengan menyertakan \textit{token} yang dimilikinya. \textit{Request} HTTP tersebut akan dikirimkan ke URL (\textit{uniform resource locator}) tertentu pada UGServer dengan menyertakan \textit{token} pada bagian \textit{header}-nya.
 
