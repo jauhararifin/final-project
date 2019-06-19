@@ -203,7 +203,14 @@ Pemberian \textit{permission} untuk setiap pengguna bertujuan untuk meningkatkan
 
 % TODO: jelasin kodenya
 
-\par Dalam menjalankan penilaian, UGSbox berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada tugas akhir ini, UGSbox berperan dalam memberikan isolasi tersebut.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/sandbox-activity}
+    \caption{Diagram Aktivitas Dari UGSbox}
+    \label{fig:sandbox-activity}
+\end{figure}
+
+\par Dalam menjalankan penilaian, UGSbox berperan dalam memberikan isolasi terhadap program-program yang berjalan di komputer pengguna. Program-program yang berjalan pada saat penilaian antara lain adalah \textit{compiler}, \textit{testcase generator}, solusi peserta, solusi juri dan \textit{checker}. Program-program ini dapat berisi kode yang membahayakan komputer pengguna yang menjalankannya. Oleh karena itu, diperlukan adanya sistem yang dapat mengisolasi program tersebut sehingga tidak membahayakan komputer pengguna. Pada tugas akhir ini, UGSbox berperan dalam memberikan isolasi tersebut. Gambar \ref{fig:sandbox-activity} merupakan diagram aktivitas dari UGSbox.
 
 \par UGSbox memberikan isolasi pada proses yang berjalan dengan menggunakan beberapa fitur dari Linux. Isolasi yang diberikan UGSbox antara lain adalah sebagai berikut:
 \begin{itemize}
