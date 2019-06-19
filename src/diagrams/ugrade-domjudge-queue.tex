@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+    \begin{axis}[xlabel={Waktu (detik)}, ylabel={Jumlah jawaban pada antrian}, xmin=0,xmax=625, ymin=0, ymax=80, legend pos=north east, ymajorgrids=true, grid style=dashed,height=0.5\textwidth,width=\textwidth]
+        \addplot[color=blue,] table {data/domjudge-queue-test2.txt};
+        \addlegendentry{DOMJudge}
+        \addplot[color=red,] table {data/ugrade-queue-gz5-test2.txt};
+        \addlegendentry{UGrade dengan \textit{grading size} 5}
+    \end{axis}
+\end{tikzpicture}
