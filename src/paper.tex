@@ -11,64 +11,40 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Paper Title*\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
-}
+\title{Development of Online Judge Using Contestant PC As Worker of Autograder}
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
+\author{\IEEEauthorblockN{Jauhar Arifin}
+\IEEEauthorblockA{School of Electrical Engineering and Informatics} \\
+Bandung Institute of Technology\\
+Bandung, Indonesia \\
+jauhararifin10@gmail.com
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
-\and
-\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
-\and
-\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
-\and
-\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
-\and
-\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
-}
+\IEEEauthorblockN{Riza Satria Perdana}
+\IEEEauthorblockA{School of Electrical Engineering and Informatics} \\
+Bandung Institute of Technology\\
+Bandung, Indonesia \\
+riza@informatika.org}
 
 \maketitle
 
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
+Competitive programming is a computer science competition where the contestants compete to solve computer science problems by writing a program which satisfies the problem constraints.
+Autograder is used to grade contestant solutions automatically in real-time. Usually autograder is deployed in many computers to increase grading performance. In this work, contestant computers are used as worker to run autograder. By using contestant computers as worker, the number of worker will proportional to the number of contestant submissions, thus increasing grading performance. Every contestant computers have different specification and can affect grading fairness. To keep grading fairness, contestant's solution and jury's solution executed in contestant worker and compared to check whether contestant's solution satisfies problem constraints. This work tested by simulating grading process in contestant computers. The testing result indicates that using contestant computers as worker gives performance improvement in the grading process.
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+competitive programming, online judge, autograder.
 \end{IEEEkeywords}
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+
+\par \textit{Competitive programming} merupakan salah satu cabang lomba yang cukup populer di bidang \textit{computer science}. Pada kompetisi \textit{competitive programming}, peserta diminta menyelesaikan persoalan terkait \textit{computer science} yang diberikan oleh juri secara benar dan dalam waktu yang singkat. Beberapa instansi dan organisasi seringkali mengadakan kompetisi ini secara rutin. Perusahaan teknologi besar seperti Google dan Facebook pun seringkali mengadakan kompetisi \textit{competitive programming} secara tahunan. Kompetisi \textit{competitive programming} ditunjang dengan menggunakan sistem \textit{online judge}. Sistem \textit{online judge} tersebut biasanya berupa halaman \textit{web} dimana peserta dapat melihat soal, membuat klarifikasi, mengirimkan jawaban dan melihat \textit{scoreboard}. Sistem \textit{online judge} yang populer pada saat ini adalah Codeforces, URI \textit{Online Judge} (\cite{uriojpaper}), Uva, dan SPOJ.
+
+\par Di dalam sistem \textit{online judge}, terdapat sistem \textit{autograder} yang digunakan untuk menilai jawaban peserta. Jawaban peserta yang berupa \textit{source code} dalam bahasa pemrograman tertentu akan dinilai kebenarannya oleh sistem \textit{autograder} dengan cara melakukan kompilasi pada kode tersebut kemudian mengeksekusi program hasil kompilasi dengan \textit{test-case} yang sudah disiapkan oleh juri atau pembuat soal. Menurut \cite{jordanioi}, cara tersebut disebut sebagai \textit{black-box grading}. Dengan menggunakan \textit{autograder}, penilaian jawaban peserta dapat dilakukan secara otomatis dan keterlibatan manusia menjadi lebih sedikit. Untuk meningkatkan jumlah jawaban peserta yang dapat dinilai dalam satuan waktu, biasanya juri menyiapkan lebih dari satu komputer yang menjalankan sistem \textit{autograder}. Untuk menjalankan \textit{autograder} pada lebih dari satu komputer, diperlukan komputer dengan spesifikasi yang sama untuk menjaga keadilan penilaian.
+
+\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} untuk meningkatkan kinerja penilaian. Kinerja penilaian didefinisikan sebagai banyaknya jawaban yang dapat dinilai oleh sistem \textit{online judge} dalam satuan waktu. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
+
+\par Dalam mengikuti kompetisi \textit{competitive programming}, peserta umumnya menggunakan komputer pribadinya untuk menulis program yang digunakan untuk menyelesaikan soal yang diberikan. Setiap komputer yang digunakan oleh peserta umumnya memiliki spesifikasi yang cukup untuk melakukan kompilasi pada \textit{source code} yang ditulis oleh peserta dan melakukan eksekusi program hasil kompilasi tersebut. Oleh sebab itu, komputer peserta berpotensi untuk menjadi infrastruktur yang dapat digunakan untuk melakukan penilaian program oleh \textit{autograder}.
 
 \section{Ease of Use}
 
