@@ -38,13 +38,13 @@ competitive programming, online judge, autograder.
 
 \section{Introduction}
 
-\par \textit{Competitive programming} merupakan salah satu cabang lomba yang cukup populer di bidang \textit{computer science}. Pada kompetisi \textit{competitive programming}, peserta diminta menyelesaikan persoalan terkait \textit{computer science} yang diberikan oleh juri secara benar dan dalam waktu yang singkat. Beberapa instansi dan organisasi seringkali mengadakan kompetisi ini secara rutin. Perusahaan teknologi besar seperti Google dan Facebook pun seringkali mengadakan kompetisi \textit{competitive programming} secara tahunan. Kompetisi \textit{competitive programming} ditunjang dengan menggunakan sistem \textit{online judge}. Sistem \textit{online judge} tersebut biasanya berupa halaman \textit{web} dimana peserta dapat melihat soal, membuat klarifikasi, mengirimkan jawaban dan melihat \textit{scoreboard}. Sistem \textit{online judge} yang populer pada saat ini adalah Codeforces, URI \textit{Online Judge} (\cite{uriojpaper}), Uva, dan SPOJ.
+Competitive programming is one of the most popular competition in computer science field. In competitive programming competition, contestants are asked to solve computer science problems correctly and as fast as possible. Some institute and organization often organize competitive programming competition periodically. Some big companies like Google and Facebook organize competitive programming competition annually. Competitive programming competition supported by online judge system. Usually, online judge system is a web based application where contestants can read the problems, create clarifications, submit their solution, and watch the scoreboard. Currently, the most popular online judge are Codeforces, URI Online Judge \cite{uriojpaper}, Uva, and SPOJ.
 
-\par Di dalam sistem \textit{online judge}, terdapat sistem \textit{autograder} yang digunakan untuk menilai jawaban peserta. Jawaban peserta yang berupa \textit{source code} dalam bahasa pemrograman tertentu akan dinilai kebenarannya oleh sistem \textit{autograder} dengan cara melakukan kompilasi pada kode tersebut kemudian mengeksekusi program hasil kompilasi dengan \textit{test-case} yang sudah disiapkan oleh juri atau pembuat soal. Menurut \cite{jordanioi}, cara tersebut disebut sebagai \textit{black-box grading}. Dengan menggunakan \textit{autograder}, penilaian jawaban peserta dapat dilakukan secara otomatis dan keterlibatan manusia menjadi lebih sedikit. Untuk meningkatkan jumlah jawaban peserta yang dapat dinilai dalam satuan waktu, biasanya juri menyiapkan lebih dari satu komputer yang menjalankan sistem \textit{autograder}. Untuk menjalankan \textit{autograder} pada lebih dari satu komputer, diperlukan komputer dengan spesifikasi yang sama untuk menjaga keadilan penilaian.
+In order to grade contestant submissions, online judge system has a subsystem called autograder. Contestant submissions which are source code in certain programming language will be graded by autograder system by compiling the program and executes compiled program using test-cases that have been prepared by juries or problem setter. According \cite{jordanioi}, this grading method is called black-box grading. By using autograder system, the grading process can be done automatically and juries don't have to evaluate contestant submissions manually. In order to increase the number of contestant submissions in certain amount of time, juries usually deploy autograder in many computers. In order to run autograder in many computers, the juries need to prepare many computers with the same spesification to keep the fairness of grading process.
 
-\par Saat ini, hampir semua kompetisi \textit{competitive programming} menggunakan sistem \textit{autograder}. Kebanyakan dari kompetisi tersebut juga telah menggunakan lebih dari satu \textit{autograder} untuk meningkatkan kinerja penilaian. Kinerja penilaian didefinisikan sebagai banyaknya jawaban yang dapat dinilai oleh sistem \textit{online judge} dalam satuan waktu. Meskipun begitu, karena banyaknya peserta yang mengikuti kompetisi tersebut, seringkali jumlah \textit{autograder} yang disiapkan oleh juri kurang dan mengakibatkan jawaban peserta tidak dapat dinilai secara cepat. Penggunaan sistem \textit{autograder} yang banyak juga menghabiskan banyak biaya karena perlu menyewa komputer dengan kinerja yang cukup tinggi untuk menjalankan sistem \textit{autograder} tersebut. Oleh karena itu, diperlukan sistem penilaian baru yang dapat mengurangi biaya pengadaan infrastruktur guna menjalankan sistem \textit{autograder}.
+Currently, almost every competitive programing competition use online judge system to support the competition and use many computers to run autograder in order to improve grading performance. Grading performance is defined as the number of submissions graded in certain amount of time. Even though autograder deployed in many computers, the grading performance often not enough to evaluate contestant solutions in real-time because the number of contestants is increasing. Furthermore, the number of computer to deploy autograder affect the procurement cost that juries need to be incurred. Therefore, new grading system is needed to increase grading performance without increasing procurement cost that need to be incurred.
 
-\par Dalam mengikuti kompetisi \textit{competitive programming}, peserta umumnya menggunakan komputer pribadinya untuk menulis program yang digunakan untuk menyelesaikan soal yang diberikan. Setiap komputer yang digunakan oleh peserta umumnya memiliki spesifikasi yang cukup untuk melakukan kompilasi pada \textit{source code} yang ditulis oleh peserta dan melakukan eksekusi program hasil kompilasi tersebut. Oleh sebab itu, komputer peserta berpotensi untuk menjadi infrastruktur yang dapat digunakan untuk melakukan penilaian program oleh \textit{autograder}.
+When competing in competitive programming competition, the contestants usually use their personal computer to write the solutions. Every contestant computers usually have sufficient specification to compile and execute contestant submissions. Therefore, contestant computers have ability to run autograder program and evaluate contestant submissions.
 
 \section{Ease of Use}
 
@@ -249,6 +249,22 @@ For papers published in translation journals, please give the English
 citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
+
+\bibitem{halimsfcp3} TODO.
+\bibitem{abouticpc} TODO.
+\bibitem{wfrules} TODO.
+\bibitem{ioiorg} TODO.
+\bibitem{ioi2017} TODO.
+\bibitem{cfrules} TODO.
+\bibitem{mdnwebasm} TODO.
+\bibitem{uriojpaper} TODO.
+\bibitem{wasikojsurvey} TODO.
+\bibitem{wfeltervmcontainer} TODO.
+\bibitem{danutamalms} TODO.
+\bibitem{merkeldocker} TODO.
+\bibitem{lessardchroot} TODO.
+\bibitem{jordanioi} TODO.
+
 \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
 \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
 \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
