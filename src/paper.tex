@@ -11,7 +11,8 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Development of Online Judge Using Contestant PC As Worker of Autograder}
+% \title{Development of Online Judge Using Contestant PC As Worker of Autograder}
+\title{Development of Autograder For Competitive Programming Using Contestant PC As Worker}
 
 \author{\IEEEauthorblockN{Jauhar Arifin}
 \IEEEauthorblockA{School of Electrical Engineering and Informatics} \\
@@ -61,6 +62,25 @@ There are several ways to create isolated environment such as using virtual mach
 Another way to create isolated environment is by using container. Container is different from virtual machine. Container Container gives isolation in software level wihout hypervisor \cite{merkeldocker}. By using container, we can isolate process execution without boot a new operating system. Container works by using some Linux features such as chroot, namespace and cgroup. By using chroot, we can isolate filesystem of Linux process \cite{lessardchroot}. Container uses Linux feature called cgroup to limit process resources. By using cgroup, we can limit memory usage, CPU usage and disk IO usage of running process \cite{wfeltervmcontainer}. In order to hide other process, user, and network from a running process, container uses a Linux feature called namespace. By using namespace, we can isolate a Linux process from other process, so the running process not aware of the existance of other process. Instead of virtual machine, most of autograding system use container to isolate grading process. This method is used because it is more lighter and faster than virtual machine. 
 
 \section{Methodology}
+
+\subsection{Time and Memory Measurement}
+
+In competitive programming competition, every problems has time and memory constraints. Contestants are asked to solve the problem by writing program that satify the constraints. According to ICPC rules, when contestant's solution exceeds the problem constraints, the solution is rejected and the contestant get time penalty. Thus, autograding system need to tell whether contestant's solution exceeds the constraints or not. The probem is, every computer has different performance when executing a program. The same program might run faster in one computer and slower in another computer. Currently, most of online judge system uses identical computer to evaluate contestant submissions. By using identical computer, the same program expected to run at the same duration and consume the same amount of memories.
+
+Contestant computers have different specification and performance. We cannot force the contestants to have identical computer. Thus, we need new time and memory measurement method. The performance of a computer is determined by its specifications such as CPU clock speed and operating system. We can tell the computer performance by its specifications. However, besides CPU clock speed and operating system, there are so much other factors that affect computer performance such as temperature, cache size, the program itself, and many other factors. Thus, determining computer performance by its specification is very hard and not feasible to do.
+
+\begin{equation}\label{tolerance-factor}
+R_{contestant} < (1 + \gamma) \times R_{jury}
+\end{equation}
+
+In this work, we compare contestant's solution and jury's solution. Contestant's solution considered satisfying the problem constraints when the memory and CPU usage of contestant's solution not exceeding jury's solution. Sometimes, contestant solution's memory or CPU exceeds jury's solution a little bit because the implementation is different. We add tolerance factor ($\gamma$) to tolerate this problem. Contestant's solution is considered satifying problem constraints when the Equation \ref{tolerance-factor} is fulfilled. When evaluating contestant's solution, the worker compiles and executes contestant's solution and jury's solution. After executes the solutions, the worker compares the memory and CPU usage of the execution and determine whether the contestant's solution satisfy problem constraints. 
+
+\subsection{Load Balancing}
+\subsection{Evaluating Submission In Isolated Environment}
+\subsection{Program Compilation}
+\subsection{Obtaining Problem Testcase}
+\subsection{Handling Reverse Engineering Attack}
+
 Before you begin to format your paper, first write and save the content as a 
 separate text file. Complete all content and organizational editing before 
 formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
