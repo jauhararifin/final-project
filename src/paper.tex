@@ -76,9 +76,31 @@ R_{contestant} < (1 + \gamma) \times R_{jury}
 In this work, we compare contestant's solution and jury's solution. Contestant's solution considered satisfying the problem constraints when the memory and CPU usage of contestant's solution not exceeding jury's solution. Sometimes, contestant solution's memory or CPU exceeds jury's solution a little bit because the implementation is different. We add tolerance factor ($\gamma$) to tolerate this problem. Contestant's solution is considered satifying problem constraints when the Equation \ref{tolerance-factor} is fulfilled. When evaluating contestant's solution, the worker compiles and executes contestant's solution and jury's solution. After executes the solutions, the worker compares the memory and CPU usage of the execution and determine whether the contestant's solution satisfy problem constraints. 
 
 \subsection{Load Balancing}
+
+We need to distribute grading jobs to worker evenly in order to increase grading performance. There are several load balancing method that we can use to distribute grading jobs evenly. The easiest way to distribute the jobs is by making each contestants to grade their own submissions. In this work, we didn't use this method because this method creates security vulnerabilites.
+
+The other way distribute grading jobs is by using push-based load balancing method. In push-based load balancing, the online judge server choose the worker to do the grading jobs. By using this method, every contestant doesn't know which submission they grade, thus can increase system security. To improve system security, we can also grade every submission multiple times. In order to implement this method, we need the status of all workers. This method is pretty hard to implement because we need to poll the worker status periodically and choose the best worker to evaluate the contestant submissions.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=0.4\textwidth]{images/paper-pull-based-load-balancing.jpeg}}
+\caption{Pull-based Load Balancing.}
+\label{pull-based-load-balancing}
+\end{figure}
+
+In this work, we use pull-based load balancing method. By using this method, we don't have to poll the worker status periodically. The worker will poll the jobs from server periodically and evaluate them when the there is a job that ready to be evaluated. Fig. \ref{pull-based-load-balancing} depicts this method mechanism. This work is easier to implements than push-based load balancing method and has the same advantages.
+
 \subsection{Evaluating Submission In Isolated Environment}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=0.4\textwidth]{images/paper-sandbox-activity.jpeg}}
+\caption{Sandbox Activity Diagram.}
+\label{paper-sandbox-activity}
+\end{figure}
+
+In order to isolate the evaluation process, we use containerization method. We compile and execute contestant's submission inside lightweight container. This container is created by using several Linux features and system calls such as cgroup, namespace, chroot and setrlimit. We use cgroup to monitor and limit the CPU and memory consumption of running process. The worker kills the program when the CPU or memory usage is exceeding the limit. In order to isolate the host's user, process and network, we use Linux feature called namespace. By using namespace, the processes inside isolated environment will not aware of any process, user or network in the outside of its own environment. In order to isolate filesystem of a process, we use chroot system call. Beside isolating the filesystem, we also need to bring some files from host environent into the isolated environment. We bring some of host filesystem into the isolated environment by using mount system call. We also limit the process limit by using setrlimit system call. By using setrlimit system call, we limit some process resources such as the number of child processes, the stack size, the number of open files and the size of file created by that process. Fig. \ref{paper-sandbox-activity} depicts how isolated environment is created.
+
 \subsection{Program Compilation}
-\subsection{Obtaining Problem Testcase}
+\subsection{Obtaining Problem Test-case}
 \subsection{Handling Reverse Engineering Attack}
 
 Before you begin to format your paper, first write and save the content as a 
