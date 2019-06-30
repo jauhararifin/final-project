@@ -87,7 +87,7 @@ The other way distribute grading jobs is by using push-based load balancing meth
 \label{pull-based-load-balancing}
 \end{figure}
 
-In this work, we use pull-based load balancing method. By using this method, we don't have to poll the worker status periodically. The worker will poll the jobs from server periodically and evaluate them when the there is a job that ready to be evaluated. Fig. \ref{pull-based-load-balancing} depicts this method mechanism. This work is easier to implements than push-based load balancing method and has the same advantages.
+In this work, we use pull-based load balancing method. By using this method, we don't have to poll the worker status periodically. The worker will poll the jobs from server periodically and evaluate them when the there is a job that ready to be evaluated. To improve the system security, we grade every submission multiple times. We define a grading size of the system as the number of times we need to grade each submission. Fig. \ref{pull-based-load-balancing} depicts this method mechanism. This work is easier to implements than push-based load balancing method and has the same advantages.
 
 \subsection{Evaluating Submission In Isolated Environment}
 
@@ -139,14 +139,31 @@ The contestants can interact with the system using user interface programs, e.g.
 
 \section{Result and Analysis}
 
+We compare the grading performance between UGrade and DOMJudge. We chose DOMJudge as the comparison because it was the most popular open source online judge system for ICPC competition. We deployed UGrade and DOMJudge in a computer with the same specification. Then we deployed fifteen computer to simulating the contestant actions. For DOMJudge, we deployed two more computers to work as autograder worker. For UGrade, the fifteen computers worked as the worker.
+
+We created a dummy competition with single problem, e.g., polynomial multiplication. This problem was expected to be solved using $O(N log N)$ solution, but there are many other solution with different complexity. We use four types of solution to simulating contestant submission. The first and second type of solution have $O(N^2)$ complexity but have different implementation. The third solution has $O(N^{log_2{3}})$ complexity. The fourth solution has $O(N log N)$ complexity and considered as the correct solution.
+
+\begin{table}[ht!]
+    \label{grading-time}
+    \caption{Average Time to Grade A Single Submission.}
+    \begin{center}
+        \input{tables/paper-grading-time}
+    \end{center}
+\end{table}
+
+The fifteen computers were submitting each type of solution one by one two times. We logged every events that happen on the system and analyzed the result. In this work, we grade every submission multiple times for UGrade system. We tested UGrade nine times using three different grading size, e.g., one, two and five. We calculated the average time to grade a single submission in DOMJudge and UGrade. Table \ref{grading-time} shows the comparison between the average time to grade a single submission in each tests. Based on Table \ref{grading-time}, we know that the UGrade grades the submission faster than DOMJudge. We also know that the grading size of UGrade affects the grading performance a little bit. By increasing the grading size of UGrade, we will grade each submission slower because each submission need to be graded many times when the grading size is high. In other hand, increasing the grading size will increase the system security because the submission graded in many worker. The juries need to adjust the grading size so it is fast enough to grade a single submission and secure enough to prevent any attacks from contestants.
+
 \section{Lesson Learned}
 
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
+Based on the development and testing we have done, there are some lessons we learned.
+\begin{enumerate}
+    \item There is a high grading performance improvement in UGrade compared to many online judge that are currently popular. This performance improvement is caused by the number of worker in the UGrade which follows the number of contestants in the competition.
+    \item The grading performance of UGrade is not affected by the number of contestants but affected by the grading size number of UGrade. The high number of contestant causes the high number of worker too, thus doesn't affect the grading performance. However, the grading size number causes the number of submission doubles, thus affects the grading performance.
+    \item The high number of grading size reduce grading performance but increase system security. The low number of grading size increase grading performance but reduce system security. The juries need to adjust the grading size to achieve the best result.
+    \item The security of UGrade needs further research. However, we can use UGrade to organize some types of online judge competition where the contestant don't have root access to their computer such as ACM-ICPC competition.
+    \item UGrade can keep the fairness of grading process even if the worker computers have different specification and performance. UGrade achieve this by comparing jury's solution and contestant's solution in the same computer.
+    \item Pull-based load balancing of UGrade causes the UGServer load become very huge. The load balancing method of this system needs further research.
+\end{enumerate}
 
 \begin{thebibliography}{00}
 
