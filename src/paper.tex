@@ -96,7 +96,7 @@ The other way to distribute grading jobs is by using push-based load balancing m
 \label{pull-based-load-balancing}
 \end{figure}
 
-In this work, we use a pull-based load balancing method. By using this method, we do not have to poll the worker status periodically. The worker will poll the jobs from the server periodically and evaluate them when there is a ready job to be evaluated. To improve system security, we grade every submission multiple times. We define a grading size of the system as the number of times we need to grade each submission. Fig. \ref{pull-based-load-balancing} depicts this method mechanism. This work is easier to implements than push-based load balancing method and has the same advantages.
+In this work, we use a pull-based load balancing method. By using this method, we do not have to poll the worker status periodically. The worker will poll the jobs from the server periodically and evaluate them when there is a ready job to be evaluated. To improve system security, we grade every submission multiple times. We define a grading size of the system as the number of times we need to grade each submission. Fig. \ref{pull-based-load-balancing} depicts this method mechanism. This work is easier to be implemented than push-based load balancing method and has the same advantages.
 
 \subsection{Evaluating Submission In Isolated Environment}
 
@@ -124,7 +124,7 @@ In order to hide the test-case information, we encrypt the test-case generator p
 
 Because the autograder programs are deployed in the contestants' computers, the contestants can do everything to the program. The contestant can attack the autograder program on their computer. There are many kinds of attacks that the contestant can do such as changing the compiler program, sending the false verdict to the server and refuse to grade other contestants' submissions. In this work, we did not handle this kind of attacks, but there is a way to handle this kind of attacks.
 
-We can prevent a contestant to refuse to do the grading process by monitoring the grading process. When we find out that there is a worker that not asks for a job for a long time or not sends the grading result for a long time, we can tell that there is a contestant that attacks the autograder program in their computer. Then, we can warn or disqualify the contestant for attacking the autograder program.
+We can prevent a contestant to refuse to do the grading process by monitoring the grading process. When we find out that there is a worker that do not ask for a job for a long time or do not send the grading result for a long time, we can tell that there is a contestant that attacks the autograder program in their computer. Then, we can warn or disqualify the contestant for attacking the autograder program.
 
 By grading every submission multiple times, we can prevent a worker from being attacked that cause it gives the wrong verdict after grading. When we grade a submission multiple times and there is a contestant that attacks the autograder in their computer, we can tell by investigating the grading result. If the grading result of a worker is different from the rest of the workers, we can tell that the contestant attacks the autograder program in that worker. Then, we can warn or disqualify that contestant for attacking the autograder program.
 
@@ -176,13 +176,13 @@ Based on the development and testing we have done, there are some lessons we lea
 \begin{enumerate}
     \item There is a high grading performance improvement in UGrade compared to many online judges that are currently popular. This performance improvement is caused by the number of the worker in the UGrade which follows the number of contestants in the competition.
     \item The grading performance of UGrade is not affected by the number of contestants but affected by the grading size number of UGrade. The high number of contestant causes a high number of worker too, so that does not affect the grading performance. However, the grading size number causes the number of submission doubles, thus affects the grading performance.
-    \item The high number of grading size reduce grading performance but increase system security. The low number of grading size increase grading performance but reduce system security. The juries need to adjust the grading size to achieve the best result.
+    \item The high number of grading size reduces grading performance but increases system security. The low number of grading size increases grading performance but reduces system security. The juries need to adjust the grading size to achieve the best result.
     \item UGrade can keep the fairness of grading process even if the worker computers have different specification and performance. UGrade achieves this by comparing the jury's solution and contestant's solution in the same computer.
 \end{enumerate}
 
 \section{Further Work}
 
-The UGrade online judge system still cannot handle some type of attacks such as test-case stealing, solution stealing and reverse engineering attacks. Some of the reverse engineering attacks can be handled by monitor the grading process of the system. In order to handle test-case stealing, solution stealing and some other type of attacks, further research is needed to improve the security aspect of this system. 
+The UGrade online judge system still cannot handle some type of attacks such as test-case stealing, solution stealing and reverse engineering attacks. Some of the reverse engineering attacks can be handled by monitoring the grading process of the system. In order to handle test-case stealing, solution stealing and some other type of attacks, further research is needed to improve the security aspect of this system. 
 
 In this work, we use a pull-based load balancing technique to distribute the grading work to all of the workers. This technique causes UGServer load to become very huge and decrease grading performance. In order to increase the grading performance and reduce the load of UGServer, further research is needed to find another way to do the load balancing process.
 
